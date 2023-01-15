@@ -1,0 +1,122 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String    @id @default(uuid())
+  gender            String?
+  email             String?   @unique
+  emailuuid         String?
+  role              Role      @default(USER)
+  dateOfBirth       String?
+  firstName         String?
+  imageUrl          String?   @default("")
+  lastName          String?
+  currentCheckpoint String?
+  bib               Int       @default(autoincrement())
+  createdAt         DateTime? @default(now())
+  phoneNumber       String?
+  phoneNumberuuid   String?
+  Run                 Run[]
+  Log                 Log[]
+  Lap                 Lap[]
+  OwnedParks          Park[]    @relation("OwnedParks")
+  GovernedParks       Park[]    @relation("GovernedParks")
+}
+
+enum Role {
+  USER
+  ADMIN
+  SCANNER
+  OWNED
+  GOVERNED
+}
+
+model Park {
+  id           String       @id @default(uuid())
+  name         String?
+  imageUrl     String?
+  description  String?
+  address      String?
+  workingHours Json?
+  ownerId      String?
+  owner        User?        @relation(fields: [ownerId], references: [id], name: "OwnedParks")
+  governorId   String?
+  governor     User?        @relation(fields: [governorId], references: [id], name: "GovernedParks")
+  Run          Run[]
+  Checkpoint   Checkpoint[]
+  Path         Path[]
+}
+
+model Run {
+  id        String    @id @default(uuid())
+  startTime DateTime?
+  stopTime  DateTime?
+  distance  Float?
+  pace      Float?
+  userId    String
+  parkId    String
+  park      Park      @relation(fields: [parkId], references: [id])
+  user      User      @relation(fields: [userId], references: [id])
+}
+
+model Checkpoint {
+  id                 String           @id @default(uuid())
+  park               Park             @relation(fields: [parkId], references: [id])
+  parkId             String
+  name               String
+  longitude          Float?
+  latitude           Float?
+  Log                Log[]
+  PathCheckpoint     PathCheckpoint[]
+  PrevPathCheckpoint PathCheckpoint[] @relation(name: "PrevPathCheckpoint")
+}
+
+model Log {
+  id           String      @id @default(uuid())
+  user         User        @relation(fields: [userId], references: [id])
+  userId       String
+  timeStamp    String
+  Checkpoint   Checkpoint? @relation(fields: [checkpointId], references: [id])
+  checkpointId String?
+}
+
+model Lap {
+  id        String    @id @default(uuid())
+  startTime String?
+  stopTime  String?
+  userId    String
+  user      User      @relation(fields: [userId], references: [id])
+  pathId    String
+  path      Path      @relation(fields: [pathId], references: [id])
+}
+
+model Path {
+  id             String           @id @default(uuid())
+  name           String
+  parkId         String
+  park           Park             @relation(fields: [parkId], references: [id])
+  distance       Float
+  Lap            Lap[]
+  PathCheckpoint PathCheckpoint[]
+}
+
+model PathCheckpoint {
+  id               String      @id @default(uuid())
+  checkpointId     String
+  checkpoint       Checkpoint  @relation(fields: [checkpointId], references: [id])
+  prevCheckpointId String?
+  prevCheckpoint   Checkpoint? @relation(fields: [prevCheckpointId], references: [id], name: "PrevPathCheckpoint")
+  isStart          Boolean
+  isFinish         Boolean
+  pathId           String
+  path             Path        @relation(fields: [pathId], references: [id])
+}
