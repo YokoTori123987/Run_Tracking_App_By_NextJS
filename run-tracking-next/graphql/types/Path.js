@@ -8,6 +8,7 @@ import {
 } from 'nexus'
 
 import {Lap} from './Lap'
+import {Park} from './Park'
 
 export const Path = objectType({
   name: 'Path',
