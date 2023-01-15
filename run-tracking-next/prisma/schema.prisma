@@ -58,8 +58,8 @@ model Park {
 
 model Run {
   id        String    @id @default(uuid())
-  startTime DateTime?
-  stopTime  DateTime?
+  startTime String?
+  stopTime  String?
   distance  Float?
   pace      Float?
   userId    String

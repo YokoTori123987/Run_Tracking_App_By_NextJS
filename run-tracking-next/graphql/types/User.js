@@ -5,7 +5,11 @@ import {
   extendType,
   nonNull,
 } from 'nexus'
+
+import {Run} from './Run'
 import { Lap } from './Lap'
+import {Log} from './Log'
+import {OwnedParks, GovernedParks} from './Park'
 
 export const User = objectType({
   name: 'User',
@@ -25,26 +29,26 @@ export const User = objectType({
     t.int('bib')
     t.string('phoneNumber')
     t.string('phoneNumberuuid')
-    // t.list.field('run', {
-    //   type: 'Run',
-    //   resolve: (parent, _, context) => {
-    //     return context.prisma.user
-    //       .findUnique({
-    //         where: { id: parent.id },
-    //       })
-    //       .run()
-    //   },
-    // })
-    // t.list.field('log', {
-    //   type: 'Log',
-    //   resolve: (parent, _, context) => {
-    //     return context.prisma.user
-    //       .findUnique({
-    //         where: { id: parent.id },
-    //       })
-    //       .log()
-    //   },
-    // })
+    t.list.field('Run', {
+      type: Run,
+      resolve: (parent, _, context) => {
+        return context.prisma.user
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .Run()
+      },
+    })
+    t.list.field('Log', {
+      type: Log,
+      resolve: (parent, _, context) => {
+        return context.prisma.user
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .Log()
+      },
+    })
     t.list.field('Lap', {
       type: Lap,
       async resolve(parent, _, context) {
@@ -55,26 +59,26 @@ export const User = objectType({
           .Lap()
       },
     })
-    // t.list.field('ownedParks', {
-    //   type: 'OwnedParks',
-    //   resolve: (parent, _, context) => {
-    //     return context.prisma.user
-    //       .findUnique({
-    //         where: { id: parent.id },
-    //       })
-    //       .ownedParks()
-    //   },
-    // })
-    // t.list.field('governedParks', {
-    //   type: 'GovernedParks',
-    //   resolve: (parent, _, context) => {
-    //     return context.prisma.user
-    //       .findUnique({
-    //         where: { id: parent.id },
-    //       })
-    //       .governedParks()
-    //   },
-    // })
+    t.list.field('OwnedParks', {
+      type: OwnedParks,
+      resolve: (parent, _, context) => {
+        return context.prisma.user
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .OwnedParks()
+      },
+    })
+    t.list.field('GovernedParks', {
+      type: GovernedParks,
+      resolve: (parent, _, context) => {
+        return context.prisma.user
+          .findUnique({
+            where: { id: parent.id },
+          })
+          .GovernedParks()
+      },
+    })
   },
 })
 
