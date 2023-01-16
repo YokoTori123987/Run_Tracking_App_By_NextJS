@@ -1,4 +1,4 @@
-import { enumType, objectType, stringArg, extendType, nonNull } from "nexus";
+import { floatArg, objectType, stringArg, extendType, intArg } from "nexus";
 
 import { Log } from "./Log";
 import { PathCheckpoint } from "./PathCheckpoint";
@@ -76,8 +76,8 @@ export const CreateCheckpoint = extendType({
       type: Checkpoint,
       args: {
         name: stringArg(),
-        longitude: stringArg(),
-        latitude: stringArg(),
+        longitude: floatArg(),
+        latitude: floatArg(),
         parkId: stringArg(),
       },
       async resolve(_, args, ctx) {
@@ -95,3 +95,4 @@ export const CreateCheckpoint = extendType({
     });
   },
 });
+
