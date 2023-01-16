@@ -29,6 +29,8 @@ type Log {
 }
 
 type Mutation {
+  createCheckpoint(latitude: String, longitude: String, name: String, parkId: String): Checkpoint
+  createPathCheckpoint(checkpointId: String, isFinish: String, isStart: String, pathId: String, prevCheckpointId: String): PathCheckpoint
   createUser(dateOfBirth: String, email: String, emailuuid: String, firstName: String, gender: String, imageUrl: String, lastName: String, phoneNumber: String, phoneNumberuuid: String): User
   deleteUser(id: String!): User
   updateRole(id: String!, role: String!): User

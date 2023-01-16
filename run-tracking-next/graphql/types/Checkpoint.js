@@ -58,12 +58,39 @@ export const CheckpointQuery = extendType({
   type: "Query",
   definition(t) {
     t.list.field("checkpoints", {
-      type: "Checkpoint",
+      type: Checkpoint,
       resolve: async (_, args, ctx) => {
         // const [items] = await Promise.all([ctx.prisma.user.findMany()])
         // console.log(items)
         // return items
-        return ctx.prisma.user.findMany();
+        return ctx.prisma.checkpoint.findMany();
+      },
+    });
+  },
+});
+
+export const CreateCheckpoint = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("createCheckpoint", {
+      type: Checkpoint,
+      args: {
+        name: stringArg(),
+        longitude: stringArg(),
+        latitude: stringArg(),
+        parkId: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        const newCheckpoint = {
+          name: args.name,
+          longitude: args.longitude,
+          latitude: args.latitude,
+          parkId: args.parkId,
+        };
+        console.log(newCheckpoint);
+        return await ctx.prisma.checkpoint.create({
+          data: newCheckpoint,
+        });
       },
     });
   },

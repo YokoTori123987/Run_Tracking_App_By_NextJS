@@ -41,7 +41,7 @@ export const LapQuery = extendType({
         // const [items] = await Promise.all([ctx.prisma.user.findMany()])
         // console.log(items)
         // return items
-        return ctx.prisma.user.findMany();
+        return ctx.prisma.lap.findMany();
       },
     });
   },

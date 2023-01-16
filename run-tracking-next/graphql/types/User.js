@@ -158,7 +158,7 @@ export const CreateUser = extendType({
           phoneNumber: args.phoneNumber,
           phoneNumberuuid: args.phoneNumberuuid,
         };
-        console.log(newUser);
+        // console.log(newUser);
         return await ctx.prisma.user.create({
           data: newUser,
         });

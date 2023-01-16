@@ -59,7 +59,37 @@ export const PathCheckpointQuery = extendType({
         // const [items] = await Promise.all([ctx.prisma.user.findMany()])
         // console.log(items)
         // return items
-        return ctx.prisma.user.findMany();
+        return ctx.prisma.pathCheckpoint.findMany();
+      },
+    });
+  },
+});
+
+export const CreatePathCheckpoint = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("createPathCheckpoint", {
+      type: "PathCheckpoint",
+      args: {
+        checkpointId: stringArg(),
+        prevCheckpointId: stringArg(),
+        pathId: stringArg(),
+        isStart: stringArg(),
+        isFinish: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        const newPathCheckpoint = {
+          checkpointId: args.checkpointId,
+          prevCheckpointId: args.prevCheckpointId,
+          emailuuid: args.emailuuid,
+          pathId: args.pathId,
+          isStart: args.isStart,
+          isFinish: args.isFinish,
+        };
+        console.log(newUser);
+        return await ctx.prisma.user.create({
+          data: newPathCheckpoint,
+        });
       },
     });
   },
