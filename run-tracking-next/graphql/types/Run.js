@@ -44,7 +44,34 @@ export const RunQuery = extendType({
         // const [items] = await Promise.all([ctx.prisma.user.findMany()])
         // console.log(items)
         // return items
-        return ctx.prisma.user.findMany();
+        return ctx.prisma.run.findMany();
+      },
+    });
+  },
+});
+
+export const RunByIDQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.list.field("run", {
+      type: "Run",
+      args: { userId: nonNull(stringArg()) },
+      resolve: async (_, args, ctx) => {
+        // console.log("first");
+        // const [items] = await Promise.all([
+        //   ctx.prisma.run.findMany({
+        //     where: {
+        //       userId: args.userId,
+        //     },
+        //   }),
+        // ]);
+        // console.log(items);
+        // return items;
+        return ctx.prisma.run.findMany({
+          where: {
+            userId: args.userId,
+          },
+        });
       },
     });
   },

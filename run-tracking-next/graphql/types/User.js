@@ -33,8 +33,8 @@ export const User = objectType({
     t.string("phoneNumberuuid");
     t.list.field("Run", {
       type: Run,
-      resolve: (parent, _, context) => {
-        return context.prisma.user
+      async resolve(parent, _, context) {
+        return await context.prisma.user
           .findUnique({
             where: { id: parent.id },
           })
@@ -43,8 +43,8 @@ export const User = objectType({
     });
     t.list.field("Log", {
       type: Log,
-      resolve: (parent, _, context) => {
-        return context.prisma.user
+      async resolve(parent, _, context) {
+        return await context.prisma.user
           .findUnique({
             where: { id: parent.id },
           })
@@ -63,8 +63,8 @@ export const User = objectType({
     });
     t.list.field("OwnedParks", {
       type: Park,
-      resolve: (parent, _, context) => {
-        return context.prisma.user
+      async resolve(parent, _, context) {
+        return await context.prisma.user
           .findUnique({
             where: { id: parent.id },
           })
@@ -73,8 +73,8 @@ export const User = objectType({
     });
     t.list.field("GovernedParks", {
       type: Park,
-      resolve: (parent, _, context) => {
-        return context.prisma.user
+      async resolve(parent, _, context) {
+        return await context.prisma.user
           .findUnique({
             where: { id: parent.id },
           })
@@ -209,6 +209,29 @@ export const DeleteUser = extendType({
       resolve(_parent, args, ctx) {
         return ctx.prisma.user.delete({
           where: { id: args.id },
+        });
+      },
+    });
+  },
+});
+
+export const UpdateRoleUser = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("updateRole", {
+      type: User,
+      args: {
+        id: nonNull(stringArg()),
+        role: nonNull(stringArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.user.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            role: args.role,
+          },
         });
       },
     });
