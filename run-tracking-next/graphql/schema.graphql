@@ -2,6 +2,17 @@
 ### Do not make changes to this file directly
 
 
+type Checkpoint {
+  Log: [Log]
+  PathCheckpoint: [PathCheckpoint]
+  PrevPathCheckpoint: [PathCheckpoint]
+  id: String!
+  latitude: Float
+  longitude: Float
+  name: String
+  park: Park
+}
+
 type Lap {
   id: String!
   path: Path!
@@ -10,15 +21,60 @@ type Lap {
   user: User!
 }
 
+type Log {
+  Checkpoint: Checkpoint
+  id: String!
+  timeStamp: String
+  user: User
+}
+
+type Mutation {
+  createUser(dateOfBirth: String, email: String, emailuuid: String, firstName: String, gender: String, imageUrl: String, lastName: String, phoneNumber: String, phoneNumberuuid: String): User
+  deleteUser(id: String!): User
+  updateUser(dateOfBirth: String, firstName: String, gender: String, id: String, imageUrl: String, lastName: String): User
+}
+
+type Park {
+  Checkpoint: [Checkpoint]
+  Path: [Path]
+  Run: [Run]
+  address: String
+  description: String
+  governor: User
+  id: String!
+  imageUrl: String
+  name: String
+  owner: User
+  workingHours: String
+}
+
 type Path {
   Lap: [Lap]!
+  PathCheckpoint: [PathCheckpoint]!
   distance: Float!
   id: String!
   name: String!
+  park: Park!
+}
+
+type PathCheckpoint {
+  checkpoint: [Checkpoint]!
+  id: String!
+  isFinish: Boolean
+  isStart: Boolean
+  path: Path!
+  prevCheckpoint: [Checkpoint]!
 }
 
 type Query {
+  checkpoints: [Checkpoint]
   laps: [Lap]
+  logs: [Log]
+  parks: [Park]
+  pathCheckpoints: [PathCheckpoint]
+  paths: [Path]
+  runs: [Run]
+  user(id: String!): User
   users: [User]
 }
 
@@ -30,8 +86,22 @@ enum Role {
   USER
 }
 
+type Run {
+  distance: Float
+  id: String!
+  pace: Float
+  park: Park
+  startTime: String
+  stopTime: String
+  user: [User]
+}
+
 type User {
+  GovernedParks: [Park]
   Lap: [Lap]
+  Log: [Log]
+  OwnedParks: [Park]
+  Run: [Run]
   bib: Int
   currentCheckpoint: String
   dateOfBirth: String

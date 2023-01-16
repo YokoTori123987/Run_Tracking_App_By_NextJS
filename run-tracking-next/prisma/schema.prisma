@@ -25,11 +25,11 @@ model User {
   createdAt         DateTime? @default(now())
   phoneNumber       String?
   phoneNumberuuid   String?
-  Run                 Run[]
-  Log                 Log[]
-  Lap                 Lap[]
-  OwnedParks          Park[]    @relation("OwnedParks")
-  GovernedParks       Park[]    @relation("GovernedParks")
+  Run               Run[]
+  Log               Log[]
+  Lap               Lap[]
+  OwnedParks        Park[]    @relation("OwnedParks")
+  GovernedParks     Park[]    @relation("GovernedParks")
 }
 
 enum Role {
@@ -46,7 +46,7 @@ model Park {
   imageUrl     String?
   description  String?
   address      String?
-  workingHours Json?
+  workingHours String?
   ownerId      String?
   owner        User?        @relation(fields: [ownerId], references: [id], name: "OwnedParks")
   governorId   String?
@@ -57,15 +57,15 @@ model Park {
 }
 
 model Run {
-  id        String    @id @default(uuid())
+  id        String  @id @default(uuid())
   startTime String?
   stopTime  String?
   distance  Float?
   pace      Float?
   userId    String
   parkId    String
-  park      Park      @relation(fields: [parkId], references: [id])
-  user      User      @relation(fields: [userId], references: [id])
+  park      Park    @relation(fields: [parkId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
 }
 
 model Checkpoint {
@@ -90,13 +90,13 @@ model Log {
 }
 
 model Lap {
-  id        String    @id @default(uuid())
+  id        String  @id @default(uuid())
   startTime String?
   stopTime  String?
   userId    String
-  user      User      @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id])
   pathId    String
-  path      Path      @relation(fields: [pathId], references: [id])
+  path      Path    @relation(fields: [pathId], references: [id])
 }
 
 model Path {
