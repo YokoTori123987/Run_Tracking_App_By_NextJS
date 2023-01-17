@@ -29,10 +29,13 @@ type Log {
 }
 
 type Mutation {
+  checkRuning(checkpointId: String!, userId: String!): Checkpoint
   createCheckpoint(latitude: Float, longitude: Float, name: String, parkId: String): Checkpoint
   createPathCheckpoint(checkpointId: String, isFinish: String, isStart: String, pathId: String, prevCheckpointId: String): PathCheckpoint
   createUser(dateOfBirth: String, email: String, emailuuid: String, firstName: String, gender: String, imageUrl: String, lastName: String, phoneNumber: String, phoneNumberuuid: String): User
+  deleteCheckpoint(id: String!): Checkpoint
   deleteUser(id: String!): User
+  updateCheckpoint(id: String, latitude: Float, longitude: Float, name: String, parkId: String): Checkpoint
   updateRole(id: String!, role: String!): User
   updateUser(dateOfBirth: String, firstName: String, gender: String, id: String, imageUrl: String, lastName: String): User
 }

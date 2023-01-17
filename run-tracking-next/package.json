@@ -12,6 +12,7 @@
     "@next/font": "13.1.2",
     "@prisma/client": "^4.8.1",
     "apollo-server-micro": "^3.11.1",
+    "dayjs": "^1.11.7",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.2",
     "graphql": "^16.6.0",
