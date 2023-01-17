@@ -81,6 +81,28 @@ export const CheckpointQuery = extendType({
   },
 });
 
+export const CheckpointByIDQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.list.field("checkpoint", {
+      type: Checkpoint,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve: async (_, args, ctx) => {
+        // const [items] = await Promise.all([ctx.prisma.user.findMany()])
+        // console.log(items)
+        // return items
+        return ctx.prisma.checkpoint.findUnique({
+          where: {
+            id: args.id,
+          }
+        });
+      },
+    });
+  },
+});
+
 export const CreateCheckpoint = extendType({
   type: "Mutation",
   definition(t) {
@@ -332,66 +354,66 @@ export const checkRunningPath = extendType({
   },
 });
 
-const stopRuning = async (userId, checkpointId, checkpointNull) => {
-  // const dayjs = require("dayjs");
-  await prisma.log.create({
-    data: {
-      userId: userId,
-      timeStamp: new Date(),
-      checkpointId: checkpointId,
-    },
-  });
+// const stopRuning = async (userId, checkpointId, checkpointNull) => {
+//   // const dayjs = require("dayjs");
+//   await prisma.log.create({
+//     data: {
+//       userId: userId,
+//       timeStamp: new Date(),
+//       checkpointId: checkpointId,
+//     },
+//   });
 
-  const poplap = await prisma.lap.findMany({
-    orderBy: {
-      stopTime: "desc",
-    },
-    where: {
-      userId: userId,
-      AND: {
-        pathId: checkpoint.pathId,
-      },
-    },
-    include: {
-      path: true,
-    },
-  });
+//   const poplap = await prisma.lap.findMany({
+//     orderBy: {
+//       stopTime: "desc",
+//     },
+//     where: {
+//       userId: userId,
+//       AND: {
+//         pathId: checkpoint.pathId,
+//       },
+//     },
+//     include: {
+//       path: true,
+//     },
+//   });
 
-  const createrun = await prisma.lap.update({
-    where: {
-      id: poplap[0].id,
-    },
-    data: { stopTime: new Date() },
-  });
+//   const createrun = await prisma.lap.update({
+//     where: {
+//       id: poplap[0].id,
+//     },
+//     data: { stopTime: new Date() },
+//   });
 
-  const lopiuo = dayjs(createrun.stopTime).diff(
-    createrun.startTime,
-    "minute",
-    true
-  );
+//   const lopiuo = dayjs(createrun.stopTime).diff(
+//     createrun.startTime,
+//     "minute",
+//     true
+//   );
 
-  console.log(lopiuo.toFixed(2));
+//   console.log(lopiuo.toFixed(2));
 
-  await prisma.run.create({
-    data: {
-      startTime: createrun.startTime,
-      stopTime: createrun.stopTime,
-      distance: poplap[0].path.distance,
-      pace: lopiuo.toFixed(2) / poplap[0].path.distance,
-      userId: createrun.userId,
-      parkId: poplap[0].path.parkId,
-    },
-  });
-  await prisma.user.update({
-    data: { currentCheckpoint: null },
-    where: {
-      id: userId,
-    },
-  });
-  if (checkpointNull) {
-    startRuning({ userId, checkpointNull, checkpointId });
-  }
-};
+//   await prisma.run.create({
+//     data: {
+//       startTime: createrun.startTime,
+//       stopTime: createrun.stopTime,
+//       distance: poplap[0].path.distance,
+//       pace: lopiuo.toFixed(2) / poplap[0].path.distance,
+//       userId: createrun.userId,
+//       parkId: poplap[0].path.parkId,
+//     },
+//   });
+//   await prisma.user.update({
+//     data: { currentCheckpoint: null },
+//     where: {
+//       id: userId,
+//     },
+//   });
+//   if (checkpointNull) {
+//     startRuning({ userId, checkpointNull, checkpointId });
+//   }
+// };
 
 // const startRuning = async (userId, checkpointNull, checkpointId) => {
 //   const user = await prisma.user.findUnique({

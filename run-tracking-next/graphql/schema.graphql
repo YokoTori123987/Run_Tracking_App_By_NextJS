@@ -73,9 +73,13 @@ type PathCheckpoint {
 }
 
 type Query {
+  checkpoint(id: String!): [Checkpoint]
   checkpoints: [Checkpoint]
+  lap(id: String!): [Lap]
   laps: [Lap]
+  log(id: String!): [Log]
   logs: [Log]
+  park(id: String!): Park
   parks: [Park]
   pathCheckpoints: [PathCheckpoint]
   paths: [Path]

@@ -5,6 +5,7 @@ import {
   extendType,
   list,
   nonNull,
+  booleanArg
 } from "nexus";
 
 //   import { Lap } from "./Lap";
@@ -65,6 +66,32 @@ export const PathCheckpointQuery = extendType({
   },
 });
 
+export const PathCheckpointByIDQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("PathCheckpoint", {
+      type: PathCheckpoint,
+      args: { id: nonNull(stringArg()) },
+      resolve: async (_, args, ctx) => {
+        // const [items] = await Promise.all([
+        //   ctx.prisma.user.findUnique({
+        //     where: {
+        //       id: args.id,
+        //     },
+        //   }),
+        // ]);
+        // console.log(items);
+        // return items;
+        return ctx.prisma.pathCheckpoint.findUnique({
+          where: {
+            id: args.id,
+          },
+        });
+      },
+    });
+  },
+});
+
 export const CreatePathCheckpoint = extendType({
   type: "Mutation",
   definition(t) {
@@ -74,21 +101,67 @@ export const CreatePathCheckpoint = extendType({
         checkpointId: stringArg(),
         prevCheckpointId: stringArg(),
         pathId: stringArg(),
-        isStart: stringArg(),
-        isFinish: stringArg(),
+        isStart: booleanArg(),
+        isFinish: booleanArg(),
       },
       async resolve(_, args, ctx) {
         const newPathCheckpoint = {
           checkpointId: args.checkpointId,
           prevCheckpointId: args.prevCheckpointId,
-          emailuuid: args.emailuuid,
           pathId: args.pathId,
           isStart: args.isStart,
           isFinish: args.isFinish,
         };
-        console.log(newUser);
-        return await ctx.prisma.user.create({
+        return await ctx.prisma.pathCheckpoint.create({
           data: newPathCheckpoint,
+        });
+      },
+    });
+  },
+});
+
+export const UpdatePathCheckpoint = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("updatePathCheckpoint", {
+      type: PathCheckpoint,
+      args: {
+        id: stringArg(),
+        checkpointId: stringArg(),
+        prevCheckpointId: stringArg(),
+        isStart: stringArg(),
+        isFinish: stringArg(),
+        pathId: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        return await ctx.prisma.pathCheckpoint.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            checkpointId: args.checkpointId,
+            prevCheckpointId: args.prevCheckpointId,
+            isStart: args.isStart,
+            isFinish: args.isFinish,
+            pathId: args.pathId,
+          },
+        });
+      },
+    });
+  },
+});
+
+export const DeletePathCheckpoint = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("deletePathCheckpoint", {
+      type: PathCheckpoint,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.pathCheckpoint.delete({
+          where: { id: args.id },
         });
       },
     });

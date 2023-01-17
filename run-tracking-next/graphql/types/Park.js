@@ -81,3 +81,115 @@ export const ParkQuery = extendType({
     });
   },
 });
+
+export const ParkByIDQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("park", {
+      type: Park,
+      args: { id: nonNull(stringArg()) },
+      resolve: async (_, args, ctx) => {
+        // const [items] = await Promise.all([
+        //   ctx.prisma.user.findUnique({
+        //     where: {
+        //       id: args.id,
+        //     },
+        //   }),
+        // ]);
+        // console.log(items);
+        // return items;
+        return ctx.prisma.park.findUnique({
+          where: {
+            id: args.id,
+          },
+        });
+      },
+    });
+  },
+});
+
+export const CreatePark = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("createPark", {
+      type: Park,
+      args: {
+        name: stringArg(),
+        imageUrl: stringArg(),
+        description: stringArg(),
+        address: stringArg(),
+        workingHours: stringArg(),
+        ownerId: stringArg(),
+        governorId: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        const newPark = {
+          id: args.id,
+          name: args.name,
+          imageUrl: args.imageUrl,
+          description: args.description,
+          address: args.address,
+          workingHours: args.workingHours,
+          ownerId: args.ownerId,
+          governorId: args.governorId,
+        };
+        // console.log(newUser);
+        return await ctx.prisma.park.create({
+          data: newPark,
+        });
+      },
+    });
+  },
+});
+
+export const UpdatePark = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("updatePark", {
+      type: Park,
+      args: {
+        id: stringArg(),
+        name: stringArg(),
+        imageUrl: stringArg(),
+        description: stringArg(),
+        address: stringArg(),
+        workingHours: stringArg(),
+        ownerId: stringArg(),
+        governorId: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        return await ctx.prisma.park.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            name: args.name,
+            imageUrl: args.imageUrl,
+            description: args.description,
+            address: args.address,
+            workingHours: args.workingHours,
+            ownerId: args.ownerId,
+            governorId: args.governorId,
+          },
+        });
+      },
+    });
+  },
+});
+
+export const DeletePark = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("deletePark", {
+      type: Park,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve(_parent, args, ctx) {
+        return ctx.prisma.park.delete({
+          where: { id: args.id },
+        });
+      },
+    });
+  },
+});

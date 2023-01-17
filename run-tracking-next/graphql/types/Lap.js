@@ -46,3 +46,25 @@ export const LapQuery = extendType({
     });
   },
 });
+
+export const LapByIDQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.list.field("lap", {
+      type: Lap,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve: async (_, args, ctx) => {
+        // const [items] = await Promise.all([ctx.prisma.user.findMany()])
+        // console.log(items)
+        // return items
+        return ctx.prisma.lap.findUnique({
+          where: {
+            id: args.id,
+          }
+        });
+      },
+    });
+  },
+});

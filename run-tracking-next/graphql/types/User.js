@@ -181,7 +181,7 @@ export const UpdateUser = extendType({
         imageUrl: stringArg(),
       },
       async resolve(_, args, ctx) {
-        return await ctx.prisma.update({
+        return await ctx.prisma.user.update({
           where: {
             id: args.id,
           },

@@ -47,3 +47,25 @@ export const LogQuery = extendType({
     });
   },
 });
+
+export const LogByIDQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.list.field("log", {
+      type: Log,
+      args: {
+        id: nonNull(stringArg()),
+      },
+      resolve: async (_, args, ctx) => {
+        // const [items] = await Promise.all([ctx.prisma.user.findMany()])
+        // console.log(items)
+        // return items
+        return ctx.prisma.log.findUnique({
+          where: {
+            id: args.id,
+          }
+        });
+      },
+    });
+  },
+});
