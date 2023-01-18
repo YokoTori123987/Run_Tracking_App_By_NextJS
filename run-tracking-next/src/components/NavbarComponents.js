@@ -96,6 +96,7 @@ export default function NavbarComponents() {
                 className={styles.vercelLogo}
                 width={100}
                 height={24}
+                style={{ margin: "auto" }}
                 priority
               />
             </Link>
@@ -103,9 +104,7 @@ export default function NavbarComponents() {
           <Col span={1} />
           <Menu
             theme="dark"
-            // mode="horizontal"
-            className="content"
-            // style={{ float: "right" }}
+            mode="horizontal"
             // mode="inline"
             items={navigationMain}
           />
