@@ -5,6 +5,7 @@ import {
   SettingOutlined,
   UnorderedListOutlined,
   AlibabaOutlined,
+  UsergroupAddOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import styles from "@/styles/Home.module.css";
@@ -18,21 +19,21 @@ const { Header } = Layout;
 export default function NavbarComponents() {
   const navigationAdmin = [
     {
-      label: <Link href="/admin/parks">Park</Link>,
+      label: <Link href="/parks">Park</Link>,
       key: "manu-1",
       // icon: <MailOutlined />,
     },
     {
-      label: <Link href="/admin/checkpoints">Checkpoints</Link>,
+      label: <Link href="/checkpoints">Checkpoints</Link>,
       key: "manu-2",
       // icon: <AppstoreOutlined />,
     },
     {
-      label: <Link href="/admin/paths">Paths</Link>,
+      label: <Link href="/paths">Paths</Link>,
       key: "manu-3",
     },
     {
-      label: <Link href="/admin/users">Users</Link>,
+      label: <Link href="/users">Users</Link>,
       key: "menu-4",
     },
     {
@@ -41,26 +42,34 @@ export default function NavbarComponents() {
       icon: <UnorderedListOutlined />,
       children: [
         {
-          label: <Link href="/admin/logs">Logs</Link>,
+          label: <Link href="/logs">Logs</Link>,
           key: "summenu-2",
         },
         {
-          label: <Link href="/admin/laps">Laps</Link>,
+          label: <Link href="/laps">Laps</Link>,
           key: "summenu-3",
         },
         {
-          label: <Link href="/admin/runs">Runs</Link>,
+          label: <Link href="/runs">Runs</Link>,
           key: "summenu-4",
         },
         {
-          label: <Link href="/admin/path-checkpoints">PathCheckpoints</Link>,
+          label: <Link href="/path-checkpoints">PathCheckpoints</Link>,
           key: "summenu-5",
         },
         {
-          label: <Link href="/admin/checkPath">CheckPath</Link>,
+          label: <Link href="/checkPath">CheckPath</Link>,
           key: "summenu-6",
         },
       ],
+    },
+  ];
+
+  const navigationMain = [
+    {
+      label: <Link href="/parks">เข้าสู่ระบบ</Link>,
+      key: "login",
+      icon: <UsergroupAddOutlined />,
     },
   ];
   return (
@@ -76,7 +85,7 @@ export default function NavbarComponents() {
             />
             <link rel="icon" href="/favicon.ico" />
           </Head>
-
+          <Col span={1} />
           {/* <Row justify="space-around" align="middle"> */}
           {/* <Col span={2} justify="space-evenly"> */}
           <div className="logo">
@@ -91,13 +100,22 @@ export default function NavbarComponents() {
               />
             </Link>
           </div>
-          <Col span={1}></Col>
+          <Col span={1} />
           <Menu
+            theme="dark"
+            // mode="horizontal"
+            className="content"
+            // style={{ float: "right" }}
+            // mode="inline"
+            items={navigationMain}
+          />
+          {/* <Menu
             className="relative ml-3 grid grid-cols-1"
             theme="dark"
             mode="horizontal"
             items={navigationAdmin}
-          />
+          /> */}
+          <Col span={1} />
         </Row>
       </Header>
     </>
