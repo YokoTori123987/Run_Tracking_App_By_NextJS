@@ -8,7 +8,7 @@ import {
   UsergroupAddOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
-import styles from "@/styles/Home.module.css";
+// import styles from "@/styles/Home.module.css";
 
 import Head from "next/head";
 import Link from "next/link";
@@ -67,7 +67,7 @@ export default function NavbarComponents() {
 
   const navigationMain = [
     {
-      label: <Link href="/parks">เข้าสู่ระบบ</Link>,
+      label: <Link href="/login">เข้าสู่ระบบ</Link>,
       key: "login",
       icon: <UsergroupAddOutlined />,
     },
@@ -93,7 +93,7 @@ export default function NavbarComponents() {
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
-                className={styles.vercelLogo}
+                // className={styles.vercelLogo}
                 width={100}
                 height={24}
                 style={{ margin: "auto" }}
@@ -102,12 +102,15 @@ export default function NavbarComponents() {
             </Link>
           </div>
           <Col span={1} />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            // mode="inline"
-            items={navigationMain}
-          />
+          <Col span={2} style={{ marginLeft: "auto" }}>
+            <Menu
+              theme="dark"
+              mode="horizontal"
+              // mode="inline"
+
+              items={navigationMain}
+            />
+          </Col>
           {/* <Menu
             className="relative ml-3 grid grid-cols-1"
             theme="dark"

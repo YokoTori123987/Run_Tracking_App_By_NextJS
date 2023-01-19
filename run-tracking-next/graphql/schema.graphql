@@ -31,11 +31,19 @@ type Log {
 type Mutation {
   checkRuning(checkpointId: String!, userId: String!): Checkpoint
   createCheckpoint(latitude: Float, longitude: Float, name: String, parkId: String): Checkpoint
-  createPathCheckpoint(checkpointId: String, isFinish: String, isStart: String, pathId: String, prevCheckpointId: String): PathCheckpoint
+  createPark(address: String, description: String, governorId: String, imageUrl: String, name: String, ownerId: String, workingHours: String): Park
+  createPath(distance: Float, name: String, parkId: String): Path
+  createPathCheckpoint(checkpointId: String, isFinish: Boolean, isStart: Boolean, pathId: String, prevCheckpointId: String): PathCheckpoint
   createUser(dateOfBirth: String, email: String, emailuuid: String, firstName: String, gender: String, imageUrl: String, lastName: String, phoneNumber: String, phoneNumberuuid: String): User
   deleteCheckpoint(id: String!): Checkpoint
+  deletePark(id: String!): Park
+  deletePath(id: String!): Path
+  deletePathCheckpoint(id: String!): PathCheckpoint
   deleteUser(id: String!): User
   updateCheckpoint(id: String, latitude: Float, longitude: Float, name: String, parkId: String): Checkpoint
+  updatePark(address: String, description: String, governorId: String, id: String, imageUrl: String, name: String, ownerId: String, workingHours: String): Park
+  updatePath(distance: Float, id: String, name: String, parkId: String): Path
+  updatePathCheckpoint(checkpointId: String, id: String, isFinish: String, isStart: String, pathId: String, prevCheckpointId: String): PathCheckpoint
   updateRole(id: String!, role: String!): User
   updateUser(dateOfBirth: String, firstName: String, gender: String, id: String, imageUrl: String, lastName: String): User
 }
@@ -73,6 +81,7 @@ type PathCheckpoint {
 }
 
 type Query {
+  PathCheckpoint(id: String!): PathCheckpoint
   checkpoint(id: String!): [Checkpoint]
   checkpoints: [Checkpoint]
   lap(id: String!): [Lap]
@@ -81,6 +90,7 @@ type Query {
   logs: [Log]
   park(id: String!): Park
   parks: [Park]
+  path(id: String!): [Path]
   pathCheckpoints: [PathCheckpoint]
   paths: [Path]
   run(userId: String!): [Run]
