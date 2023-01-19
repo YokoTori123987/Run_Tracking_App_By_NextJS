@@ -4,8 +4,8 @@ import { schema } from "graphql/schema";
 import { createContext } from "../../../graphql/context";
 
 const apollo = new ApolloServer({
-  context: createContext,
   schema,
+  context: createContext,
 });
 
 const startServer = apollo.start();
