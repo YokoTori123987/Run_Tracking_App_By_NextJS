@@ -71,6 +71,11 @@ export default function NavbarComponents() {
       key: "login",
       icon: <UsergroupAddOutlined />,
     },
+    {
+      label: <Link href="/checkPath">เข้าระบบสแกนแส้นทาง</Link>,
+      key: "checkPath",
+      icon: <AppstoreOutlined />,
+    },
   ];
   return (
     <>

@@ -15,12 +15,14 @@ specifiers:
   eslint-config-next: 13.1.2
   firebase: ^9.15.0
   graphql: ^16.6.0
-  micro: ^10.0.1
+  micro: ^9.3.4
   next: 13.1.2
   nexus: ^1.3.0
   prisma: ^4.8.1
+  qrcode-reader: ^1.0.4
   react: 18.2.0
   react-dom: 18.2.0
+  react-qr-reader: 3.0.0-beta-1
   typescript: ^4.9.4
 
 dependencies:
@@ -30,18 +32,20 @@ dependencies:
   '@popperjs/core': 2.11.6
   '@prisma/client': 4.9.0_prisma@4.9.0
   antd: 5.1.5_biqbaboplfbrettd7655fr4n2y
-  apollo-server-micro: 3.11.1_potwy64f2tuwa43rykwfkwmjkm
+  apollo-server-micro: 3.11.1_graphql@16.6.0+micro@9.4.1
   bootstrap: 5.2.3_@popperjs+core@2.11.6
   dayjs: 1.11.7
   eslint: 8.32.0
   eslint-config-next: 13.1.2_7uibuqfxkfaozanbtbziikiqje
   firebase: 9.15.0
   graphql: 16.6.0
-  micro: 10.0.1
+  micro: 9.4.1
   next: 13.1.2_pbqkqtl3ytrxhl67w6o5ecjene
   nexus: 1.3.0_graphql@16.6.0
+  qrcode-reader: 1.0.4
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-qr-reader: 3.0.0-beta-1_biqbaboplfbrettd7655fr4n2y
   typescript: 4.9.4
 
 devDependencies:
@@ -59,8 +63,8 @@ packages:
   /@ant-design/cssinjs/1.5.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-rKsX5BLCISmllyfSnwgBzfspwbG8tbhDC9hZwjUMV1Rivg4XQFxLy5qRG1vAvM9wKzixAS+PzO+E2Sq7mK4VIQ==}
     peerDependencies:
-      react: '>=16.0.0'
-      react-dom: '>=16.0.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       '@emotion/hash': 0.8.0
@@ -81,8 +85,8 @@ packages:
     resolution: {integrity: sha512-dPUlZtsIffBrDyFwM+tuO4PWi1DPgGgd10ASistPhLpr1WyssadfhChWs/mICVkCm5PaRm/foMkE1x3xw4OPZw==}
     engines: {node: '>=8'}
     peerDependencies:
-      react: '>=16.0.0'
-      react-dom: '>=16.0.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@ant-design/colors': 7.0.0
       '@ant-design/icons-svg': 4.2.1
@@ -96,7 +100,7 @@ packages:
   /@ant-design/react-slick/1.0.0_react@18.2.0:
     resolution: {integrity: sha512-OKxZsn8TAf8fYxP79rDXgLs9zvKMTslK6dJ4iLhDXOujUqC5zJPBRszyrcEHXcMPOm1Sgk40JgyF3yiL/Swd7w==}
     peerDependencies:
-      react: '>=16.9.0'
+      react: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -111,8 +115,8 @@ packages:
     peerDependencies:
       graphql: ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-ws: ^5.5.5
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
-      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: '*'
+      react-dom: '*'
       subscriptions-transport-ws: ^0.9.0 || ^0.11.0
     peerDependenciesMeta:
       graphql-ws:
@@ -1180,8 +1184,8 @@ packages:
   /@rc-component/context/1.3.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-6QdaCJ7Wn5UZLJs15IEfqy4Ru3OaL5ctqpQYWd5rlfV9wwzrzdt6+kgAQZV/qdB0MUPN4nhyBfRembQCIvBf+w==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       rc-util: 5.27.1_biqbaboplfbrettd7655fr4n2y
@@ -1200,8 +1204,8 @@ packages:
     resolution: {integrity: sha512-okqRJSfNisXdI6CUeOLZC5ukBW/8kir2Ii4PJiKpUt+3+uS7dxwJUMxsUZquxA1rQuL8YcEmKVp/TCnR+yUdZA==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -1214,8 +1218,8 @@ packages:
     resolution: {integrity: sha512-tbXM9SB1r5FOuZjRCljERFByFiEUcMmCWMXLog/NmgCzlAzreXyf23Vei3ZpSMxSMavzPnhCovfZjZdmxS3d1w==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -1228,8 +1232,8 @@ packages:
     resolution: {integrity: sha512-Cy45VnNEDq6DLF5eKonIflObDfofbPq7AJpSf18qLN+j9+wW+sNlRv3JnCMDUsCdhSlnM4+yJ1RMokKp9GCpOQ==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       '@rc-component/portal': 1.1.0_biqbaboplfbrettd7655fr4n2y
@@ -1352,6 +1356,31 @@ packages:
       tslib: 2.4.1
     dev: false
 
+  /@zxing/browser/0.0.7_@zxing+library@0.18.6:
+    resolution: {integrity: sha512-AepzMgDnD6EjxewqmXpHJsi4S3Gw9ilZJLIbTf6fWuWySEcHBodnGu3p7FWlgq1Sd5QyfPhTum5z3CBkkhMVng==}
+    peerDependencies:
+      '@zxing/library': ^0.18.3
+    dependencies:
+      '@zxing/library': 0.18.6
+    optionalDependencies:
+      '@zxing/text-encoding': 0.9.0
+    dev: false
+
+  /@zxing/library/0.18.6:
+    resolution: {integrity: sha512-bulZ9JHoLFd9W36pi+7e7DnEYNJhljYjZ1UTsKPOoLMU3qtC+REHITeCRNx40zTRJZx18W5TBRXt5pq2Uopjsw==}
+    engines: {node: '>= 10.4.0'}
+    dependencies:
+      ts-custom-error: 3.3.1
+    optionalDependencies:
+      '@zxing/text-encoding': 0.9.0
+    dev: false
+
+  /@zxing/text-encoding/0.9.0:
+    resolution: {integrity: sha512-U/4aVJ2mxI0aDNI8Uq0wEhMgY+u4CNtEb0om3+y3+niDAsoTCOB33UF0sxpzqzdqXLqmvc+vZyAt4O8pPdfkwA==}
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /acorn-jsx/5.3.2_acorn@8.8.1:
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -1396,8 +1425,8 @@ packages:
   /antd/5.1.5_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-f1gfmDG8CApTu1h6gtM7i/krMTP6WH55w7pUPAMHlp9jsviKR+ElPqSQeLZV3UjuxVNn0DWvGwWEJ0Rv/kbeEQ==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@ant-design/colors': 7.0.0
       '@ant-design/cssinjs': 1.5.3_biqbaboplfbrettd7655fr4n2y
@@ -1526,7 +1555,7 @@ packages:
       graphql: 16.6.0
     dev: false
 
-  /apollo-server-micro/3.11.1_potwy64f2tuwa43rykwfkwmjkm:
+  /apollo-server-micro/3.11.1_graphql@16.6.0+micro@9.4.1:
     resolution: {integrity: sha512-4bETccnRotMQIg3ah4/NAWPppB05i5ePrTOuLBGBBQaV8bz1E4Md3snxSB8JkANND7sXmH9OCiKKeLFK8q8JaA==}
     deprecated: The `apollo-server-micro` package is part of Apollo Server v2 and v3, which are now deprecated (end-of-life October 22nd 2023). This package's functionality is now found in the `@apollo/server` package. See https://www.apollographql.com/docs/apollo-server/previous-versions/ for more details.
     peerDependencies:
@@ -1535,7 +1564,7 @@ packages:
       '@hapi/accept': 5.0.2
       apollo-server-core: 3.11.1_graphql@16.6.0
       apollo-server-types: 3.7.1_graphql@16.6.0
-      micro: 10.0.1
+      micro: 9.4.1
       type-is: 1.6.18
     transitivePeerDependencies:
       - encoding
@@ -2430,6 +2459,14 @@ packages:
     resolution: {integrity: sha512-OO0pH2lK6a0hZnAdau5ItzHPI6pUlvI7jMVnxUQRtw4owF2wk8lOSabtGDCTP4Ggrg2MbGnWO9X8K1t4+fGMDw==}
     dev: false
 
+  /fsevents/2.3.2:
+    resolution: {integrity: sha512-xiqMQR4xAeHTuB9uWm+fFRcIOgKBMiOBP+eXiyT7jsgVCq1bkVygt00oASowB7EdtpOHaaPgKt812P9ab+DDKA==}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    os: [darwin]
+    requiresBuild: true
+    dev: false
+    optional: true
+
   /function-bind/1.1.1:
     resolution: {integrity: sha512-yIovAzMX49sF8Yl58fSCWJ5svSLuaibPxXQJFLmBObTuCr0Mf1KiPopGM9NiFjiYBCbfaa2Fh6breQ6ANVTI0A==}
 
@@ -2999,9 +3036,9 @@ packages:
     engines: {node: '>= 8'}
     dev: false
 
-  /micro/10.0.1:
-    resolution: {integrity: sha512-9uwZSsUrqf6+4FLLpiPj5TRWQv5w5uJrJwsx1LR/TjqvQmKC1XnGQ9OHrFwR3cbZ46YqPqxO/XJCOpWnqMPw2Q==}
-    engines: {node: '>= 16.0.0'}
+  /micro/9.4.1:
+    resolution: {integrity: sha512-Lpjcbp6Y9GJIfewxDfTmu9eW0rt0MGo+Gs1d3yJLFa7mhErtKkCngGhDbA/O1gqUjEwsHh+jWPg8BJ0Bx4AgFA==}
+    engines: {node: '>= 8.0.0'}
     hasBin: true
     dependencies:
       arg: 4.1.0
@@ -3064,8 +3101,8 @@ packages:
     peerDependencies:
       fibers: '>= 3.1.0'
       node-sass: ^6.0.0 || ^7.0.0
-      react: ^18.2.0
-      react-dom: ^18.2.0
+      react: '*'
+      react-dom: '*'
       sass: ^1.3.0
     peerDependenciesMeta:
       fibers:
@@ -3361,10 +3398,14 @@ packages:
     engines: {node: '>=6'}
     dev: false
 
+  /qrcode-reader/1.0.4:
+    resolution: {integrity: sha512-rRjALGNh9zVqvweg1j5OKIQKNsw3bLC+7qwlnead5K/9cb1cEIAGkwikt/09U0K+2IDWGD9CC6SP7tHAjUeqvQ==}
+    dev: false
+
   /qrcode.react/3.1.0_react@18.2.0:
     resolution: {integrity: sha512-oyF+Urr3oAMUG/OiOuONL3HXM+53wvuH3mtIWQrYmsXoAq0DkvZp2RYUWFSMFtbdOpuS++9v+WAkzNVkMlNW6Q==}
     peerDependencies:
-      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react: '*'
     dependencies:
       react: 18.2.0
     dev: false
@@ -3386,8 +3427,8 @@ packages:
   /rc-align/4.0.15_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-wqJtVH60pka/nOX7/IspElA8gjPNQKIx/ZqJ6heATCkXpe1Zg4cPVrMD2vC96wjsFFL8WsmhPbx9tdMo1qqlIA==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3401,8 +3442,8 @@ packages:
   /rc-cascader/3.8.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-zCz/NzsNRQ1TIfiR3rQNxjeRvgRHEkNdo0FjHQZ6Ay6n4tdCmMrM7+81ThNaf21JLQ1gS2AUG2t5uikGV78obA==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       array-tree-filter: 2.1.0
@@ -3417,8 +3458,8 @@ packages:
   /rc-checkbox/2.3.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-afVi1FYiGv1U0JlpNH/UaEXdh6WUJjcWokj/nUN2TgG80bfG+MDdbfHKlLcNNba94mbjy2/SXJ1HDgrOkXGAjg==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3429,8 +3470,8 @@ packages:
   /rc-collapse/3.4.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-jpTwLgJzkhAgp2Wpi3xmbTbbYExg6fkptL67Uu5LCRVEj6wqmy0DHTjjeynsjOLsppHGHu41t1ELntZ0lEvS/Q==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3444,8 +3485,8 @@ packages:
   /rc-dialog/9.0.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-s3U+24xWUuB6Bn2Lk/Qt6rufy+uT+QvWkiFhNBcO9APLxcFFczWamaq7x9h8SCuhfc1nHcW4y8NbMsnAjNnWyg==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       '@rc-component/portal': 1.1.0_biqbaboplfbrettd7655fr4n2y
@@ -3459,8 +3500,8 @@ packages:
   /rc-drawer/6.1.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-mYsTVT8Amy0LRrpVEv7gI1hOjtfMSO/qHAaCDzFx9QBLnms3cAQLJkaxRWM+Eq99oyLhU/JkgoqTg13bc4ogOQ==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       '@rc-component/portal': 1.1.0_biqbaboplfbrettd7655fr4n2y
@@ -3474,8 +3515,8 @@ packages:
   /rc-dropdown/4.0.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-OdpXuOcme1rm45cR0Jzgfl1otzmU4vuBVb+etXM8vcaULGokAKVpKlw8p6xzspG7jGd/XxShvq+N3VNEfk/l5g==}
     peerDependencies:
-      react: '>=16.11.0'
-      react-dom: '>=16.11.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3489,8 +3530,8 @@ packages:
     resolution: {integrity: sha512-HGqxHnmGQgkPApEcikV4qTg3BLPC82uB/cwBDftDt1pYaqitJfSl5TFTTUMKVEJVT5RqJ2Zi68ME1HmIMX2HAw==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       async-validator: 4.2.5
@@ -3502,8 +3543,8 @@ packages:
   /rc-image/5.13.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-iZTOmw5eWo2+gcrJMMcnd7SsxVHl3w5xlyCgsULUdJhJbnuI8i/AL0tVOsE7aLn9VfOh1qgDT3mC2G75/c7mqg==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       '@rc-component/portal': 1.1.0_biqbaboplfbrettd7655fr4n2y
@@ -3518,8 +3559,8 @@ packages:
   /rc-input-number/7.4.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-r/Oub/sPYbzqLNUOHnnc9sbCu78a81KX+RCbRwmpvB4W6nptUySbdWS5KHV4Hak5CAE1LAd+wWm5JjvZizG1FA==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       '@rc-component/mini-decimal': 1.0.1
@@ -3532,8 +3573,8 @@ packages:
   /rc-input/0.1.4_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-FqDdNz+fV2dKNgfXzcSLKvC+jEs1709t7nD+WdfjrdSaOcefpgc7BUJYadc3usaING+b7ediMTfKxuJBsEFbXA==}
     peerDependencies:
-      react: '>=16.0.0'
-      react-dom: '>=16.0.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3545,8 +3586,8 @@ packages:
   /rc-mentions/1.13.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-FCkaWw6JQygtOz0+Vxz/M/NWqrWHB9LwqlY2RtcuFqWJNFK9njijOOzTSsBGANliGufVUzx/xuPHmZPBV0+Hgw==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3561,8 +3602,8 @@ packages:
   /rc-menu/9.8.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-179weouypfjWJSRvvoo/vPy+StojsMzK2XC5jRNhL1ryt/N/8wAFESte8K6jZJkNp9DHDLFTe+dCGmikKpiFuA==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3578,8 +3619,8 @@ packages:
   /rc-motion/2.6.3_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-xFLkes3/7VL/J+ah9jJruEW/Akbx5F6jVa2wG5o/ApGKQKSOd5FR3rseHLL9+xtJg4PmCwo6/1tqhDO/T+jFHA==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3592,8 +3633,8 @@ packages:
     resolution: {integrity: sha512-74wUFiLlyr6lRGEY1m1BaTiDp+0lIT4FRAblMnh9FApyK2JGdsSLbrQ/1rgM7d2N/IX5UIr8kLLW3TdXxFt/jQ==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3606,8 +3647,8 @@ packages:
   /rc-overflow/1.2.8_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-QJ0UItckWPQ37ZL1dMEBAdY1dhfTXFL9k6oTTcyydVwoUNMnMqCGqnRNA98axSr/OeDKqR6DVFyi8eA5RQI/uQ==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3620,8 +3661,8 @@ packages:
   /rc-pagination/3.2.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-5tIXjB670WwwcAJzAqp2J+cOBS9W3cH/WU1EiYwXljuZ4vtZXKlY2Idq8FZrnYBz8KhN3vwPo9CoV/SJS6SL1w==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3636,8 +3677,8 @@ packages:
       date-fns: '>= 2.x'
       dayjs: '>= 1.x'
       moment: '>= 2.x'
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     peerDependenciesMeta:
       date-fns:
         optional: true
@@ -3659,8 +3700,8 @@ packages:
   /rc-progress/3.4.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-eAFDHXlk8aWpoXl0llrenPMt9qKHQXphxcVsnKs0FHC6eCSk1ebJtyaVjJUzKe0233ogiLDeEFK1Uihz3s67hw==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3673,8 +3714,8 @@ packages:
     resolution: {integrity: sha512-SaiZFyN8pe0Fgphv8t3+kidlej+cq/EALkAJAc3A0w0XcPaH2L1aggM8bhe1u6GAGuQNAoFvTLjw4qLPGRKV5g==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3686,8 +3727,8 @@ packages:
   /rc-resize-observer/1.2.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-g53PnWLeVOmt4XWkt2x+QlIdf/PhJSd7JqHhtMrUY370e7wJ+kxbgXicYqvENUcgFiiOiMCd07YsC2GNsoSbnA==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3700,8 +3741,8 @@ packages:
   /rc-segmented/2.1.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-hUlonro+pYoZcwrH6Vm56B2ftLfQh046hrwif/VwLIw1j3zGt52p5mREBwmeVzXnSwgnagpOpfafspzs1asjGw==}
     peerDependencies:
-      react: '>=16.0.0'
-      react-dom: '>=16.0.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3733,8 +3774,8 @@ packages:
     resolution: {integrity: sha512-igTKF3zBet7oS/3yNiIlmU8KnZ45npmrmHlUUio8PNbIhzMcsh+oE/r2UD42Y6YD2D/s+kzCQkzQrPD6RY435Q==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3748,8 +3789,8 @@ packages:
     resolution: {integrity: sha512-+KfMZIty40mYCQSDvYbZ1jwnuObLauTiIskT1hL4FFOBHP6ZOr8LK0m143yD3kEN5XKHSEX1DIwCj3AYZpoeNQ==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3761,8 +3802,8 @@ packages:
   /rc-switch/4.0.0_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-IfrYC99vN0gKaTyjQdqYuADU0eH00SAFHg3jOp8HrmUpJruhV1SohJzrCbPqPraZeX/6X/QKkdLfkdnUub05WA==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3775,8 +3816,8 @@ packages:
     resolution: {integrity: sha512-PHe+lZKwPo3qui5j79m54vKu8b4hebk04x+4Hy65NvwUU3+NNFGS5FZpylXQMkueMnE8hgh22ZuScQDkCtzQFQ==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       '@rc-component/context': 1.3.0_biqbaboplfbrettd7655fr4n2y
@@ -3791,8 +3832,8 @@ packages:
     resolution: {integrity: sha512-aArXHzxK7YICxe+622CZ8FlO5coMi8P7E6tXpseCPKm1gdTjUt0LrQK1/AxcrRXZXG3K4QqhlKmET0+cX5DQaQ==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3808,8 +3849,8 @@ packages:
   /rc-textarea/0.4.7_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-IQPd1CDI3mnMlkFyzt2O4gQ2lxUsnBAeJEoZGJnkkXgORNqyM9qovdrCj9NzcRfpHgLdzaEbU3AmobNFGUznwQ==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3823,8 +3864,8 @@ packages:
   /rc-tooltip/5.2.2_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-jtQzU/18S6EI3lhSGoDYhPqNpWajMtS5VV/ld1LwyfrDByQpYmw/LW6U7oFXXLukjfDHQ7Ju705A82PRNFWYhg==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3868,8 +3909,8 @@ packages:
     resolution: {integrity: sha512-mQv+vas0TwKcjAO2izNPkqR4j86OemLRmvL2nOzdP9OWNWA1ivoTt5hzFqYNW9zACwmTezRiN8bttrC7cZzYSw==}
     engines: {node: '>=8.x'}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3883,8 +3924,8 @@ packages:
   /rc-upload/4.3.4_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-uVbtHFGNjHG/RyAfm9fluXB6pvArAGyAx8z7XzXXyorEgVIWj6mOlriuDm0XowDHYz4ycNK0nE0oP3cbFnzxiQ==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       classnames: 2.3.2
@@ -3896,8 +3937,8 @@ packages:
   /rc-util/5.27.1_biqbaboplfbrettd7655fr4n2y:
     resolution: {integrity: sha512-PsjHA+f+KBCz+YTZxrl3ukJU5RoNKoe3KSNMh0xGiISbR67NaM9E9BiMjCwxa3AcCUOg/rZ+V0ZKLSimAA+e3w==}
     peerDependencies:
-      react: '>=16.9.0'
-      react-dom: '>=16.9.0'
+      react: '*'
+      react-dom: '*'
     dependencies:
       '@babel/runtime': 7.20.7
       react: 18.2.0
@@ -3923,7 +3964,7 @@ packages:
   /react-dom/18.2.0_react@18.2.0:
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
-      react: ^18.2.0
+      react: '*'
     dependencies:
       loose-envify: 1.4.0
       react: 18.2.0
@@ -3932,6 +3973,19 @@ packages:
 
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
+    dev: false
+
+  /react-qr-reader/3.0.0-beta-1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-5HeFH9x/BlziRYQYGK2AeWS9WiKYZtGGMs9DXy3bcySTX3C9UJL9EwcPnWw8vlf7JP4FcrAlr1SnZ5nsWLQGyw==}
+    peerDependencies:
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      '@zxing/browser': 0.0.7_@zxing+library@0.18.6
+      '@zxing/library': 0.18.6
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      rollup: 2.79.1
     dev: false
 
   /react/18.2.0:
@@ -4008,6 +4062,14 @@ packages:
     hasBin: true
     dependencies:
       glob: 7.2.3
+    dev: false
+
+  /rollup/2.79.1:
+    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
     dev: false
 
   /run-parallel/1.2.0:
@@ -4185,7 +4247,7 @@ packages:
     peerDependencies:
       '@babel/core': '*'
       babel-plugin-macros: '*'
-      react: '>= 16.8.0 || 17.x.x || ^18.0.0-0'
+      react: '*'
     peerDependenciesMeta:
       '@babel/core':
         optional: true
@@ -4270,6 +4332,11 @@ packages:
 
   /tr46/0.0.3:
     resolution: {integrity: sha512-N3WMsuqV66lT30CrXNbEjx4GEwlow3v6rr4mCcv6prnfwhS01rkgyFdjPNBYd9br7LpXV1+Emh01fHnq2Gdgrw==}
+    dev: false
+
+  /ts-custom-error/3.3.1:
+    resolution: {integrity: sha512-5OX1tzOjxWEgsr/YEUWSuPrQ00deKLh6D7OTWcvNHm12/7QPyRh8SYpyWvA4IZv8H/+GQWQEh/kwo95Q9OVW1A==}
+    engines: {node: '>=14.0.0'}
     dev: false
 
   /ts-invariant/0.10.3:

@@ -23,7 +23,7 @@ model User {
   currentCheckpoint String?
   bib               Int       @default(autoincrement())
   createdAt         DateTime? @default(now())
-  phoneNumber       String?
+  phoneNumber       String?   @unique
   phoneNumberuuid   String?
   Run               Run[]
   Log               Log[]

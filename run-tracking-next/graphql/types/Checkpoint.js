@@ -13,8 +13,6 @@ import { PathCheckpoint } from "./PathCheckpoint";
 import { Park } from "./Park";
 import { prisma } from "@prisma/client";
 import dayjs from "dayjs";
-// import { resolve } from "styled-jsx/css";
-// import { resolve } from "styled-jsx/css";
 
 export const Checkpoint = objectType({
   name: "Checkpoint",
@@ -26,7 +24,7 @@ export const Checkpoint = objectType({
     t.field("park", {
       type: Park,
       resolve: (parent, _, context) => {
-        return context.prisma.user
+        return context.prisma.park
           .findUnique({
             where: { id: parent.id },
           })
@@ -36,7 +34,7 @@ export const Checkpoint = objectType({
     t.list.field("Log", {
       type: Log,
       resolve: (parent, _, context) => {
-        return context.prisma.user
+        return context.prisma.log
           .findUnique({
             where: { id: parent.id },
           })
@@ -46,7 +44,7 @@ export const Checkpoint = objectType({
     t.list.field("PathCheckpoint", {
       type: PathCheckpoint,
       resolve: (parent, _, context) => {
-        return context.prisma.user
+        return context.prisma.pathCheckpoint
           .findUnique({
             where: { id: parent.id },
           })
@@ -56,7 +54,7 @@ export const Checkpoint = objectType({
     t.list.field("PrevPathCheckpoint", {
       type: PathCheckpoint,
       resolve: (parent, _, context) => {
-        return context.prisma.user
+        return context.prisma.pathCheckpoint
           .findUnique({
             where: { id: parent.id },
           })
@@ -96,7 +94,7 @@ export const CheckpointByIDQuery = extendType({
         return ctx.prisma.checkpoint.findUnique({
           where: {
             id: args.id,
-          }
+          },
         });
       },
     });
