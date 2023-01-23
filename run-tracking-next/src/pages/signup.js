@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Button, Modal, Form, Input } from "antd";
 import { useState } from "react";
 // import Link from "next/link";
@@ -46,6 +46,9 @@ const tabListNoTitle = [
 
 export default function signup() {
   const [open, setOpen] = useState(false);
+  const [otp, setotp] = useState(false);
+  const [changesOTP, setChangeOTP] = useState(null);
+  const [confirmResult, setConfirmResult] = useState(null);
   const showModal = () => {
     setOpen(true);
   };
@@ -58,38 +61,96 @@ export default function signup() {
     ),
     app: <p>app content</p>,
   };
-  function onCaptchVerify() {
-    window.recaptchaVerifier = new RecaptchaVerifier(
+  const changeOTP = (e) => {
+    console.log(e);
+    setChangeOTP(e.target.value);
+  };
+  const ooo = () => {
+    // ส่งค่า otp ไปให้ firebase เพื่อยื่นยันความถูกต้องของ otp
+    // changesOTP
+    confirmResult
+      .confirm(changesOTP)
+      .then((result) => {
+        // User signed in successfully.
+        const user = result.user;
+        // ...
+        console.log(user);
+      })
+      .catch((error) => {
+        console.log(error);
+        // User couldn't sign in (bad verification changesOTP?)
+        // ...
+      });
+  };
+  const setUpRecaptcha = () => {
+    // window.recaptchaVerifier = new RecaptchaVerifier(
+    return new RecaptchaVerifier(
       "recaptcha-container",
       {
-        size: "normal",
-        callback: (response) => {
-          // reCAPTCHA solved, allow signInWithPhoneNumber.
-          // ...
-        },
-        "expired-callback": () => {
-          // Response expired. Ask user to solve reCAPTCHA again.
-          // ...
-        },
+        size: "invisible",
+        // callback: (response) => {
+        //   // reCAPTCHA solved, allow signInWithPhoneNumber.
+        //   // onSignInSubmit();
+        //   console.log("Created");
+        // },
       },
       auth
     );
-  }
-  function onSignInSubmit() {
-    const phoneNumber = getPhoneNumberFromUserInput();
-    const appVerifier = window.recaptchaVerifier;
+  };
+  const onsignInSumit = () => {
+    // e.preventDefault();
+    console.log("dawdwadawd");
+    const appVerifier = setUpRecaptcha();
+    // console.log(recap);
+    const phoneNumber = "+66910356938";
+    // var phoneNumber = getPhoneNumberFromUserInput();
+    console.log(appVerifier + " - phonenumber " + phoneNumber);
     signInWithPhoneNumber(auth, phoneNumber, appVerifier)
       .then((confirmationResult) => {
         // SMS sent. Prompt user to type the code from the message, then sign the
         // user in with confirmationResult.confirm(code).
-        window.confirmationResult = confirmationResult;
+        // window.confirmationResult = confirmationResult;
+        console.log(confirmationResult);
+        if (confirmationResult) {
+          setotp(true);
+          setConfirmResult(confirmationResult);
+        }
         // ...
       })
       .catch((error) => {
         // Error; SMS not sent
         // ...
       });
-  }
+    // app
+    // .auth()
+    // .signInWithPhoneNumber(phoneNumber, appVerifier)
+    // .then(function (confirmationResult) {
+    // window.confirmationResult = confirmationResult;
+    // console.log(window.confirmationResult);
+    // const code = getCodeFromUserInput();
+    // confirmationResult
+    //   .confirm(code)
+    //   .then((result) => {
+    //     // User signed in successfully.
+    //     const user = result.user;
+    //     // ...
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //     // User couldn't sign in (bad verification code?)
+    //     // ...
+    //   });
+    // })
+    // .catch(function (error) {
+    //   console.log(error);
+    // });
+  };
+  // useEffect(() => {
+  //   if (window.confirmationResult) {
+  //     setotp(true);
+  //     // console.log(first);
+  //   }
+  // }, []);
   // const [activeTabKey1, setActiveTabKey1] = useState("tab1");
   const [activeTabKey2, setActiveTabKey2] = useState("article");
   // const onTab1Change = (key) => {
@@ -101,6 +162,7 @@ export default function signup() {
   const { loading, error, data } = useQuery(GET_UUSER);
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
+  console.log(window.recaptchaVerifier);
   return (
     <>
       <div>signup</div>
@@ -132,7 +194,7 @@ export default function signup() {
           console.log(key);
         }}
       >
-        {console.log(activeTabKey2)}
+        {/* {console.log(activeTabKey2)} */}
         {contentListNoTitle[activeTabKey2]}
       </Card>
       <Modal
@@ -153,9 +215,9 @@ export default function signup() {
           initialValues={{
             remember: true,
           }}
-          onFinish={"onFinish"}
-          onFinishFailed={"onFinishFailed"}
-          autoComplete="off"
+          onFinish={onsignInSumit}
+          // onFinishFailed={"onFinishFailed"}
+          // autoComplete="off"
         >
           <Form.Item
             label="Username"
@@ -169,7 +231,25 @@ export default function signup() {
           >
             <Input />
           </Form.Item>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit" id="recaptcha-container">
+              Submit
+            </Button>
+          </Form.Item>
         </Form>
+        {otp && (
+          <>
+            <input onChange={changeOTP} type="text" />
+            <Button
+              type="primary"
+              onClick={ooo}
+              htmlType="submit"
+              id="recaptcha-container"
+            >
+              Submit
+            </Button>
+          </>
+        )}
       </Modal>
       {data.users.map((user) => (
         <div key={user.id}>
