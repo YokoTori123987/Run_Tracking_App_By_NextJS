@@ -1,38 +1,23 @@
-import { gql, useQuery } from "@apollo/client";
-import React, { useEffect } from "react";
+import { gql, useQuery, useMutation } from "@apollo/client";
+import React, { useEffect, useState } from "react";
 import { Card, Button, Modal, Form, Input } from "antd";
-import { useState } from "react";
-// import Link from "next/link";
-import app from "../components/firebase_config";
-import {
-  getAuth,
-  RecaptchaVerifier,
-  signInWithPhoneNumber,
-} from "firebase/auth";
-const GET_UUSER = gql`
-  query GetUser {
-    users {
-      id
-      firstName
-    }
+import { useUserAuth } from "../context/UserAuthContext";
+// const GET_UUSER = gql`
+//   query GetUser {
+//     users {
+//       id
+//       firstName
+//     }
+//   }
+// `;
+
+const CREATE_ACCOUNT_USER = gql`
+  # Increments a back-end counter and gets its resulting value
+  mutation createAccountUser($phoneNumberuuid: String, $phoneNumber: String) {
+    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber)
   }
 `;
-const auth = getAuth();
 
-// const tabList = [
-//   {
-//     key: "tab1",
-//     tab: "tab1",
-//   },
-//   {
-//     key: "tab2",
-//     tab: "tab2",
-//   },
-// ];
-// const contentList = {
-//   tab1: <p>content1</p>,
-//   tab2: <p>content2</p>,
-// };
 const tabListNoTitle = [
   {
     key: "article",
@@ -45,10 +30,14 @@ const tabListNoTitle = [
 ];
 
 export default function signup() {
+  const [createUser, { data, loading, error }] =
+    useMutation(CREATE_ACCOUNT_USER);
+  const { signUp, verifyOtp, setUpRecaptha, user } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [otp, setotp] = useState(false);
   const [changesOTP, setChangeOTP] = useState(null);
   const [confirmResult, setConfirmResult] = useState(null);
+  const [number, setNumber] = useState(null);
   const showModal = () => {
     setOpen(true);
   };
@@ -62,139 +51,49 @@ export default function signup() {
     app: <p>app content</p>,
   };
   const changeOTP = (e) => {
-    console.log(e);
+    // ใส่ตัวเลข otp ลงในช่อง
     setChangeOTP(e.target.value);
   };
-  const ooo = () => {
-    // ส่งค่า otp ไปให้ firebase เพื่อยื่นยันความถูกต้องของ otp
-    // changesOTP
-    confirmResult
-      .confirm(changesOTP)
-      .then((result) => {
-        // User signed in successfully.
-        const user = result.user;
-        // ...
-        console.log(user);
-      })
-      .catch((error) => {
-        console.log(error);
-        // User couldn't sign in (bad verification changesOTP?)
-        // ...
-      });
-  };
-  const setUpRecaptcha = () => {
-    // window.recaptchaVerifier = new RecaptchaVerifier(
-    return new RecaptchaVerifier(
-      "recaptcha-container",
-      {
-        size: "invisible",
-        // callback: (response) => {
-        //   // reCAPTCHA solved, allow signInWithPhoneNumber.
-        //   // onSignInSubmit();
-        //   console.log("Created");
-        // },
-      },
-      auth
-    );
-  };
-  const onsignInSumit = () => {
-    // e.preventDefault();
-    console.log("dawdwadawd");
-    const appVerifier = setUpRecaptcha();
-    // console.log(recap);
-    const phoneNumber = "+66910356938";
-    // var phoneNumber = getPhoneNumberFromUserInput();
-    console.log(appVerifier + " - phonenumber " + phoneNumber);
-    signInWithPhoneNumber(auth, phoneNumber, appVerifier)
-      .then((confirmationResult) => {
-        // SMS sent. Prompt user to type the code from the message, then sign the
-        // user in with confirmationResult.confirm(code).
-        // window.confirmationResult = confirmationResult;
-        console.log(confirmationResult);
-        if (confirmationResult) {
-          setotp(true);
-          setConfirmResult(confirmationResult);
-        }
-        // ...
-      })
-      .catch((error) => {
-        // Error; SMS not sent
-        // ...
-      });
-    // app
-    // .auth()
-    // .signInWithPhoneNumber(phoneNumber, appVerifier)
-    // .then(function (confirmationResult) {
-    // window.confirmationResult = confirmationResult;
-    // console.log(window.confirmationResult);
-    // const code = getCodeFromUserInput();
-    // confirmationResult
-    //   .confirm(code)
-    //   .then((result) => {
-    //     // User signed in successfully.
-    //     const user = result.user;
-    //     // ...
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //     // User couldn't sign in (bad verification code?)
-    //     // ...
-    //   });
-    // })
-    // .catch(function (error) {
-    //   console.log(error);
+  const confirmOTP = async () => {
+    // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
+    const numberuuid = await verifyOtp(confirmResult, changesOTP);
+    console.log(numberuuid + "dadawdaw");
+    console.log(user);
+    // createUser({
+    //   variables: { phoneNumber: number, PhoneNumberuuid: numberuuid },
     // });
   };
-  // useEffect(() => {
-  //   if (window.confirmationResult) {
-  //     setotp(true);
-  //     // console.log(first);
-  //   }
-  // }, []);
-  // const [activeTabKey1, setActiveTabKey1] = useState("tab1");
+  const onsignInSumit = async (e) => {
+    console.log(e + "/e");
+    console.log(e.PhoneNumber + "/PN");
+    const phoneNumber = "+66" + e.PhoneNumber;
+    const result = await setUpRecaptha(phoneNumber);
+    setNumber(e.phoneNumber);
+    setConfirmResult(result);
+    setotp(true);
+  };
   const [activeTabKey2, setActiveTabKey2] = useState("article");
-  // const onTab1Change = (key) => {
-  //   setActiveTabKey1(key);
-  // };
   const onTab2Change = (key) => {
     setActiveTabKey2(key);
   };
-  const { loading, error, data } = useQuery(GET_UUSER);
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
-  console.log(window.recaptchaVerifier);
+
+  // if (loading) return "Loading...";
+  // if (error) return `Error! ${error.message}`;
+  // console.log(window.recaptchaVerifier);
   return (
     <>
       <div>signup</div>
-      {/* <Card
-        style={{
-          width: "100%",
-        }}
-        title="Card title"
-        extra={<a href="#">More</a>}
-        tabList={tabList}
-        activeTabKey={activeTabKey1}
-        onTabChange={(key) => {
-          onTab1Change(key);
-        }}
-      >
-        {contentList[activeTabKey1]}
-      </Card>
-      <br />
-      <br /> */}
       <Card
         style={{
           width: "50%",
         }}
         tabList={tabListNoTitle}
         activeTabKey={activeTabKey2}
-        // tabBarExtraContent={<a href="#">More</a>}
         onTabChange={(key) => {
           onTab2Change(key);
-          console.log(key);
+          // console.log(key);
         }}
       >
-        {/* {console.log(activeTabKey2)} */}
         {contentListNoTitle[activeTabKey2]}
       </Card>
       <Modal
@@ -217,11 +116,11 @@ export default function signup() {
           }}
           onFinish={onsignInSumit}
           // onFinishFailed={"onFinishFailed"}
-          // autoComplete="off"
+          autoComplete="off"
         >
           <Form.Item
-            label="Username"
-            name="username"
+            label="PhoneNumber"
+            name="PhoneNumber"
             rules={[
               {
                 required: true,
@@ -242,20 +141,15 @@ export default function signup() {
             <input onChange={changeOTP} type="text" />
             <Button
               type="primary"
-              onClick={ooo}
+              onClick={confirmOTP}
               htmlType="submit"
-              id="recaptcha-container"
+              // id="recaptcha-container"
             >
               Submit
             </Button>
           </>
         )}
       </Modal>
-      {data.users.map((user) => (
-        <div key={user.id}>
-          <h1>{user.firstName}</h1>
-        </div>
-      ))}
     </>
   );
 }

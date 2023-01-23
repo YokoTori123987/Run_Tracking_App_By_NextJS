@@ -18,7 +18,7 @@ export const Park = objectType({
       type: User,
       async resolve(parent, _, context) {
         return await context.prisma.user
-          .findUnique({
+          .findMany({
             where: { id: parent.id },
           })
           .owner();
@@ -28,7 +28,7 @@ export const Park = objectType({
       type: User,
       async resolve(parent, _, context) {
         return await context.prisma.user
-          .findUnique({
+          .findMany({
             where: { id: parent.id },
           })
           .governor();
@@ -38,7 +38,7 @@ export const Park = objectType({
       type: Run,
       async resolve(parent, _, context) {
         return await context.prisma.run
-          .findUnique({
+          .findMany({
             where: { id: parent.id },
           })
           .Run();
@@ -56,11 +56,10 @@ export const Park = objectType({
     t.list.field("Path", {
       type: Path,
       async resolve(parent, _, context) {
-        return await context.prisma.user
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .Path();
+        return await context.prisma.path.findMany({
+          where: { id: parent.id },
+        });
+        // .Path();
       },
     });
   },

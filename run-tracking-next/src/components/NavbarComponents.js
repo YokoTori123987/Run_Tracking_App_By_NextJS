@@ -12,11 +12,16 @@ import Image from "next/image";
 
 import Head from "next/head";
 import Link from "next/link";
+import { useUserAuth } from "../context/UserAuthContext";
+import { useRouter } from "next/router";
 import { Layout, Menu, Col, Row } from "antd";
-
-const { Header } = Layout;
+// import { getAuth, signOut } from "firebase/auth";
+// import { Volkhov } from "@next/font/google";
 
 export default function NavbarComponents() {
+  const { user, logOut } = useUserAuth();
+  const router = useRouter();
+  const { Header } = Layout;
   const navigationAdmin = [
     {
       label: <Link href="/parks">Park</Link>,
@@ -65,6 +70,14 @@ export default function NavbarComponents() {
     },
   ];
 
+  // const navlogout = [
+  //   {
+  //     label: <Link href="/login">ออกจากระบบ</Link>,
+  //     key: "login",
+  //     icon: <UsergroupAddOutlined />,
+  //   },
+  // ];
+
   const navigationMain = [
     {
       label: <Link href="/login">เข้าสู่ระบบ</Link>,
@@ -94,7 +107,7 @@ export default function NavbarComponents() {
           {/* <Row justify="space-around" align="middle"> */}
           {/* <Col span={2} justify="space-evenly"> */}
           <div className="logo">
-            <Link href="/index">
+            <Link href="/">
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -108,13 +121,29 @@ export default function NavbarComponents() {
           </div>
           <Col span={1} />
           <Col span={2} style={{ marginLeft: "auto" }}>
-            <Menu
-              theme="dark"
-              mode="horizontal"
-              // mode="inline"
-
-              items={navigationMain}
-            />
+            {user ? (
+              <>
+                {/* <Meun theme="dark" mode="horizontal" items={navlogout} /> */}
+                <Link
+                  href="/login"
+                  onClick={() => {
+                    logOut();
+                    router.push("/login");
+                  }}
+                >
+                  ออกจากระบบ
+                </Link>
+              </>
+            ) : (
+              <>
+                <Menu
+                  theme="dark"
+                  mode="horizontal"
+                  // mode="inline"
+                  items={navigationMain}
+                />
+              </>
+            )}
           </Col>
           {/* <Menu
             className="relative ml-3 grid grid-cols-1"
