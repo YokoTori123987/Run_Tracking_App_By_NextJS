@@ -1,7 +1,6 @@
 import { useRouter } from "next/router"
 import { useQuery, gql } from "@apollo/client"
-import { Col, Row, Layout } from "antd"
-import { Card } from "antd"
+import { Col, Row, Layout, Card } from "antd"
 
 export default function Statistic() {
 
@@ -39,6 +38,12 @@ export default function Statistic() {
         backgroundColor: '#7dbcea',
     };
 
+    const {data, loading} = useQuery(QUERY)
+    console.log(loading);
+
+    if(loading) {
+        return <p>loading</p>
+    }
 
     return (
         <>
