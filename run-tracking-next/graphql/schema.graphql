@@ -29,7 +29,7 @@ type Log {
 }
 
 type Mutation {
-  checkRuning(checkpointId: String!, userId: String!): Checkpoint
+  checkRunning(checkpointId: String!, userId: String!): String
   createCheckpoint(latitude: Float, longitude: Float, name: String, parkId: String): Checkpoint
   createPark(address: String, description: String, governorId: String, imageUrl: String, name: String, ownerId: String, workingHours: String): Park
   createPath(distance: Float, name: String, parkId: String): Path
