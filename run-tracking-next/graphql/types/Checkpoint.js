@@ -13,6 +13,7 @@ import { PathCheckpoint } from "./PathCheckpoint";
 import { Park } from "./Park";
 import { prisma } from "@prisma/client";
 import dayjs from "dayjs";
+import { send } from "micro";
 
 export const Checkpoint = objectType({
   name: "Checkpoint",
@@ -177,8 +178,8 @@ export const DeleteCheckpoint = extendType({
 export const checkRunningPath = extendType({
   type: "Mutation",
   definition(t) {
-    t.field("checkRuning", {
-      type: Checkpoint,
+    t.field("checkRunning", {
+      type: "String",
       args: {
         checkpointId: nonNull(stringArg()),
         userId: nonNull(stringArg()),
@@ -201,14 +202,13 @@ export const checkRunningPath = extendType({
             NOT: { prevCheckpointId: null },
           },
         });
-        // console.log(checkpointNull);
-        // console.log(checkpointNull.pathId);
-        // console.log(checkpoint.id + " / " + "on");
         if (checkpoint) {
           if (user.currentCheckpoint == checkpoint.prevCheckpointId) {
             if (checkpoint.isFinish === true) {
+              // ทำฟังก์ชั่น หยุดรอบการวิ่ง
               // stopRuning(args.userId, args.checkpointId, args.checkpointNull);
               console.log("stop");
+              // ทำการสร้างข้อมูลลง log
               const test = await ctx.prisma.log.create({
                 data: {
                   userId: args.userId,
@@ -216,7 +216,8 @@ export const checkRunningPath = extendType({
                   checkpointId: args.checkpointId,
                 },
               });
-              console.log(test);
+              // console.log(test);
+              // ทำการสร้างข้อมูลลง lap
               const poplap = await ctx.prisma.lap.findMany({
                 orderBy: {
                   stopTime: "desc",
@@ -231,7 +232,8 @@ export const checkRunningPath = extendType({
                   path: true,
                 },
               });
-              console.log(poplap);
+              // console.log(poplap);
+              // ทำการอัพเดทข้อมูลของ lap ก่อนหน้าที่สร้างไปแล้ว
               const createrun = await ctx.prisma.lap.update({
                 where: {
                   id: poplap[0].id,
@@ -263,6 +265,7 @@ export const checkRunningPath = extendType({
                 },
               });
               if (checkpointNull) {
+                // เริ่มการวิ่ง
                 // startRuning({ userId, checkpointNull, checkpointId });
                 const user = await ctx.prisma.user.findUnique({
                   where: { id: args.userId },
@@ -293,6 +296,7 @@ export const checkRunningPath = extendType({
                       },
                     });
                   }
+                  return "เริ่มวิ่ง";
                 }
               }
             } else {
@@ -343,10 +347,10 @@ export const checkRunningPath = extendType({
               console.log(pop);
             }
           }
+          return "เริ่มวิ่ง";
         }
-        // return true;
 
-        return checkpoint;
+        return "บันทึกจุดเช็คพ้อย";
       },
     });
   },

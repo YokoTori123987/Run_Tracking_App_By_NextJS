@@ -44,31 +44,39 @@ export function UserAuthContextProvider({ children }) {
     return signInWithPhoneNumber(auth, number, recaptchaVerifier);
   }
 
-  const verifyOtp = async (result, otp) => {
+  const verifyOtpLogin = async (result, otp) => {
     // setError("");
     // if (otp === "" || otp === null) return;
     // ส่งค่า otp ไปให้ firebase เพื่อยื่นยันความถูกต้องของ otp
     try {
       await result.confirm(otp);
-      // router.push("/");
+      router.push("/");
     } catch (err) {
       setError(err.message);
     }
   };
 
-  const createPhoneUser = async (number) => {
-    await onAuthStateChanged(auth, (currentuser) => {
-      const uuid = { phoneNumber: number, PhoneNumberuuid: currentuser.uid };
-      senduser(uuid);
-    });
+  const verifyOtpSignup = async (result, otp) => {
+    // setError("");
+    // if (otp === "" || otp === null) return;
+    // ส่งค่า otp ไปให้ firebase เพื่อยื่นยันความถูกต้องของ otp
+    try {
+      var uuuID = null;
+      await result
+        .confirm(otp)
+        .then((result) => {
+          uuuID = result.user;
+        })
+        .catch((error) => {
+          console.log(error);
+          // ...
+        });
+      // router.push("/");
+      return uuuID.uid;
+    } catch (err) {
+      setError(err.message);
+    }
   };
-
-  function senduser(Uid) {
-    console.log(Uid);
-    const data = Uid;
-    console.log(data);
-    return data;
-  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
@@ -90,9 +98,8 @@ export function UserAuthContextProvider({ children }) {
         logOut,
         googleSignIn,
         setUpRecaptha,
-        verifyOtp,
-        createPhoneUser,
-        senduser,
+        verifyOtpSignup,
+        verifyOtpLogin,
       }}
     >
       {children}
