@@ -2,6 +2,9 @@ import { gql, useQuery, useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
 import { Card, Button, Modal, Form, Input } from "antd";
 import { useUserAuth } from "../context/UserAuthContext";
+import { useRouter } from "next/router";
+// import Router from "next/router";
+
 // const GET_UUSER = gql`
 //   query GetUser {
 //     users {
@@ -14,7 +17,9 @@ import { useUserAuth } from "../context/UserAuthContext";
 const CREATE_ACCOUNT_USER = gql`
   # Increments a back-end counter and gets its resulting value
   mutation createAccountUser($phoneNumberuuid: String, $phoneNumber: String) {
-    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber)
+    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber) {
+      id
+    }
   }
 `;
 
@@ -30,14 +35,14 @@ const tabListNoTitle = [
 ];
 
 export default function signup() {
-  const [createUser, { data, loading, error }] =
-    useMutation(CREATE_ACCOUNT_USER);
-  const { createPhoneUser, senduser, verifyOtp, setUpRecaptha } = useUserAuth();
+  const [createUser, { loading, error }] = useMutation(CREATE_ACCOUNT_USER);
+  const { verifyOtpSignup, setUpRecaptha } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [otp, setotp] = useState(false);
   const [changesOTP, setChangeOTP] = useState(null);
   const [confirmResult, setConfirmResult] = useState(null);
   const [number, setNumber] = useState(null);
+  const router = useRouter();
   const showModal = () => {
     setOpen(true);
   };
@@ -57,14 +62,13 @@ export default function signup() {
   };
   const confirmOTP = async () => {
     // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
-    const numberuuid = await verifyOtp(confirmResult, changesOTP);
-    // console.log(number);
-    await createPhoneUser(number);
-    const data = senduser();
-    console.log(data);
-    // createUser({
-    //   variables: { phoneNumber: number, PhoneNumberuuid: numberuuid },
-    // });
+    const useruid = await verifyOtpSignup(confirmResult, changesOTP);
+    console.log(useruid);
+    createUser({
+      variables: { phoneNumber: number, phoneNumberuuid: useruid },
+    });
+
+    router.push("/");
   };
   const onsignInSumit = async (e) => {
     const phoneNumber = "+66" + e.PhoneNumber;
@@ -78,8 +82,8 @@ export default function signup() {
     setActiveTabKey2(key);
   };
 
-  // if (loading) return "Loading...";
-  // if (error) return `Error! ${error.message}`;
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
   // console.log(window.recaptchaVerifier);
   return (
     <>
