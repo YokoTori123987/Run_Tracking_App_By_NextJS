@@ -17,7 +17,7 @@ const GET_CHECK_PATH_PAGE = gql`
   }
 `;
 
-export default function checkPath() {
+export default function CheckPath() {
   const { loading, error, data } = useQuery(GET_CHECK_PATH_PAGE);
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;

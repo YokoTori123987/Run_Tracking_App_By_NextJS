@@ -29,7 +29,7 @@ const tabListNoTitle = [
   },
 ];
 
-export default function signup() {
+export default function Signup() {
   const [createUser, { data, loading, error }] =
     useMutation(CREATE_ACCOUNT_USER);
   const { createPhoneUser, senduser, verifyOtp, setUpRecaptha } = useUserAuth();
