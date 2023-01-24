@@ -17,7 +17,6 @@ const userAuthContext = createContext();
 export function UserAuthContextProvider({ children }) {
   const router = useRouter();
   const [user, setUser] = useState({});
-
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
   }
@@ -51,11 +50,25 @@ export function UserAuthContextProvider({ children }) {
     // ส่งค่า otp ไปให้ firebase เพื่อยื่นยันความถูกต้องของ otp
     try {
       await result.confirm(otp);
-      router.push("/");
+      // router.push("/");
     } catch (err) {
       setError(err.message);
     }
   };
+
+  const createPhoneUser = async (number) => {
+    await onAuthStateChanged(auth, (currentuser) => {
+      const uuid = { phoneNumber: number, PhoneNumberuuid: currentuser.uid };
+      senduser(uuid);
+    });
+  };
+
+  function senduser(Uid) {
+    console.log(Uid);
+    const data = Uid;
+    console.log(data);
+    return data;
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
@@ -78,6 +91,8 @@ export function UserAuthContextProvider({ children }) {
         googleSignIn,
         setUpRecaptha,
         verifyOtp,
+        createPhoneUser,
+        senduser,
       }}
     >
       {children}

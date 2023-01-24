@@ -32,7 +32,7 @@ const tabListNoTitle = [
 export default function signup() {
   const [createUser, { data, loading, error }] =
     useMutation(CREATE_ACCOUNT_USER);
-  const { signUp, verifyOtp, setUpRecaptha, user } = useUserAuth();
+  const { createPhoneUser, senduser, verifyOtp, setUpRecaptha } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [otp, setotp] = useState(false);
   const [changesOTP, setChangeOTP] = useState(null);
@@ -41,6 +41,7 @@ export default function signup() {
   const showModal = () => {
     setOpen(true);
   };
+  // console.log(currentuser + " dwadawdawdaw");
   const contentListNoTitle = {
     article: (
       <>
@@ -57,18 +58,18 @@ export default function signup() {
   const confirmOTP = async () => {
     // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
     const numberuuid = await verifyOtp(confirmResult, changesOTP);
-    console.log(numberuuid + "dadawdaw");
-    console.log(user);
+    // console.log(number);
+    await createPhoneUser(number);
+    const data = senduser();
+    console.log(data);
     // createUser({
     //   variables: { phoneNumber: number, PhoneNumberuuid: numberuuid },
     // });
   };
   const onsignInSumit = async (e) => {
-    console.log(e + "/e");
-    console.log(e.PhoneNumber + "/PN");
     const phoneNumber = "+66" + e.PhoneNumber;
     const result = await setUpRecaptha(phoneNumber);
-    setNumber(e.phoneNumber);
+    setNumber(e.PhoneNumber);
     setConfirmResult(result);
     setotp(true);
   };
