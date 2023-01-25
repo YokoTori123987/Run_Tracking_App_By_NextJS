@@ -34,31 +34,28 @@ export const User = objectType({
     t.list.field("Run", {
       type: Run,
       async resolve(parent, _, context) {
-        return await context.prisma.user
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .Run();
+        return await context.prisma.run.findMany({
+          where: { userId: parent.id },
+        });
+        // .Run();
       },
     });
     t.list.field("Log", {
       type: Log,
       async resolve(parent, _, context) {
-        return await context.prisma.user
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .Log();
+        return await context.prisma.log.findMany({
+          where: { id: parent.id },
+        });
+        // .Log();
       },
     });
     t.list.field("Lap", {
       type: Lap,
       async resolve(parent, _, context) {
-        return await context.prisma.user
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .Lap();
+        return await context.prisma.lap.findMany({
+          where: { id: parent.id },
+        });
+        // .Lap();
       },
     });
     t.list.field("OwnedParks", {
