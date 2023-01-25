@@ -19,7 +19,7 @@ export default function Statistic() {
 
     const router = new useRouter
     const { id } = router.query
-    const { Header, Footer, Sider, Content } = Layout;
+    const { Header, Footer, Content } = Layout;
     const headerStyle = {
         textAlign: 'start',
         color: '#fff',
