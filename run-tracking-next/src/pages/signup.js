@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Card, Button, Modal, Form, Input } from "antd";
 import { useUserAuth } from "../context/UserAuthContext";
 import { QrReader } from "react-qr-reader";
-import { Router } from "next/router";
+import { useRouter } from "next/router";
 
 const QUERY = gql`
   query GetUser($id: String!) {
@@ -36,6 +36,7 @@ const tabListNoTitle = [
 ];
 
 export default function Signup() {
+  const Router = new useRouter()
   const [createUser, { data, loading, error }] =
     useMutation(CREATE_ACCOUNT_USER);
   const { createPhoneUser, senduser, verifyOtp, setUpRecaptha } = useUserAuth();
@@ -69,13 +70,14 @@ export default function Signup() {
       refetch({ id: result.text })
         .then((res) => {
           setUserId(res.data.user.id)
-          if (!!res.data.user.email) {
-            Router('/signup')
-          } else if (res.data.user) {
+          if (res.data.user.email === null) {
             Modal.error({
               title: 'มีข้อมูลอยู่ในฐานข้อมูล',
               content: 'ไอดีนี้ถูกกรอกข้อมูลแล้ว',
             });
+            Router.push('/')
+          } else if (res.data.user) {
+            Router.push('/signup/'+result.text)
           }
           console.log(res)
         })
@@ -137,11 +139,7 @@ export default function Signup() {
       <div>
         <div>signup</div>
         <Card
-          style={{
-            width: "95%",
-            marginLeft: "20px",
-            marginRight: "20px",
-          }}
+          class="cardSignup"
           tabList={tabListNoTitle}
           activeTabKey={activeTabKey2}
           onTabChange={(key) => {

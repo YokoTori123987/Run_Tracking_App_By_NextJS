@@ -46,6 +46,7 @@ type Mutation {
   updatePathCheckpoint(checkpointId: String, id: String, isFinish: String, isStart: String, pathId: String, prevCheckpointId: String): PathCheckpoint
   updateRole(id: String!, role: String!): User
   updateUser(dateOfBirth: String, firstName: String, gender: String, id: String, imageUrl: String, lastName: String): User
+  updateUserQR(dateOfBirth: String, email: String, firstName: String, gender: String, id: String, imageUrl: String, lastName: String, phoneNumber: String): User
 }
 
 type Park {

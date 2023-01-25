@@ -237,3 +237,38 @@ export const UpdateRoleUser = extendType({
     });
   },
 });
+
+export const UpdateUserQR = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("updateUserQR", {
+      type: User,
+      args: {
+        id: stringArg(),
+        gender: stringArg(),
+        dateOfBirth: stringArg(),
+        firstName: stringArg(),
+        lastName: stringArg(),
+        imageUrl: stringArg(),
+        email: stringArg(),
+        phoneNumber: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        return await ctx.prisma.user.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            gender: args.gender,
+            dateOfBirth: args.dateOfBirth,
+            firstName: args.firstName,
+            lastName: args.lastName,
+            imageUrl: args.imageUrl,
+            email: args.email,
+            phoneNumber: args.phoneNumber,
+          },
+        });
+      },
+    });
+  },
+});

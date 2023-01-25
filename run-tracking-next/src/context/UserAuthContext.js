@@ -17,6 +17,7 @@ const userAuthContext = createContext();
 export function UserAuthContextProvider({ children }) {
   const router = useRouter();
   const [user, setUser] = useState({});
+  const [error, setError] = useState(null)
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
   }
