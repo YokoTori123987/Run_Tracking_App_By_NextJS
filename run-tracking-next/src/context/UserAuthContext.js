@@ -34,12 +34,12 @@ export function UserAuthContextProvider({ children }) {
 
   function setUpRecaptha(number) {
     // console.log(number);
-    // ส่งเบอร์โทรมาเพือเอาไปทำการ RecaptchaVerifier
     const recaptchaVerifier = new RecaptchaVerifier(
       "recaptcha-container",
       { size: "invisible" },
       auth
     );
+    // ส่งเบอร์โทรมาเพือเอาไปทำการ RecaptchaVerifier
     // recaptchaVerifier.render();
 
     return signInWithPhoneNumber(auth, number, recaptchaVerifier);

@@ -14,20 +14,19 @@ export default function Signup() {
     const router = new useRouter()
     const { id } = router.query
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const { createPhoneUser, senduser, verifyOtpSignup, setUpRecaptha } = useUserAuth();
+    const { verifyOtpSignup, setUpRecaptha } = useUserAuth();
     const [number, setNumber] = useState(null);
     const [OTP, setOTP] = useState(null);
     const [confirmResult, setConfirmResult] = useState(null);
 
-    const changeOTP = (event) => {
-        setOTP(event.target.value)
+    const changeOTP = (e) => {
+        setOTP(e.target.value)
         // console.log(event)
     }
 
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-
 
     const { Header, Content, Footer } = Layout
 
@@ -62,7 +61,7 @@ export default function Signup() {
 
     const onFinish = async (data) => {
         const sss = await updateUserQR({ variables: { updateUserQrId: id, firstName: data.firstName, lastName: data.lastName, email: data.email, phoneNumber: data.phoneNumber, gender: data.gender, dateOfBirth: data.dateOfBirth } })
-        console.log(sss)
+        console.log(sss, { data })
         if (!sss.data.updateUserQR) {
             // return "ข้อมูลที่ถูกที่ถูกส่งล้มเหลว"
         } else {
@@ -175,8 +174,7 @@ export default function Signup() {
                     okButtonProps={{ style: { display: "none" } }}
                     cancelButtonProps={{ style: { display: "none" } }}
                 >
-
-                    <input onChange={changeOTP} type="text" id="recaptcha-container"/>
+                    <input onChange={changeOTP} type="text" />
                     <Button
                         type="primary"
                         onClick={confirmOTP}
@@ -184,8 +182,10 @@ export default function Signup() {
                     >
                         Submit
                     </Button>
+                    
                 </Modal>
             </Content>
+            <div id="recaptcha-container"></div>
             <Footer style={footerStyle}>
 
             </Footer>
