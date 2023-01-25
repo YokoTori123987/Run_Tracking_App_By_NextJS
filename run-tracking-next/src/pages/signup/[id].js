@@ -69,10 +69,10 @@ export default function Signup() {
             /// ส่ง number ไปใช้ ฟั่งชัน opt
             const phoneNumber = "+66" + data.phoneNumber;
             const result = await setUpRecaptha(phoneNumber);
-            console.log(result)
+            console.log(result);
             if (result) {
-                setIsModalOpen(true)
-                setConfirmResult(result)
+                setIsModalOpen(true);
+                setConfirmResult(result);
             }
 
             /// ถ้า result error return เบอร์โทรไม่ถูกต้อง
@@ -176,12 +176,11 @@ export default function Signup() {
                     cancelButtonProps={{ style: { display: "none" } }}
                 >
 
-                    <input onChange={changeOTP} type="text" />
+                    <input onChange={changeOTP} type="text" id="recaptcha-container"/>
                     <Button
                         type="primary"
                         onClick={confirmOTP}
                         htmlType="submit"
-                        id="recaptcha-container"
                     >
                         Submit
                     </Button>
