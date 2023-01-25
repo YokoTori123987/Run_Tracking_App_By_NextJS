@@ -114,7 +114,7 @@ type Run {
   park: Park
   startTime: String
   stopTime: String
-  user: [User]
+  user: User
 }
 
 type User {

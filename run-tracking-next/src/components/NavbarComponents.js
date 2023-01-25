@@ -15,8 +15,17 @@ import Link from "next/link";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useRouter } from "next/router";
 import { Layout, Menu, Col, Row } from "antd";
+import { gql, useQuery } from "@apollo/client";
 // import { getAuth, signOut } from "firebase/auth";
 // import { Volkhov } from "@next/font/google";
+
+const GET_USER = gql`
+  query GetAuthUser {
+    user {
+      role
+    }
+  }
+`;
 
 export default function NavbarComponents() {
   const { user, logOut } = useUserAuth();
@@ -69,14 +78,7 @@ export default function NavbarComponents() {
       ],
     },
   ];
-
-  // const navlogout = [
-  //   {
-  //     label: <Link href="/login">ออกจากระบบ</Link>,
-  //     key: "login",
-  //     icon: <UsergroupAddOutlined />,
-  //   },
-  // ];
+  // console.log(user);
 
   const navigationMain = [
     {

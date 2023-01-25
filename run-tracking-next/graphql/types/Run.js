@@ -15,21 +15,19 @@ export const Run = objectType({
     t.field("park", {
       type: Park,
       resolve: (parent, _, context) => {
-        return context.prisma.user
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .park();
+        return context.prisma.park.findFirst({
+          where: { id: parent.parkId },
+        });
+        // .park();
       },
     });
-    t.list.field("user", {
+    t.field("user", {
       type: User,
       resolve: (parent, _, context) => {
-        return context.prisma.user
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .user();
+        return context.prisma.user.findFirst({
+          where: { id: parent.userId },
+        });
+        // .user();
       },
     });
   },

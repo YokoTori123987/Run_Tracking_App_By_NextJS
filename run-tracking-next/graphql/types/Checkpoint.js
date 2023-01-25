@@ -204,6 +204,7 @@ export const checkRunningPath = extendType({
         });
         if (checkpoint) {
           if (user.currentCheckpoint == checkpoint.prevCheckpointId) {
+            console.log("lol");
             if (checkpoint.isFinish === true) {
               // ทำฟังก์ชั่น หยุดรอบการวิ่ง
               // stopRuning(args.userId, args.checkpointId, args.checkpointNull);
