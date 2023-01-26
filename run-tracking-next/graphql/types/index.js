@@ -6,3 +6,4 @@ export * from "./Log";
 export * from "./Lap";
 export * from "./Path";
 export * from "./PathCheckpoint";
+export * from "./Details";

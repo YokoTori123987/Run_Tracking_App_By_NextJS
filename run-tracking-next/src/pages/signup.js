@@ -63,19 +63,24 @@ export default function signup() {
   const confirmOTP = async () => {
     // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
     const useruid = await verifyOtpSignup(confirmResult, changesOTP);
-    console.log(useruid);
     createUser({
       variables: { phoneNumber: number, phoneNumberuuid: useruid },
     });
-
     router.push("/");
   };
   const onsignInSumit = async (e) => {
     const phoneNumber = "+66" + e.PhoneNumber;
-    const result = await setUpRecaptha(phoneNumber);
-    setNumber(e.PhoneNumber);
-    setConfirmResult(result);
-    setotp(true);
+    // const result = await setUpRecaptha(phoneNumber)
+    await setUpRecaptha(phoneNumber)
+      .then((res) => {
+        console.log(res);
+        setConfirmResult(res);
+        setotp(true);
+        setNumber(e.PhoneNumber);
+      })
+      .catch((err) => {
+        console.log(err + " / " + "ได้มีการสมัครด้วยเบอร์นี้ไปแล้ว");
+      });
   };
   const [activeTabKey2, setActiveTabKey2] = useState("article");
   const onTab2Change = (key) => {

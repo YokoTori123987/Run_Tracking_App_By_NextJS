@@ -81,6 +81,7 @@ type PathCheckpoint {
 }
 
 type Query {
+  AdminDetails: Run
   PathCheckpoint(id: String!): PathCheckpoint
   checkpoint(id: String!): [Checkpoint]
   checkpoints: [Checkpoint]
