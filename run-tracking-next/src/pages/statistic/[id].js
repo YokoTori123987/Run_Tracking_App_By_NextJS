@@ -48,16 +48,17 @@ export default function Statistic() {
     const {data, loading} = useQuery(QUERY, {
         variables: { id: id }
     })
-    console.log(loading);
+    // console.log(loading);
 
     if(loading) {
         return <p>loading</p>
     }
-    console.log(data)
+    // console.log(data)
 
-    console.log(data.user.Run, "ssss")
-    console.log(user, 'aaaa')
-    
+    // console.log(data.user.Run, "ssss")
+    // console.log(user, 'aaaa')
+
+    // const run = data.user.Run
 
     return (
         <>
@@ -96,11 +97,13 @@ export default function Statistic() {
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h4>
-                                            {/* {data.user.Run((el)=>{
-                                                <div key={el.id}>
-                                                    <p>{el.pace}</p>
-                                                </div>
-                                            })} */}
+                                            {data.user.Run.map((run) => {
+                                                return (
+                                                    <div>
+                                                        {run.pace}
+                                                    </div>
+                                                )
+                                            })}
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>

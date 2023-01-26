@@ -94,9 +94,9 @@ export default function Signup() {
         ///// ถ้าไม่มี uid ให้ error 
         ////ถ้ามีทำไร
         if (!numberuuid) {
-            console.log("ไม่มี uid")
+            console.log("ไม่มี numberuuid")
         } else {
-            console.log("มี uid")
+            console.log("มี numberuuid")
             router.push('/')
         }
     }
