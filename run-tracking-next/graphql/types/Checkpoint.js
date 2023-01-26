@@ -196,14 +196,13 @@ export const checkRunningPath = extendType({
           },
           include: {
             prevCheckpoint: true,
+            checkpoint: true
           },
         });
-        // console.log(checkpointNull);
-        // console.log(checkpoint);
+       
         if (checkpoint) {
-          console.log("fefrgrthyjyuk");
+          // เช็คว่า จุดเช็คพ้อยของ user ตรงกับ เช็คพ้อยก่อนหน้าไหม
           if (user.currentCheckpoint == checkpoint.prevCheckpointId) {
-            console.log("dddd");
             if (checkpoint.isFinish === true) {
               // ทำฟังก์ชั่น หยุดรอบการวิ่ง
               // stopRuning(args.userId, args.checkpointId, args.checkpointNull);
@@ -216,7 +215,7 @@ export const checkRunningPath = extendType({
                 },
               });
               // ทำการสร้างข้อมูลลง lap
-              const poplap = await ctx.prisma.lap.findMany({
+              const poplap = await ctx.prisma.lap.findFirst({
                 orderBy: {
                   stopTime: "desc",
                 },
@@ -233,35 +232,37 @@ export const checkRunningPath = extendType({
               // ทำการอัพเดทข้อมูลของ lap ก่อนหน้าที่สร้างไปแล้ว
               const createrun = await ctx.prisma.lap.update({
                 where: {
-                  id: poplap[0].id,
+                  id: poplap.id,
                 },
                 data: { stopTime: new Date() },
               });
+              // ทำการบวกลบเวลา ให้ได้เวลาวิ่งจริง
               const lopiuo = dayjs(createrun.stopTime).diff(
                 createrun.startTime,
                 "minute",
                 true
-              );
-
-              await ctx.prisma.run.create({
-                data: {
-                  startTime: createrun.startTime,
-                  stopTime: createrun.stopTime,
-                  distance: poplap[0].path.distance,
-                  pace: lopiuo.toFixed(2) / poplap[0].path.distance,
-                  userId: createrun.userId,
-                  parkId: poplap[0].path.parkId,
-                },
-              });
-              await ctx.prisma.user.update({
-                data: { currentCheckpoint: null },
-                where: {
-                  id: args.userId,
-                },
-              });
-              if (checkpointNull) {
-                // เริ่มการวิ่ง
-                // startRuning({ userId, checkpointNull, checkpointId });
+                );
+                // สร้าง run
+                const test = await ctx.prisma.run.create({
+                  data: {
+                    startTime: createrun.startTime,
+                    stopTime: createrun.stopTime,
+                    distance: poplap.path.distance,
+                    pace: lopiuo.toFixed(2) / poplap.path.distance,
+                    userId: createrun.userId,
+                    parkId: poplap.path.parkId,
+                  },
+                });
+                await ctx.prisma.user.update({
+                  data: { currentCheckpoint: null },
+                  where: {
+                    id: args.userId,
+                  },
+                });
+                
+                if (checkpointNull) {
+                  // เริ่มการวิ่ง
+                  // startRuning({ userId, checkpointNull, checkpointId });
                 const user = await ctx.prisma.user.findUnique({
                   where: { id: args.userId },
                 });
@@ -291,11 +292,10 @@ export const checkRunningPath = extendType({
                       },
                     });
                   }
-                  return "เริ่มวิ่ง นาย" + " " + user.firstName;
+                  return "นาย : "+user.firstName+ " เริ่มวิ่ง BIB : "+user.bib;
                 }
               }
-              console.log("first");
-              return "จบการวิ่ง นาย" + " " + user.firstName;
+              return "นาย : " + user.firstName+ " จบการวิ่ง BIB : "+user.bib;
             } else {
               await ctx.prisma.user.update({
                 data: { currentCheckpoint: args.checkpointId },
@@ -310,12 +310,14 @@ export const checkRunningPath = extendType({
                   checkpointId: args.checkpointId,
                 },
               });
+              return "นาย : " + user.firstName+ " BIB : "+user.bib + " จุดปัจจุบัน : "+ checkpoint.checkpoint.name
             }
-            console.log("dwdawdawdhyht");
           }
-          // console.log("dawdwdawdarhjlikyuyjhthyu");
-          return "ผิดทาง ทางที่ถูกคือ" + checkpoint.prevCheckpoint.name;
+          if(user.currentCheckpoint != checkpoint.prevCheckpointId){
+            return "ผิดทาง ทางที่ถูกคือ : " + checkpoint.prevCheckpoint.name;
+          }
         }
+        
         if (checkpointNull) {
           // startRuning(args.userId, args.checkpointNull, args.checkpointId);
           const user = await ctx.prisma.user.findUnique({
@@ -344,13 +346,12 @@ export const checkRunningPath = extendType({
                   stopTime: null,
                 },
               });
+              return "นาย : "+user.firstName+ " เริ่มวิ่ง BIB : "+user.bib;
             }
           }
-          return "เริ่มวิ่ง นาย" + user.firstName;
+        }else {
+          return "ผิดทาง ทางที่ถูกคือ" + checkpointNull.prevCheckpoint.name;
         }
-        console.log("ddawdawdw");
-        // return "บันทึกจุดเช็คพ้อย นาย" + user.firstName;
-        return "dddddd";
       },
     });
   },
