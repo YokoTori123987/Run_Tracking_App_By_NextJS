@@ -25,41 +25,36 @@ export const Checkpoint = objectType({
     t.field("park", {
       type: Park,
       resolve: (parent, _, context) => {
-        return context.prisma.park
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .park();
+        return context.prisma.checkpoint.findFirst({
+          where: { id: parent.id },
+        });
       },
     });
     t.list.field("Log", {
       type: Log,
       resolve: (parent, _, context) => {
-        return context.prisma.log
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .Log();
+        return context.prisma.checkpoint.findMany({
+          where: { id: parent.id },
+        });
+        // .Log();
       },
     });
     t.list.field("PathCheckpoint", {
       type: PathCheckpoint,
       resolve: (parent, _, context) => {
-        return context.prisma.pathCheckpoint
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .PathCheckpoint();
+        return context.prisma.checkpoint.findMany({
+          where: { id: parent.id },
+        });
+        // .PathCheckpoint();
       },
     });
     t.list.field("PrevPathCheckpoint", {
       type: PathCheckpoint,
       resolve: (parent, _, context) => {
-        return context.prisma.pathCheckpoint
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .PrevPathCheckpoint();
+        return context.prisma.checkpoint.findMany({
+          where: { id: parent.id },
+        });
+        // .PrevPathCheckpoint();
       },
     });
   },
@@ -72,7 +67,6 @@ export const CheckpointQuery = extendType({
       type: Checkpoint,
       resolve: async (_, args, ctx) => {
         // const [items] = await Promise.all([ctx.prisma.user.findMany()])
-        // console.log(items)
         // return items
         return ctx.prisma.checkpoint.findMany();
       },
@@ -90,7 +84,6 @@ export const CheckpointByIDQuery = extendType({
       },
       resolve: async (_, args, ctx) => {
         // const [items] = await Promise.all([ctx.prisma.user.findMany()])
-        // console.log(items)
         // return items
         return ctx.prisma.checkpoint.findUnique({
           where: {
@@ -120,7 +113,6 @@ export const CreateCheckpoint = extendType({
           latitude: args.latitude,
           parkId: args.parkId,
         };
-        console.log(newCheckpoint);
         return await ctx.prisma.checkpoint.create({
           data: newCheckpoint,
         });
@@ -185,8 +177,6 @@ export const checkRunningPath = extendType({
         userId: nonNull(stringArg()),
       },
       async resolve(_, args, ctx) {
-        console.log(args.checkpointId + " / " + args.userId);
-        // console.log(new Date());
         const user = await ctx.prisma.user.findUnique({
           where: { id: args.userId },
         });
@@ -195,29 +185,36 @@ export const checkRunningPath = extendType({
             checkpointId: args.checkpointId,
             AND: { prevCheckpointId: null },
           },
+          include: {
+            prevCheckpoint: true,
+          },
         });
         const checkpoint = await ctx.prisma.pathCheckpoint.findFirst({
           where: {
             checkpointId: args.checkpointId,
             NOT: { prevCheckpointId: null },
           },
+          include: {
+            prevCheckpoint: true,
+          },
         });
+        // console.log(checkpointNull);
+        // console.log(checkpoint);
         if (checkpoint) {
+          console.log("fefrgrthyjyuk");
           if (user.currentCheckpoint == checkpoint.prevCheckpointId) {
-            console.log("lol");
+            console.log("dddd");
             if (checkpoint.isFinish === true) {
               // ทำฟังก์ชั่น หยุดรอบการวิ่ง
               // stopRuning(args.userId, args.checkpointId, args.checkpointNull);
-              console.log("stop");
               // ทำการสร้างข้อมูลลง log
-              const test = await ctx.prisma.log.create({
+              await ctx.prisma.log.create({
                 data: {
                   userId: args.userId,
                   timeStamp: new Date(),
                   checkpointId: args.checkpointId,
                 },
               });
-              // console.log(test);
               // ทำการสร้างข้อมูลลง lap
               const poplap = await ctx.prisma.lap.findMany({
                 orderBy: {
@@ -233,7 +230,6 @@ export const checkRunningPath = extendType({
                   path: true,
                 },
               });
-              // console.log(poplap);
               // ทำการอัพเดทข้อมูลของ lap ก่อนหน้าที่สร้างไปแล้ว
               const createrun = await ctx.prisma.lap.update({
                 where: {
@@ -241,13 +237,11 @@ export const checkRunningPath = extendType({
                 },
                 data: { stopTime: new Date() },
               });
-              console.log(createrun);
               const lopiuo = dayjs(createrun.stopTime).diff(
                 createrun.startTime,
                 "minute",
                 true
               );
-              console.log(lopiuo.toFixed(2));
 
               await ctx.prisma.run.create({
                 data: {
@@ -297,9 +291,11 @@ export const checkRunningPath = extendType({
                       },
                     });
                   }
-                  return "เริ่มวิ่ง";
+                  return "เริ่มวิ่ง นาย" + " " + user.firstName;
                 }
               }
+              console.log("first");
+              return "จบการวิ่ง นาย" + " " + user.firstName;
             } else {
               await ctx.prisma.user.update({
                 data: { currentCheckpoint: args.checkpointId },
@@ -315,7 +311,10 @@ export const checkRunningPath = extendType({
                 },
               });
             }
+            console.log("dwdawdawdhyht");
           }
+          // console.log("dawdwdawdarhjlikyuyjhthyu");
+          return "ผิดทาง ทางที่ถูกคือ" + checkpoint.prevCheckpoint.name;
         }
         if (checkpointNull) {
           // startRuning(args.userId, args.checkpointNull, args.checkpointId);
@@ -345,13 +344,13 @@ export const checkRunningPath = extendType({
                   stopTime: null,
                 },
               });
-              console.log(pop);
             }
           }
-          return "เริ่มวิ่ง";
+          return "เริ่มวิ่ง นาย" + user.firstName;
         }
-
-        return "บันทึกจุดเช็คพ้อย";
+        console.log("ddawdawdw");
+        // return "บันทึกจุดเช็คพ้อย นาย" + user.firstName;
+        return "dddddd";
       },
     });
   },
@@ -394,8 +393,6 @@ export const checkRunningPath = extendType({
 //     "minute",
 //     true
 //   );
-
-//   console.log(lopiuo.toFixed(2));
 
 //   await prisma.run.create({
 //     data: {
