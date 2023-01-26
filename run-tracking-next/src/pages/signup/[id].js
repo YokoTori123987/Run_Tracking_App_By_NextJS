@@ -7,8 +7,8 @@ import { useState } from "react";
 export default function Signup() {
 
     const UPDATE_ACCOUNT_USER = gql`
-        mutation updateUserQR($updateUserQrId: String, $firstName: String, $lastName: String, $email: String, $phoneNumber: String, $gender: String, $dateOfBirth: String) {
-            updateUserQR(id: $updateUserQrId, firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber, gender: $gender, dateOfBirth: $dateOfBirth) {id}
+        mutation updateUserQR($updateUserQrId: String, $firstName: String, $lastName: String, $email: String, $phoneNumber: String, $phoneNumberuuid: String, $gender: String, $dateOfBirth: String) {
+            updateUserQR(id: $updateUserQrId, firstName: $firstName, lastName: $lastName, email: $email, phoneNumber: $phoneNumber, phoneNumberuuid: $phoneNumberuuid, gender: $gender, dateOfBirth: $dateOfBirth) {id}
         }
     `
     const router = new useRouter()
@@ -18,6 +18,7 @@ export default function Signup() {
     const [number, setNumber] = useState(null);
     const [OTP, setOTP] = useState(null);
     const [confirmResult, setConfirmResult] = useState(null);
+    const [ dataUser, SetDataUser ] = useState({});
 
     const changeOTP = (e) => {
         setOTP(e.target.value)
@@ -60,35 +61,43 @@ export default function Signup() {
     };
 
     const onFinish = async (data) => {
-        const sss = await updateUserQR({ variables: { updateUserQrId: id, firstName: data.firstName, lastName: data.lastName, email: data.email, phoneNumber: data.phoneNumber, gender: data.gender, dateOfBirth: data.dateOfBirth } })
-        console.log(sss, { data })
-        if (!sss.data.updateUserQR) {
+        // const sss = await updateUserQR({ variables: { updateUserQrId: id, firstName: data.firstName, lastName: data.lastName, email: data.email, phoneNumber: data.phoneNumber, gender: data.gender, dateOfBirth: data.dateOfBirth } })
+        // console.log(sss, { data })
+        // if (!sss.data.updateUserQR) {
             // return "ข้อมูลที่ถูกที่ถูกส่งล้มเหลว"
-        } else {
+        // } else {
             /// ส่ง number ไปใช้ ฟั่งชัน opt
-            const phoneNumber = "+66" + data.phoneNumber;
-            const result = await setUpRecaptha(phoneNumber);
-            console.log(result);
-            if (result) {
-                setIsModalOpen(true);
-                setConfirmResult(result);
-            }
+        SetDataUser(data);
+        const phoneNumber = "+66" + data.phoneNumber;
+        const result = await setUpRecaptha(phoneNumber);
+        console.log(result);
+        if (result) {
+            setIsModalOpen(true);
+            setConfirmResult(result);
+        }
 
             /// ถ้า result error return เบอร์โทรไม่ถูกต้อง
-        }
+        // }
         // const phoneNumber =  "+66" + data.phoneNumber;
         // const result = 
     }
 
     const confirmOTP = async () => {
-        const uid = await verifyOtpSignup(confirmResult, OTP)
-        console.log(uid)
+        const data = dataUser
+        const numberuuid = await verifyOtpSignup(confirmResult, OTP)
+        // console.log(uid)
+        const sss = await updateUserQR({ variables: { updateUserQrId: id, firstName: data.firstName, lastName: data.lastName, email: data.email, phoneNumber: data.phoneNumber, phoneNumberuuid: numberuuid, gender: data.gender, dateOfBirth: data.dateOfBirth } })
+
+        // createUser({
+        //     variables: { PhoneNumberuuid: numberuuid },
+        //   });
         ///// ถ้าไม่มี uid ให้ error 
         ////ถ้ามีทำไร
-        if (!uid) {
+        if (!numberuuid) {
             console.log("ไม่มี uid")
         } else {
             console.log("มี uid")
+            router.push('/')
         }
     }
 
@@ -182,7 +191,6 @@ export default function Signup() {
                     >
                         Submit
                     </Button>
-                    
                 </Modal>
             </Content>
             <div id="recaptcha-container"></div>

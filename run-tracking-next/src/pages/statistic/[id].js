@@ -1,12 +1,14 @@
 import { useRouter } from "next/router"
 import { useQuery, gql } from "@apollo/client"
 import { Col, Row, Layout, Card } from "antd"
+import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Statistic() {
 
     const router = new useRouter
     const { id } = router.query
     const { Header, Footer, Content } = Layout;
+    const { user } = useUserAuth();
 
     const QUERY = gql`
         query FindUserId($id: String!) {
@@ -18,7 +20,10 @@ export default function Statistic() {
                 phoneNumber
                 dateOfBirth
                 bib
-                
+                Run {
+                    id
+                    pace
+                }
             }
         }
     `
@@ -50,7 +55,9 @@ export default function Statistic() {
     }
     console.log(data)
 
-
+    console.log(data.user.Run, "ssss")
+    console.log(user, 'aaaa')
+    
 
     return (
         <>
@@ -88,7 +95,13 @@ export default function Statistic() {
                                 {/* ข้อมูลการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4>07:00</h4>
+                                        <h4>
+                                            {/* {data.user.Run((el)=>{
+                                                <div key={el.id}>
+                                                    <p>{el.pace}</p>
+                                                </div>
+                                            })} */}
+                                        </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h4>10 k.m</h4>

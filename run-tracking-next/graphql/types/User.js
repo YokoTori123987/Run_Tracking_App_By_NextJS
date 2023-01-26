@@ -249,6 +249,7 @@ export const UpdateUserQR = extendType({
         imageUrl: stringArg(),
         email: stringArg(),
         phoneNumber: stringArg(),
+        phoneNumberuuid: stringArg(),
       },
       async resolve(_, args, ctx) {
         return await ctx.prisma.user.update({
@@ -263,6 +264,7 @@ export const UpdateUserQR = extendType({
             imageUrl: args.imageUrl,
             email: args.email,
             phoneNumber: args.phoneNumber,
+            phoneNumberuuid: args.phoneNumberuuid,
           },
         });
       },

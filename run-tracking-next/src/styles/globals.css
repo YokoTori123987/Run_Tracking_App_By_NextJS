@@ -118,6 +118,8 @@ h4{
 }
 h5{
   font-size: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 .imgprofile {
   border-radius: 100%;
@@ -128,9 +130,12 @@ h5{
   margin-left: auto;
   margin-right: auto;
 }
+.qrcode{
+  width: 700px;
+}
 
 
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 400px) {
   h1{
     font-size: 30px;
     text-align: center;
@@ -143,10 +148,22 @@ h5{
     font-size: 10px;
     text-align: center;
   }
+  h5{
+    font-size: 20px;
+    text-align: center;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
   .imgprofile{
     border-radius: 50%;
     width: 100%;
     padding: 20px;
     align-items: center;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  .qrcode{
+    width: 300px;
+    height: 500px;
   }
 }

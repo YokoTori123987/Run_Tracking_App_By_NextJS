@@ -39,7 +39,7 @@ export default function Signup() {
   const Router = new useRouter()
   const [createUser, { data, loading, error }] =
     useMutation(CREATE_ACCOUNT_USER);
-  const { createPhoneUser, senduser, verifyOtp, setUpRecaptha } = useUserAuth();
+  const { createPhoneUser, senduser, verifyOtpSignup, setUpRecaptha } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [otp, setotp] = useState(false);
   const [userId, setUserId] = useState("");
@@ -70,14 +70,23 @@ export default function Signup() {
       refetch({ id: result.text })
         .then((res) => {
           setUserId(res.data.user.id)
-          if (res.data.user.email === null) {
+          if (res.data.user.email) {
             Modal.error({
               title: 'มีข้อมูลอยู่ในฐานข้อมูล',
               content: 'ไอดีนี้ถูกกรอกข้อมูลแล้ว',
             });
             Router.push('/')
-          } else if (res.data.user) {
-            Router.push('/signup/'+result.text)
+          } else if (res.data.user.email === null) {
+            Modal.info({
+              title: 'This is a notification message',
+              content: (
+                <div>
+                  <p>กรุณากรอกข้อมูลของท่าน</p>
+                </div>
+              ),
+              onOk() { },
+            });
+            Router.push('/signup/' + result.text)
           }
           console.log(res)
         })
@@ -94,11 +103,16 @@ export default function Signup() {
       </>
     ),
     app: <>
-      <QrReader
-        style={{ width: '50%' }}
-        ref={scanRef}
-        onResult={handleScan}
-      />
+      <div class="qrcode">
+        <QrReader
+          style={{ width: '100%' }}
+          ref={scanRef}
+          onResult={handleScan}
+          constraints={{
+            facingMode: 'environment'
+          }}
+        />
+      </div>
     </>,
   };
   const changeOTP = (e) => {
@@ -107,14 +121,14 @@ export default function Signup() {
   };
   const confirmOTP = async () => {
     // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
-    const numberuuid = await verifyOtp(confirmResult, changesOTP);
+    const numberuuid = await verifyOtpSignup(confirmResult, changesOTP);
     // console.log(number);
     await createPhoneUser(number);
     const data = senduser();
     console.log(data);
-    // createUser({
-    //   variables: { phoneNumber: number, PhoneNumberuuid: numberuuid },
-    // });
+    createUser({
+      variables: { phoneNumber: number, PhoneNumberuuid: numberuuid },
+    });
   };
   const onsignInSumit = async (e) => {
     const phoneNumber = "+66" + e.PhoneNumber;
@@ -139,6 +153,12 @@ export default function Signup() {
       <div>
         <div>signup</div>
         <Card
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
           class="cardSignup"
           tabList={tabListNoTitle}
           activeTabKey={activeTabKey2}
