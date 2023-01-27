@@ -26,6 +26,7 @@ export default function History() {
                 }
             }
         }
+    `
     
     const headerStyle = {
         textAlign: 'start',
