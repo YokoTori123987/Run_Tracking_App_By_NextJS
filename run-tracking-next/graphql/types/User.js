@@ -271,4 +271,3 @@ export const UpdateUserQR = extendType({
     });
   },
 });
-

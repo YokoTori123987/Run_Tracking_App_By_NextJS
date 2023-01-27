@@ -85,6 +85,7 @@ type Query {
   PathCheckpoint(id: String!): PathCheckpoint
   checkpoint(id: String!): [Checkpoint]
   checkpoints: [Checkpoint]
+  currentRun(userId: String!): Run
   lap(id: String!): [Lap]
   laps: [Lap]
   log(id: String!): [Log]

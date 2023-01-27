@@ -27,6 +27,24 @@ export default function Statistic() {
             }
         }
     `
+
+    const QUERY2 = gql`
+        query FindCurrentUser($userId: String!) {
+            currentRun(userId: $userId) {
+                id
+                pace
+                distance
+                startTime
+                stopTime
+                park {
+                    id
+                    name
+                }
+            }
+        }
+    `
+
+
     const headerStyle = {
         textAlign: 'start',
         color: '#fff',
@@ -45,20 +63,32 @@ export default function Statistic() {
         backgroundColor: '#7dbcea',
     };
 
-    const {data, loading} = useQuery(QUERY, {
+    const {data, loading, error} = useQuery(QUERY, {
         variables: { id: id }
     })
+
     // console.log(loading);
+
+    const { data: data2 , loading: loding2, error: error2 } = useQuery(QUERY2, {
+        variables: { userId: id }
+    })
 
     if(loading) {
         return <p>loading</p>
     }
+    if(error) {
+        return error("ไม่มีข้อมูล")
+    }
+    
     // console.log(data)
+    // console.log(data2)
 
     // console.log(data.user.Run, "ssss")
     // console.log(user, 'aaaa')
 
     // const run = data.user.Run
+
+    // console.log(data2)
 
     return (
         <>
@@ -80,7 +110,7 @@ export default function Statistic() {
                     </Col>
                     <Col xs={{ span: 24 }} lg={{ span: 18 }}>
                         <div style={{ marginTop: "40px" }}>
-                            <Card title="Recent activity" bordered={false} style={{ margin: "40px" }} extra={<a href="#">History</a>}>
+                            <Card title="Recent activity" bordered={false} style={{ margin: "40px" }} extra={<a href="/history/ + { id }">History</a>}>
                                 {/* หัวข้อการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
@@ -97,20 +127,18 @@ export default function Statistic() {
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h4>
-                                            {data.user.Run.map((run) => {
-                                                return (
-                                                    <div>
-                                                        {run.pace}
-                                                    </div>
-                                                )
-                                            })}
+                                            {data2.currentRun.pace}
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4>10 k.m</h4>
+                                        <h4>
+                                            {data2.currentRun.distance}
+                                        </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4>00:00 m</h4>
+                                        <h4>
+                                            {data2.currentRun.pace}
+                                        </h4>
                                     </Col>
                                 </Row>
                             </Card>

@@ -74,3 +74,23 @@ export const RunByIDQuery = extendType({
     });
   },
 });
+
+export const CurrentRun = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("currentRun", {
+      type: "Run",
+      args: { userId: nonNull(stringArg()) },
+      resolve: async (_, args, ctx) => {
+        return ctx.prisma.run.findFirst({
+          orderBy: {
+            startTime: "desc",
+          },
+          where: {
+            userId: args.userId,
+          }
+        })
+      }
+    })
+  }
+})
