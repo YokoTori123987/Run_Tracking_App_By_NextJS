@@ -30,6 +30,7 @@ export default function checkPath() {
   const [checkRunning] = useMutation(CHECK_RUNING_PATH, {
     onCompleted: (res) => {
       // console.log(res);
+      console.log(res);
       api.info({
         message: res.checkRunning,
         duration: 2,
@@ -112,17 +113,18 @@ export default function checkPath() {
                 <QrReader
                   key={checkpointId}
                   // ref={qrRef}
-                  scanDelay={5000}
-                  // onError={webcamError}
-                  // onScan={webcamScan}
+                  scanDelay="500"
                   legacyMode={false}
-                  facingMode={"environment"}
+                  // facingMode={"environment"}
                   onResult={(result) => {
                     if (result) {
                       const userId = result.text;
                       checkRunning({
                         variables: { userId, checkpointId },
                       });
+                    }
+                    if (error) {
+                      console.info(error);
                     }
 
                     // if (error) {

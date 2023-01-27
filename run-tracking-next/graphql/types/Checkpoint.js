@@ -324,7 +324,19 @@ export const checkRunningPath = extendType({
             }
           }
           if (user.currentCheckpoint != checkpoint.prevCheckpointId) {
-            return "ผิดทาง ทางที่ถูกคือ : " + checkpoint.prevCheckpoint.name;
+            if (!user.currentCheckpoint) {
+              return "ยังไม่ได้เริ่มวิ่งกรุณาไปจุดเริ่มต้น";
+            }
+            const checkpointWrong = await ctx.prisma.pathCheckpoint.findFirst({
+              where: {
+                prevCheckpointId: user.currentCheckpoint,
+              },
+              include: {
+                prevCheckpoint: true,
+                checkpoint: true,
+              },
+            });
+            return "ผิดทาง ทางที่ถูกคือ : " + checkpointWrong.checkpoint.name;
           }
         }
 
@@ -360,9 +372,15 @@ export const checkRunningPath = extendType({
             }
           }
         }
-        if (user.currentCheckpoint != checkpointNull.prevCheckpointId) {
-          return "ผิดทาง ทางที่ถูกคือ" + checkpointNull.prevCheckpoint.name;
+        if (user.currentCheckpoint) {
+          return "ได้เริ่มวิ่งแล้วกรุณาไปยังจุดเช็คพอยท์ ต่อไป";
         }
+        // console.log("first");
+        // if (user.currentCheckpoint != checkpointNull.prevCheckpointId) {
+        //   console.log("22222");
+        //   console.log(checkpointNull);
+        //   return "ผิดทาง ทางที่ถูกคือ" + checkpointNull.prevCheckpoint.name;
+        // }
       },
       // return "ไม่มีผู้ใช้อยู่ในระบบ";
       // },
