@@ -359,7 +359,8 @@ export const checkRunningPath = extendType({
               return "นาย : " + user.firstName + " เริ่มวิ่ง BIB : " + user.bib;
             }
           }
-        } else {
+        }
+        if (user.currentCheckpoint != checkpointNull.prevCheckpointId) {
           return "ผิดทาง ทางที่ถูกคือ" + checkpointNull.prevCheckpoint.name;
         }
       },
