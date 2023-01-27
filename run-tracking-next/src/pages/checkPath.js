@@ -3,7 +3,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Select, notification } from "antd";
 import { QrReader } from "react-qr-reader";
-// import {}
+
 const GET_CHECK_PATH_PAGE = gql`
   query FindParks {
     parks {
@@ -63,7 +63,7 @@ export default function checkPath() {
     }));
   }
   const handleCheckpoint = (e) => {
-    console.log(e);
+    // console.log(e);
     setcheckpointId(e);
   };
   return (
@@ -112,19 +112,14 @@ export default function checkPath() {
                 <QrReader
                   key={checkpointId}
                   // ref={qrRef}
-                  // scanDelay={5000}
+                  scanDelay={5000}
                   // onError={webcamError}
                   // onScan={webcamScan}
                   legacyMode={false}
                   facingMode={"environment"}
                   onResult={(result) => {
-                    // console.log(checkpointId);
                     if (result) {
-                      // setWebcamResult(result?.text)
-                      // console.log(result)
                       const userId = result.text;
-                      // flyToCheckpoint(userId)
-                      // console.log(checkpointId + ' +++ ' + userId)
                       checkRunning({
                         variables: { userId, checkpointId },
                       });
@@ -137,7 +132,6 @@ export default function checkPath() {
                 />
               </div>
               <div className="card-footer mb-1 rounded text-center  ">
-                {/* <h6>WebCam Result: {userId}</h6> */}
                 <h6>{checkpointId + " / " + userId}</h6>
               </div>
             </div>

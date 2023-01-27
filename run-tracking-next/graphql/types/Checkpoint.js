@@ -196,10 +196,11 @@ export const checkRunningPath = extendType({
           },
           include: {
             prevCheckpoint: true,
-            checkpoint: true
+            checkpoint: true,
           },
         });
-       
+
+        // if (user) {
         if (checkpoint) {
           // เช็คว่า จุดเช็คพ้อยของ user ตรงกับ เช็คพ้อยก่อนหน้าไหม
           if (user.currentCheckpoint == checkpoint.prevCheckpointId) {
@@ -241,28 +242,28 @@ export const checkRunningPath = extendType({
                 createrun.startTime,
                 "minute",
                 true
-                );
-                // สร้าง run
-                const test = await ctx.prisma.run.create({
-                  data: {
-                    startTime: createrun.startTime,
-                    stopTime: createrun.stopTime,
-                    distance: poplap.path.distance,
-                    pace: lopiuo.toFixed(2) / poplap.path.distance,
-                    userId: createrun.userId,
-                    parkId: poplap.path.parkId,
-                  },
-                });
-                await ctx.prisma.user.update({
-                  data: { currentCheckpoint: null },
-                  where: {
-                    id: args.userId,
-                  },
-                });
-                
-                if (checkpointNull) {
-                  // เริ่มการวิ่ง
-                  // startRuning({ userId, checkpointNull, checkpointId });
+              );
+              // สร้าง run
+              const test = await ctx.prisma.run.create({
+                data: {
+                  startTime: createrun.startTime,
+                  stopTime: createrun.stopTime,
+                  distance: poplap.path.distance,
+                  pace: lopiuo.toFixed(2) / poplap.path.distance,
+                  userId: createrun.userId,
+                  parkId: poplap.path.parkId,
+                },
+              });
+              await ctx.prisma.user.update({
+                data: { currentCheckpoint: null },
+                where: {
+                  id: args.userId,
+                },
+              });
+
+              if (checkpointNull) {
+                // เริ่มการวิ่ง
+                // startRuning({ userId, checkpointNull, checkpointId });
                 const user = await ctx.prisma.user.findUnique({
                   where: { id: args.userId },
                 });
@@ -292,10 +293,12 @@ export const checkRunningPath = extendType({
                       },
                     });
                   }
-                  return "นาย : "+user.firstName+ " เริ่มวิ่ง BIB : "+user.bib;
+                  return (
+                    "นาย : " + user.firstName + " เริ่มวิ่ง BIB : " + user.bib
+                  );
                 }
               }
-              return "นาย : " + user.firstName+ " จบการวิ่ง BIB : "+user.bib;
+              return "นาย : " + user.firstName + " จบการวิ่ง BIB : " + user.bib;
             } else {
               await ctx.prisma.user.update({
                 data: { currentCheckpoint: args.checkpointId },
@@ -310,14 +313,21 @@ export const checkRunningPath = extendType({
                   checkpointId: args.checkpointId,
                 },
               });
-              return "นาย : " + user.firstName+ " BIB : "+user.bib + " จุดปัจจุบัน : "+ checkpoint.checkpoint.name
+              return (
+                "นาย : " +
+                user.firstName +
+                " BIB : " +
+                user.bib +
+                " จุดปัจจุบัน : " +
+                checkpoint.checkpoint.name
+              );
             }
           }
-          if(user.currentCheckpoint != checkpoint.prevCheckpointId){
+          if (user.currentCheckpoint != checkpoint.prevCheckpointId) {
             return "ผิดทาง ทางที่ถูกคือ : " + checkpoint.prevCheckpoint.name;
           }
         }
-        
+
         if (checkpointNull) {
           // startRuning(args.userId, args.checkpointNull, args.checkpointId);
           const user = await ctx.prisma.user.findUnique({
@@ -346,13 +356,15 @@ export const checkRunningPath = extendType({
                   stopTime: null,
                 },
               });
-              return "นาย : "+user.firstName+ " เริ่มวิ่ง BIB : "+user.bib;
+              return "นาย : " + user.firstName + " เริ่มวิ่ง BIB : " + user.bib;
             }
           }
-        }else {
+        } else {
           return "ผิดทาง ทางที่ถูกคือ" + checkpointNull.prevCheckpoint.name;
         }
       },
+      // return "ไม่มีผู้ใช้อยู่ในระบบ";
+      // },
     });
   },
 });
