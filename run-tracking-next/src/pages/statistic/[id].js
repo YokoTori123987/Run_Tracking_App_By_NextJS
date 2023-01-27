@@ -5,7 +5,7 @@ import { useUserAuth } from "../../context/UserAuthContext";
 
 export default function Statistic() {
 
-    const router = new useRouter
+    const router = new useRouter()
     const { id } = router.query
     const { Header, Footer, Content } = Layout;
     const { user } = useUserAuth();
@@ -101,11 +101,11 @@ export default function Statistic() {
                         <h2 style={{ marginBottom: "20px" }}>Profile</h2>
                         <img src="https://th.bing.com/th/id/R.f81936ad509f82c43bc17a903c8a1bf0?rik=GLun8UNuhTh1dQ&riu=http%3a%2f%2fwww.blognone.com%2fsites%2fdefault%2ffiles%2fnews-thumbnails%2fDoraemon.PNG%3f1346647979&ehk=ddjyAxlHrJLxQMSjSgoj7j7Vz4ZWCvUo6%2fIVo4qsHX0%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" class='imgprofile' />
                         <div style={{ paddingTop: "30px" }}>
-                            <h5>BIB : {data.user.bib}</h5>
-                            <h5>Name : {data.user.firstName} {data.user.lastName}</h5>
-                            <h5>Phone : {data.user.phoneNumber}</h5>
-                            <h5>Email : {data.user.email}</h5>
-                            <h5>Birth Day : {data.user.dateOfBirth}</h5>
+                            <h5>BIB : {data?.user?.bib}</h5>
+                            <h5>Name : {data?.user?.firstName} {data?.user?.lastName}</h5>
+                            <h5>Phone : {data?.user?.phoneNumber}</h5>
+                            <h5>Email : {data?.user?.email}</h5>
+                            <h5>Birth Day : {data?.user?.dateOfBirth}</h5>
                         </div>
                     </Col>
                     <Col xs={{ span: 24 }} lg={{ span: 18 }}>
@@ -127,17 +127,17 @@ export default function Statistic() {
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h4>
-                                            {data2.currentRun.pace}
+                                            {data2?.currentRun?.pace}
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h4>
-                                            {data2.currentRun.distance}
+                                            {data2?.currentRun?.distance}
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h4>
-                                            {data2.currentRun.pace}
+                                            {data2?.currentRun?.pace}
                                         </h4>
                                     </Col>
                                 </Row>

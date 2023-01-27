@@ -1,10 +1,10 @@
 import { Layout } from "antd"
 import { useRouter } from "next/router"
-import { gql, useMutation, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 export default function History() {
 
-    const router = new useRouter
+    const router = new useRouter()
     const { id } = router.query
     const { Header, Footer, Content } = Layout;
 
@@ -49,6 +49,12 @@ export default function History() {
     const { data, loading } = useQuery(QUERY, {
         variables: { id: id }
     })
+    
+    if(loading) {
+        return <p>loading</p>
+    }
+
+    console.log(data.user.Run)
 
     return(
         <>
@@ -56,7 +62,14 @@ export default function History() {
                 <h1>History</h1>
             </Header>
             <Content>
-
+                <div>
+                {data.user.Run.map((el) => {
+                    <div key={el.id}>
+                        <p>{el.pace}</p>
+                        <p>{el.distance}</p>
+                    </div>
+                })}
+                </div> 
             </Content>
             <Footer>
 

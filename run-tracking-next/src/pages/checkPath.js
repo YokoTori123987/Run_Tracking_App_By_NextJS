@@ -1,6 +1,6 @@
 import React from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { Select, notification } from "antd";
 import { QrReader } from "react-qr-reader";
 
@@ -23,6 +23,7 @@ const CHECK_RUNING_PATH = gql`
 `;
 export default function checkPath() {
   let userId;
+  const scanRef = useRef(null)
   const [api, contextHolder] = notification.useNotification();
   const [parkId, setPark] = useState();
   const [checkpointId, setcheckpointId] = useState();
@@ -67,6 +68,26 @@ export default function checkPath() {
     // console.log(e);
     setcheckpointId(e);
   };
+  const handleScan = async(result) => {
+    if (!result) return;
+    if (result?.text === scanRef.current) return;
+    scanRef.current = result?.text
+// {(result) => {
+  if (result) {
+    const userId = result.text;
+    checkRunning({
+      variables: { userId, checkpointId },
+    });
+  }
+  if (error) {
+    console.info(error);
+  }
+
+//   // if (error) {
+//   //   console.info(error)
+//   // }
+// }}
+  }
   return (
     <div>
       {contextHolder}
@@ -105,32 +126,21 @@ export default function checkPath() {
                 className="card-body text-center"
                 style={{
                   margin: "auto",
-                  width: "25%",
-                  height: "25%",
+                  width: "50%",
+                  height: "50%",
                   border: "3px solid black",
                 }}
               >
                 <QrReader
                   key={checkpointId}
                   // ref={qrRef}
-                  scanDelay="500"
+                  // scanDelay="500"
+                  ref={scanRef}
                   legacyMode={false}
-                  // facingMode={"environment"}
-                  onResult={(result) => {
-                    if (result) {
-                      const userId = result.text;
-                      checkRunning({
-                        variables: { userId, checkpointId },
-                      });
-                    }
-                    if (error) {
-                      console.info(error);
-                    }
-
-                    // if (error) {
-                    //   console.info(error)
-                    // }
+                  constraints={{
+                    facingMode: 'environment'
                   }}
+                  onResult={handleScan}
                 />
               </div>
               <div className="card-footer mb-1 rounded text-center  ">
