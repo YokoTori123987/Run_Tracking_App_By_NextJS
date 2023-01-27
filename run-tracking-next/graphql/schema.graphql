@@ -73,15 +73,16 @@ type Path {
 }
 
 type PathCheckpoint {
-  checkpoint: [Checkpoint]!
+  checkpoint: Checkpoint!
   id: String!
   isFinish: Boolean
   isStart: Boolean
   path: Path!
-  prevCheckpoint: [Checkpoint]!
+  prevCheckpoint: Checkpoint!
 }
 
 type Query {
+  AdminDetails: Run
   PathCheckpoint(id: String!): PathCheckpoint
   checkpoint(id: String!): [Checkpoint]
   checkpoints: [Checkpoint]

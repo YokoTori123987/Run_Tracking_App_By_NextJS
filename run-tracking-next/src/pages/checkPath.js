@@ -1,9 +1,9 @@
 import React from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
-import { Select } from "antd";
+import { Select, notification } from "antd";
 import { QrReader } from "react-qr-reader";
-// import {}
+
 const GET_CHECK_PATH_PAGE = gql`
   query FindParks {
     parks {
@@ -23,20 +23,35 @@ const CHECK_RUNING_PATH = gql`
 `;
 export default function checkPath() {
   let userId;
+  const [api, contextHolder] = notification.useNotification();
   const [parkId, setPark] = useState();
   const [checkpointId, setcheckpointId] = useState();
   const { loading, error, data } = useQuery(GET_CHECK_PATH_PAGE);
-  const [checkRunning, { loading2, error2, data2 }] =
-    useMutation(CHECK_RUNING_PATH);
+  const [checkRunning] = useMutation(CHECK_RUNING_PATH, {
+    onCompleted: (res) => {
+      // console.log(res);
+      console.log(res);
+      api.info({
+        message: res.checkRunning,
+        duration: 2,
+        placement: "top",
+      });
+    },
+    onError: (error) => {
+      api.info({
+        message: error.checkRunning,
+        duration: 2,
+        placement: "top",
+      });
+    },
+  });
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
-  if (loading2) return "Loading...";
-  if (error2) return `Error! ${error.message}`;
   const parkOption = data.parks.map((data) => ({
     value: data.id,
     label: data.name,
   }));
-  console.log(data2);
+
   const handleChangePark = async (e) => {
     setPark(e);
   };
@@ -49,12 +64,12 @@ export default function checkPath() {
     }));
   }
   const handleCheckpoint = (e) => {
-    console.log(e);
+    // console.log(e);
     setcheckpointId(e);
   };
-  // console.log(data);
   return (
     <div>
+      {contextHolder}
       checkPath
       <div>
         <Select
@@ -98,22 +113,18 @@ export default function checkPath() {
                 <QrReader
                   key={checkpointId}
                   // ref={qrRef}
-                  // scanDelay={5000}
-                  // onError={webcamError}
-                  // onScan={webcamScan}
+                  scanDelay="500"
                   legacyMode={false}
-                  facingMode={"environment"}
+                  // facingMode={"environment"}
                   onResult={(result) => {
-                    console.log(checkpointId);
                     if (result) {
-                      // setWebcamResult(result?.text)
-                      // console.log(result)
                       const userId = result.text;
-                      // flyToCheckpoint(userId)
-                      // console.log(checkpointId + ' +++ ' + userId)
                       checkRunning({
                         variables: { userId, checkpointId },
                       });
+                    }
+                    if (error) {
+                      console.info(error);
                     }
 
                     // if (error) {
@@ -123,7 +134,6 @@ export default function checkPath() {
                 />
               </div>
               <div className="card-footer mb-1 rounded text-center  ">
-                {/* <h6>WebCam Result: {userId}</h6> */}
                 <h6>{checkpointId + " / " + userId}</h6>
               </div>
             </div>

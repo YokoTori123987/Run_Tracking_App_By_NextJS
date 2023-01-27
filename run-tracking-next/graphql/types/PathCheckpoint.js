@@ -5,7 +5,7 @@ import {
   extendType,
   list,
   nonNull,
-  booleanArg
+  booleanArg,
 } from "nexus";
 
 //   import { Lap } from "./Lap";
@@ -21,31 +21,27 @@ export const PathCheckpoint = objectType({
     t.nonNull.field("path", {
       type: Path,
       resolve: (parent, _, context) => {
-        return context.prisma.post
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .path();
+        return context.prisma.pathCheckpoint.findFirst({
+          where: { id: parent.id },
+        });
+        // .path();
       },
     });
-    t.nonNull.list.field("prevCheckpoint", {
+    t.nonNull.field("prevCheckpoint", {
       type: Checkpoint,
       resolve: (parent, _, context) => {
-        return context.prisma.post
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .prevCheckpoint();
+        return context.prisma.pathCheckpoint.findFirst({
+          where: { id: parent.id },
+        });
+        // .prevCheckpoint();
       },
     });
-    t.nonNull.list.field("checkpoint", {
+    t.nonNull.field("checkpoint", {
       type: Checkpoint,
       resolve: (parent, _, context) => {
-        return context.prisma.post
-          .findUnique({
-            where: { id: parent.id },
-          })
-          .checkpoint();
+        return context.prisma.pathCheckpoint.findFirst({
+          where: { id: parent.id },
+        });
       },
     });
   },

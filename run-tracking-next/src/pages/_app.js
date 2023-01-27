@@ -5,7 +5,6 @@ import ApolloCliient from "lib/apollo";
 // import "../styles/index.css";
 import { Row, Col } from "antd";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-import { AuthContextProvider } from "../context/AuthContext";
 import NavbarComponents from "@/components/NavbarComponents";
 import { useRouter } from "next/router";
 import { UserAuthContextProvider } from "../context/UserAuthContext";

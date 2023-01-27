@@ -37,11 +37,10 @@ export const Park = objectType({
     t.list.field("Run", {
       type: Run,
       async resolve(parent, _, context) {
-        return await context.prisma.run
-          .findMany({
-            where: { id: parent.id },
-          })
-          .Run();
+        return await context.prisma.run.findMany({
+          where: { id: parent.parkId },
+        });
+        // .Run();
       },
     });
     t.list.field("Checkpoint", {
