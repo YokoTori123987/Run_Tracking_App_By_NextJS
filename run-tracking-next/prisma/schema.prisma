@@ -14,17 +14,17 @@ model User {
   id                String    @id @default(uuid())
   gender            String?
   email             String?   @unique
-  emailuuid         String?
+  emailuuid         String?   @unique
   role              Role      @default(USER)
   dateOfBirth       String?
   firstName         String?
   imageUrl          String?   @default("")
   lastName          String?
   currentCheckpoint String?
-  bib               Int       @default(autoincrement())
+  bib               Int       @unique @default(autoincrement())
   createdAt         DateTime? @default(now())
   phoneNumber       String?   @unique
-  phoneNumberuuid   String?
+  phoneNumberuuid   String?   @unique
   Run               Run[]
   Log               Log[]
   Lap               Lap[]

@@ -34,14 +34,14 @@ export default function checkPath() {
       console.log(res);
       api.info({
         message: res.checkRunning,
-        duration: 2,
+        duration: 5,
         placement: "top",
       });
     },
     onError: (error) => {
       api.info({
         message: error.checkRunning,
-        duration: 2,
+        duration: 5,
         placement: "top",
       });
     },
