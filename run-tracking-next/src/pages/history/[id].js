@@ -1,4 +1,4 @@
-import { Layout } from "antd"
+import { Layout, Card, Col, Row } from "antd"
 import { useRouter } from "next/router"
 import { gql, useQuery } from "@apollo/client";
 
@@ -27,7 +27,7 @@ export default function History() {
             }
         }
     `
-    
+
     const headerStyle = {
         textAlign: 'start',
         color: '#fff',
@@ -38,7 +38,11 @@ export default function History() {
     };
     const contentStyle = {
         minHeight: 750,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center"
         // lineHeight: '120px',
+
     };
     const footerStyle = {
         textAlign: 'center',
@@ -49,27 +53,52 @@ export default function History() {
     const { data, loading } = useQuery(QUERY, {
         variables: { id: id }
     })
-    
-    if(loading) {
+
+    if (loading) {
         return <p>loading</p>
     }
 
-    console.log(data.user.Run)
-
-    return(
+    return (
         <>
             <Header style={headerStyle}>
                 <h1>History</h1>
             </Header>
-            <Content>
-                <div>
-                {data.user.Run.map((el) => {
-                    <div key={el.id}>
-                        <p>{el.pace}</p>
-                        <p>{el.distance}</p>
-                    </div>
+            <Content style={contentStyle}>
+                {data.user.Run.map((run) => {
+                    return (
+                        <Card
+                            title={run.park.name}
+                            bordered={false}
+                            style={{
+                                width: "70%",
+                                marginTop: "40px"
+                            }}
+                        >
+                            <Row style={{ textAlign: "center"}}>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <h4>Pace</h4>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <h4>Distance</h4>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <h4>Time</h4>
+                                </Col>
+                            </Row>
+                            <Row style={{ textAlign: "center"}}> 
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <h4>{run?.pace}</h4>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <h4>{run?.distance}</h4>
+                                </Col>
+                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                    <h4>{run.startTime} {run.stopTime}</h4>
+                                </Col>
+                            </Row>
+                        </Card>
+                    )
                 })}
-                </div> 
             </Content>
             <Footer>
 

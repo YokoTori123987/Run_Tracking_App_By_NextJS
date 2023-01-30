@@ -94,3 +94,22 @@ export const CurrentRun = extendType({
     })
   }
 })
+
+export const HistoryQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.list.field("runs", {
+      type: "Run",
+      resolve: async (_, args, ctx) => {
+        // const [items] = await Promise.all([ctx.prisma.user.findMany()])
+        // console.log(items)
+        // return items
+        return ctx.prisma.run.findMany({
+          orderBy: {
+            startTime: "desc",
+          },
+        });
+      },
+    });
+  },
+});
