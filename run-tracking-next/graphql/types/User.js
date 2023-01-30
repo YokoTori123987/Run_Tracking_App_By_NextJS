@@ -86,6 +86,30 @@ const Role = enumType({
   members: ["USER", "ADMIN", "SCANNER", "OWNED", "GOVERNED"],
 });
 
+export const UserAuthQuery = extendType({
+  type: "Query",
+  definition(t) {
+    t.field("authUser", {
+      type: User,
+      args: { phoneNumberuuid: nonNull(stringArg()) },
+      resolve: async (_, args, ctx) => {
+        const test = await ctx.prisma.user.findFirst({
+          where: {
+            phoneNumberuuid: args.phoneNumberuuid,
+          },
+        });
+        console.log(test);
+        return test;
+        // return ctx.prisma.user.findUnique({
+        //   where: {
+        //     phoneNumberuuid: args.phoneNumberuuid,
+        //   },
+        // });
+      },
+    });
+  },
+});
+
 export const UsersQuery = extendType({
   type: "Query",
   definition(t) {

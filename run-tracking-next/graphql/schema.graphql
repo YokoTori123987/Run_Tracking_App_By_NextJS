@@ -83,6 +83,7 @@ type PathCheckpoint {
 type Query {
   AdminDetails: Run
   PathCheckpoint(id: String!): PathCheckpoint
+  authUser(phoneNumberuuid: String!): User
   checkpoint(id: String!): [Checkpoint]
   checkpoints: [Checkpoint]
   lap(id: String!): [Lap]
