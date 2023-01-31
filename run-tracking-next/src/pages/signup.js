@@ -39,7 +39,7 @@ export default function Signup() {
   const Router = new useRouter()
   const [createUser, { data, loading, error }] =
     useMutation(CREATE_ACCOUNT_USER);
-  const { createPhoneUser, senduser, verifyOtpSignup, setUpRecaptha } = useUserAuth();
+  const { verifyOtpSignup, setUpRecaptha } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [otp, setotp] = useState(false);
   const [userId, setUserId] = useState("");
@@ -122,11 +122,9 @@ export default function Signup() {
   const confirmOTP = async () => {
     // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
     const numberuuid = await verifyOtpSignup(confirmResult, changesOTP);
-    // console.log(number);
-    await createPhoneUser(number);
-    const data = senduser();
-    console.log(data);
-    createUser({
+    console.log(number,"ssss");
+    // await createPhoneUser(number);
+    await createUser({
       variables: { phoneNumber: number, PhoneNumberuuid: numberuuid },
     });
   };

@@ -139,4 +139,5 @@ type User {
   phoneNumber: String
   phoneNumberuuid: String
   role: Role
+  runsHistory: [Run]
 }

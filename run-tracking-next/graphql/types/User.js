@@ -78,6 +78,18 @@ export const User = objectType({
           .GovernedParks();
       },
     });
+    t.list.field("runsHistory", {
+      type: Run,
+      async resolve(parent, _, context) {
+        return await context.prisma.run.findMany({
+          where: { userId: parent.id },
+          orderBy: {
+            startTime: "desc",
+          },
+        });
+        // .Run();
+      },
+    });
   },
 });
 
