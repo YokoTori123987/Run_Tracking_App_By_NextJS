@@ -11,7 +11,7 @@ import {
 const inter = Inter({ subsets: ["latin"] });
 
 const contentStyle = {
-  height: "700px",
+  width: "100%",
   color: "#fff",
   textAlign: "center",
   background: "#364d79",
@@ -22,50 +22,68 @@ const contentStyle = {
 export default function Home() {
   return (
     <>
-      <Col xs={{ span: 24}} >
-        <Carousel autoplay>
-          <div>
-            <div style={contentStyle}>
-              <div
-                style={{
-                  backgroundImage: `url("https://www.ananda.co.th/blog/thegenc/wp-content/uploads/2019/09/WEB_GreenSpace-00.jpg")`,
-                  height: "700px",
-                  
-                }}
-              ></div>
-            </div>
-          </div>
+      
+      <Carousel autoplay>
+     
+        <div>
           <div style={contentStyle}>
             <div
               style={{
-                backgroundImage: `url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5eeea355389655.59822ff824b72.gif")`,
+                backgroundImage: `url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/72d9717d-2ba6-4008-bd25-ceb6d49b5f40/dbmim7a-8cec114b-c425-4a73-a95b-f97d3e5100b2.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzcyZDk3MTdkLTJiYTYtNDAwOC1iZDI1LWNlYjZkNDliNWY0MFwvZGJtaW03YS04Y2VjMTE0Yi1jNDI1LTRhNzMtYTk1Yi1mOTdkM2U1MTAwYjIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.O4Rh64Kmq0kYDgA2oGiTkAKAv1RqJkwy0V367V8G2U4")`,
+                backgroundRepeat: "no-repeat",
+                backgroundAttachment: "fixed",
+                backgroundSize: "cover",
                 height: "700px",
+                width: "100%",
               }}
             ></div>
           </div>
-          <div style={contentStyle}>
-            <div
-              style={{
-                backgroundImage: `url("https://wallpaperaccess.com/full/5927911.gif")`,
-                height: "700px",
-              }}
-            ></div>
-          </div>
-          <div style={contentStyle}>
-            <div
-              style={{
-                backgroundImage: `url("https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5eeea355389655.59822ff824b72.gif")`,
-                height: "700px",
-              }}
-            ></div>
-          </div>
-        </Carousel>
-      </Col>
+        </div>
+        <div style={contentStyle}>
+          <div
+            style={{
+              backgroundImage: `url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/72d9717d-2ba6-4008-bd25-ceb6d49b5f40/dbmim7a-8cec114b-c425-4a73-a95b-f97d3e5100b2.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzcyZDk3MTdkLTJiYTYtNDAwOC1iZDI1LWNlYjZkNDliNWY0MFwvZGJtaW03YS04Y2VjMTE0Yi1jNDI1LTRhNzMtYTk1Yi1mOTdkM2U1MTAwYjIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.O4Rh64Kmq0kYDgA2oGiTkAKAv1RqJkwy0V367V8G2U4")`,
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "fixed",
+              backgroundSize: "cover",
+              height: "700px",
+              width: "100%",
+            }}
+          ></div>
+        </div>
+        <div style={contentStyle}>
+          <div
+            style={{
+              backgroundImage: `url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/72d9717d-2ba6-4008-bd25-ceb6d49b5f40/dbmim7a-8cec114b-c425-4a73-a95b-f97d3e5100b2.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzcyZDk3MTdkLTJiYTYtNDAwOC1iZDI1LWNlYjZkNDliNWY0MFwvZGJtaW03YS04Y2VjMTE0Yi1jNDI1LTRhNzMtYTk1Yi1mOTdkM2U1MTAwYjIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.O4Rh64Kmq0kYDgA2oGiTkAKAv1RqJkwy0V367V8G2U4")`,
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "fixed",
+              backgroundSize: "cover",
+              height: "700px",
+              width: "100%",
+            }}
+          ></div>
+        </div>
+        <div style={contentStyle}>
+          <div
+            style={{
+              backgroundImage: `url("https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/72d9717d-2ba6-4008-bd25-ceb6d49b5f40/dbmim7a-8cec114b-c425-4a73-a95b-f97d3e5100b2.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzcyZDk3MTdkLTJiYTYtNDAwOC1iZDI1LWNlYjZkNDliNWY0MFwvZGJtaW03YS04Y2VjMTE0Yi1jNDI1LTRhNzMtYTk1Yi1mOTdkM2U1MTAwYjIucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.O4Rh64Kmq0kYDgA2oGiTkAKAv1RqJkwy0V367V8G2U4")`,
+              backgroundRepeat: "no-repeat",
+              backgroundAttachment: "fixed",
+              backgroundSize: "cover",
+              height: "700px",
+              width: "100%",
+            }}
+          ></div>
+        </div>
+      </Carousel>
+
       <div
+        className="site-card-wrapper"
         style={{
-          padding: "20px",
+          margin:"50px",
           alignItems: "center",
           justifyContent: "center",
+          // textAlign:"center",
         }}
       >
         <Row>
