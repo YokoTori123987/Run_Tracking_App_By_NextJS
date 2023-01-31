@@ -17,9 +17,7 @@ import { useRouter } from "next/router";
 const CREATE_ACCOUNT_USER = gql`
   # Increments a back-end counter and gets its resulting value
   mutation createAccountUser($phoneNumberuuid: String, $phoneNumber: String) {
-    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber) {
-      id
-    }
+    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber)
   }
 `;
 
@@ -71,9 +69,9 @@ export default function signup() {
   const onsignInSumit = async (e) => {
     const phoneNumber = "+66" + e.PhoneNumber;
     // const result = await setUpRecaptha(phoneNumber)
+    
     await setUpRecaptha(phoneNumber)
       .then((res) => {
-        console.log(res);
         setConfirmResult(res);
         setotp(true);
         setNumber(e.PhoneNumber);
@@ -82,6 +80,7 @@ export default function signup() {
         console.log(err + " / " + "ได้มีการสมัครด้วยเบอร์นี้ไปแล้ว");
       });
   };
+
   const [activeTabKey2, setActiveTabKey2] = useState("article");
   const onTab2Change = (key) => {
     setActiveTabKey2(key);
