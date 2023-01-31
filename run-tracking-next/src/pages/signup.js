@@ -1,8 +1,10 @@
 import { gql, useQuery, useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Input } from "antd";
+import { Card, Button, Modal, Form, Input, Col, Row } from "antd";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useRouter } from "next/router";
+import { PhoneOutlined, MailOutlined } from "@ant-design/icons";
+
 // import Router from "next/router";
 
 // const GET_UUSER = gql`
@@ -13,6 +15,11 @@ import { useRouter } from "next/router";
 //     }
 //   }
 // `;
+
+const handleCancel = () => {
+  console.log("Clicked cancel button");
+  setOpen(false);
+};
 
 const CREATE_ACCOUNT_USER = gql`
   # Increments a back-end counter and gets its resulting value
@@ -47,10 +54,19 @@ export default function signup() {
   // console.log(currentuser + " dwadawdawdaw");
   const contentListNoTitle = {
     article: (
-      <>
-        <Button>Mail</Button>
-        <Button onClick={showModal}>สมัครด้วยเบอร์โทร</Button>
-      </>
+      <div style={{ padding: 30 }}>
+        <Button type="primary" shape="round" size="large">
+          สมัครผ่าน Mail
+        </Button>
+        <br />
+        <br />
+        หรือ
+        <br />
+        <br />
+        <Button type="primary" shape="round" size="large" onClick={showModal}>
+          สมัครผ่านเบอร์โทรศัพท์
+        </Button>
+      </div>
     ),
     app: <p>app content</p>,
   };
@@ -91,74 +107,105 @@ export default function signup() {
   // console.log(window.recaptchaVerifier);
   return (
     <>
-      <div>signup</div>
-      <Card
-        style={{
-          width: "50%",
-        }}
-        tabList={tabListNoTitle}
-        activeTabKey={activeTabKey2}
-        onTabChange={(key) => {
-          onTab2Change(key);
-          // console.log(key);
-        }}
-      >
-        {contentListNoTitle[activeTabKey2]}
-      </Card>
-      <Modal
-        title="Title"
-        open={open}
-        okButtonProps={{ style: { display: "none" } }}
-        cancelButtonProps={{ style: { display: "none" } }}
-        onCancel={() => setOpen(false)}
-      >
-        <Form
-          name="basic"
-          labelCol={{
-            span: 8,
-          }}
-          wrapperCol={{
-            span: 16,
-          }}
-          initialValues={{
-            remember: true,
-          }}
-          onFinish={onsignInSumit}
-          // onFinishFailed={"onFinishFailed"}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="PhoneNumber"
-            name="PhoneNumber"
-            rules={[
-              {
-                required: true,
-                message: "Please input your username!",
-              },
-            ]}
+      <br />
+      <br />
+      <Row>
+        <Col xs={{ span: 20 }} lg={{ span: 8 }} style={{ margin: "auto" }}>
+          <Card
+            style={{
+              textAlign: "center",
+              paddingBottom: "20px",
+              marginBottom: "40px",
+              justify: "center",
+              alignContent: "center",
+              alignItems: "center",
+            }}
+            tabList={tabListNoTitle}
+            activeTabKey={activeTabKey2}
+            onTabChange={(key) => {
+              onTab2Change(key);
+              // console.log(key);
+            }}
           >
-            <Input />
-          </Form.Item>
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <Button type="primary" htmlType="submit" id="recaptcha-container">
-              Submit
-            </Button>
-          </Form.Item>
-        </Form>
-        {otp && (
-          <>
-            <input onChange={changeOTP} type="text" />
-            <Button
-              type="primary"
-              onClick={confirmOTP}
-              htmlType="submit"
-              // id="recaptcha-container"
+            {contentListNoTitle[activeTabKey2]}
+            <Modal
+              title="สมัครผ่านเบอร์โทรศัพท์"
+              open={open}
+              okButtonProps={{ style: { display: "none" } }}
+              cancelButtonProps={{ style: { display: "none" } }}
+              onCancel={() => setOpen(false)}
             >
-              Submit
-            </Button>
-          </>
-        )}
-      </Modal>
+              <Form
+                name="basic"
+                labelCol={{
+                  span: 8,
+                }}
+                wrapperCol={{
+                  span: 16,
+                }}
+                initialValues={{
+                  remember: true,
+                }}
+                onFinish={onsignInSumit}
+                // onFinishFailed={"onFinishFailed"}
+                autoComplete="off"
+              >
+                <Input.Group compact>
+                  <Form.Item
+                    name="PhoneNumber"
+                    rules={[
+                      {
+                        required: true,
+                        message: "กรุณากรอกเบอร์โทรศัพท์ !",
+                      },
+                    ]}
+                  >
+                    <Input
+                      prefix={<PhoneOutlined className="site-form-item-icon" />}
+                      placeholder="+66"
+                      size="large"
+                      type="text"
+                    />
+                  </Form.Item>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    id="recaptcha-container"
+                    size="large"
+                  >
+                    ส่ง OTP
+                  </Button>
+                </Input.Group>
+              </Form>
+
+              {otp && (
+                <Input.Group compact>
+                  <Input
+                      labelCol={{
+                      span: 8,
+                    }}
+                    onChange={changeOTP}
+                    style={{ width: 190, padding: "auto" }}
+                    prefix={<MailOutlined className="site-form-item-icon" />}
+                    placeholder="ใส่รหัส OTP ที่นี่"
+                    type="text"
+                    maxlength="6"
+                    size="large"
+                  />
+                  <Button
+                    type="primary"
+                    onClick={confirmOTP}
+                    htmlType="submit"
+                    size="large"
+                  >
+                    ยืนยัน OTP
+                  </Button>
+                </Input.Group>
+              )}
+            </Modal>
+          </Card>
+        </Col>
+      </Row>
     </>
   );
 }

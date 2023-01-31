@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "customize-cra": "^1.0.0",
+    "less": "^4.1.3",
+    "less-loader": "^11.1.0",
+    "react-app-rewired": "^2.2.1"
+  }
+}
