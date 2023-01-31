@@ -11,12 +11,31 @@ import {
 } from "firebase/auth";
 import { auth } from "../components/firebase_config";
 import { useRouter } from "next/router";
+// import {gql , useQuery} from "@apollo/client"
+
+// const GET_USER = gql`
+// query AuthUser($phoneNumberuuid: String!){
+//   authUser(phoneNumberuuid: $phoneNumberuuid){
+//     bib
+//     currentCheckpoint
+//     dateOfBirth
+//     email
+//     firstName
+//     gender
+//     imageUrl
+//     lastName
+//     phoneNumber
+//   }
+// }
+// `
 
 const userAuthContext = createContext();
 
 export function UserAuthContextProvider({ children }) {
+  // const [authUser,{ loading2, error2, data }] = useQuery(GET_USER)
   const router = useRouter();
   const [user, setUser] = useState({});
+  // console.log(user)
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);
   }
@@ -77,14 +96,14 @@ export function UserAuthContextProvider({ children }) {
       setError(err.message);
     }
   };
-
+  
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth", currentuser);
+      // authUser({variables: {phoneNumberuuid: currentuser.uid}})
+
       setUser(currentuser);
       //
     });
-
     return () => {
       unsubscribe();
     };
