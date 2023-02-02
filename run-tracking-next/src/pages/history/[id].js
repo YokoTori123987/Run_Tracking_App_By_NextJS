@@ -1,6 +1,7 @@
 import { Layout, Card, Col, Row, List } from "antd"
 import { useRouter } from "next/router"
 import { gql, useQuery } from "@apollo/client";
+import moment from "moment"
 
 export default function History() {
 
@@ -42,8 +43,8 @@ export default function History() {
         // flexDirection: "column",
         // alignItems: "center"
         // lineHeight: '120px',
-        marginRight: "100px",
-        marginLeft: "100px"
+        marginRight: "40px",
+        marginLeft: "40px"
     };
     const footerStyle = {
         textAlign: 'center',
@@ -78,48 +79,77 @@ export default function History() {
                     }}
                     dataSource={data?.user?.runsHistory}
                     footer={
-                        <div style={{ marginTop: "20px", textAlign: "end"}}>
+                        <div style={{ marginTop: "20px", textAlign: "end" }}>
                             <b>Total</b> {length}
                         </div>
                     }
                     renderItem={((run) => {
-                    return (
-                        <Card
-                            title={run?.park?.name}
-                            bordered={false}
-                            style={{
-                                width: "100%",
-                                marginTop: "40px"
-                            }}
-                        >
-                            <Row style={{ textAlign: "center" }}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <h4>Pace</h4>
-                                </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <h4>Distance</h4>
-                                </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <h4>Time</h4>
-                                </Col>
-                            </Row>
-                            <Row style={{ textAlign: "center" }}>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <h4>{run?.pace}</h4>
-                                </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <h4>{run?.distance}</h4>
-                                </Col>
-                                <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                    <h4>{run?.startTime} {run?.stopTime}</h4>
-                                </Col>
-                            </Row>
-                        </Card>
-                    )
-                })}
+
+                        // const duration = moment.duration(moment(run?.stopTime).diff(moment(run?.startTime)));
+                        // const hours = duration.days();
+                        // console.log(hours)
+
+                        const startTime = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
+                        const stopTime = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
+
+                        const duration = moment.duration(moment(stopTime).diff(moment(startTime)))
+                        const day = duration.days() * 24
+
+                        // console.log(hour, 'hr')
+                        // console.log(min, 'min')
+
+                        // console.log(a)
+                        // console.log(b)
+
+                        return (
+                            <Card
+                                title={run?.park?.name}
+                                bordered={false}
+                                style={{
+                                    width: "100%",
+                                    marginTop: "40px",
+                                }}
+                            >
+                                <Row style={{ textAlign: "center" }}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                            Pace
+                                        </h4>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                            Distance
+                                        </h4>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                            Time
+                                        </h4>
+                                    </Col>
+                                </Row>
+                                <Row style={{ textAlign: "center" }}>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        <h4>
+                                            {run?.pace}
+                                        </h4>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        <h4>
+                                            {run?.distance}
+                                        </h4>
+                                    </Col>
+                                    <Col xs={8} sm={8} md={8} lg={8} xl={8}>
+                                        <h4>
+                                            {duration.hours() + day + " hr " + duration.minutes() + " min "}
+                                        </h4>
+                                    </Col>
+                                </Row>
+                            </Card>
+                        )
+                    })}
                 />
 
-                
+
             </Content>
             <Footer>
 

@@ -114,12 +114,16 @@ h2{
   font-size: 30px;
 }
 h4{
+  font-size: 15px;
+  font-weight: normal;
   text-align: center;
 }
 h5{
   font-size: 15px;
+  font-weight: normal;
   margin-left: 4%;
   margin-right: 4%;
+  text-align: center;
 }
 .imgprofile {
   border-radius: 100%;
@@ -132,6 +136,12 @@ h5{
 }
 .qrcode{
   width: 700px;
+}
+.cardParks{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 

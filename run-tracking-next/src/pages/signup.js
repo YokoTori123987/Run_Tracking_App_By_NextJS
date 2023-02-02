@@ -20,7 +20,9 @@ const QUERY = gql`
 const CREATE_ACCOUNT_USER = gql`
   # Increments a back-end counter and gets its resulting value
   mutation createAccountUser($phoneNumberuuid: String, $phoneNumber: String) {
-    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber)
+    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber) {
+      id
+    }
   }
 `;
 
@@ -37,8 +39,7 @@ const tabListNoTitle = [
 
 export default function Signup() {
   const Router = new useRouter()
-  const [createUser, { data, loading, error }] =
-    useMutation(CREATE_ACCOUNT_USER);
+  const [createUser, { loading, error }] = useMutation(CREATE_ACCOUNT_USER);
   const { verifyOtpSignup, setUpRecaptha } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [otp, setotp] = useState(false);
@@ -46,15 +47,10 @@ export default function Signup() {
   const [changesOTP, setChangeOTP] = useState(null);
   const [confirmResult, setConfirmResult] = useState(null);
   const [number, setNumber] = useState(null);
+  const scanRef = useRef(null)
   const showModal = () => {
     setOpen(true);
   };
-  const scanRef = useRef(null)
-
-  const { loading: loding2, error: errror2, data: data2, refetch } = useQuery(QUERY, { skip: true, });
-  if (loading) return "Loading...";
-  if (error) return `Error! ${error.message}`;
-  console.log(data2)
 
   const handleScan = async (result) => {
     // console.log(scanRef)
@@ -70,13 +66,13 @@ export default function Signup() {
       refetch({ id: result.text })
         .then((res) => {
           setUserId(res.data.user.id)
-          if (res.data.user.email) {
+          if (res.data.user.email, res.data.user.firstName, res.data.user.lastName, res.data.user.phoneNumber) {
             Modal.error({
               title: 'มีข้อมูลอยู่ในฐานข้อมูล',
               content: 'ไอดีนี้ถูกกรอกข้อมูลแล้ว',
             });
             Router.push('/')
-          } else if (res.data.user.email === null) {
+          } else if (res.data.user.email === null, res.data.user.firstName === null, res.data.user.lastName === null, res.data.user.phoneNumber === null) {
             Modal.info({
               title: 'This is a notification message',
               content: (
@@ -93,8 +89,6 @@ export default function Signup() {
     }
   }
 
-
-  // console.log(currentuser + " dwadawdawdaw");
   const contentListNoTitle = {
     article: (
       <>
@@ -115,19 +109,21 @@ export default function Signup() {
       </div>
     </>,
   };
+
   const changeOTP = (e) => {
     // ใส่ตัวเลข otp ลงในช่อง
     setChangeOTP(e.target.value);
   };
+
   const confirmOTP = async () => {
     // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
-    const numberuuid = await verifyOtpSignup(confirmResult, changesOTP);
-    console.log(number,"ssss");
-    // await createPhoneUser(number);
-    await createUser({
-      variables: { phoneNumber: number, PhoneNumberuuid: numberuuid },
+    const useruid = await verifyOtpSignup(confirmResult, changesOTP);
+    createUser({
+      variables: { phoneNumber: number, phoneNumberuuid: useruid },
     });
+    Router.push("/");
   };
+
   const onsignInSumit = async (e) => {
     const phoneNumber = "+66" + e.PhoneNumber;
     // const result = await setUpRecaptha(phoneNumber)
@@ -142,16 +138,19 @@ export default function Signup() {
         console.log(err + " / " + "ได้มีการสมัครด้วยเบอร์นี้ไปแล้ว");
       });
   };
+
   const [activeTabKey2, setActiveTabKey2] = useState("article");
   const onTab2Change = (key) => {
     setActiveTabKey2(key);
   };
 
-  // if (loading) return "Loading...";
-  // if (error) return `Error! ${error.message}`;
-  // console.log(window.recaptchaVerifier);
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
 
-
+  const { loading: loding2, error: errror2, data: data2, refetch } = useQuery(QUERY, { skip: true, });
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+  // console.log(data2)
 
   return (
     <>
