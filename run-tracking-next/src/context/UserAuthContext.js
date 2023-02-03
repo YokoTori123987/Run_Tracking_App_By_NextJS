@@ -35,6 +35,7 @@ export function UserAuthContextProvider({ children }) {
   // const [authUser,{ loading2, error2, data }] = useQuery(GET_USER)
   const router = useRouter();
   const [user, setUser] = useState({});
+  const [error, setError] = useState(null)
   // console.log(user)
   function logIn(email, password) {
     return signInWithEmailAndPassword(auth, email, password);

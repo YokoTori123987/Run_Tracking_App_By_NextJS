@@ -100,8 +100,89 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+/* @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+  }
+} */
+
+h1{
+  font-size: 30px;
+}
+h2{
+  text-align: start;
+  font-size: 30px;
+}
+h4{
+  font-size: 15px;
+  font-weight: normal;
+  text-align: center;
+}
+h5{
+  font-size: 15px;
+  font-weight: normal;
+  margin-left: 4%;
+  margin-right: 4%;
+  text-align: center;
+}
+.imgprofile {
+  border-radius: 100%;
+  width: 300px;
+}
+.cardSignup {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+.qrcode{
+  width: 700px;
+}
+.contentParks{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.cardParks{
+  width: 40%;
+  color: black;
+  margin-top: 30px ;
+}
+
+@media only screen and (max-width: 400px) {
+  h1{
+    font-size: 30px;
+    text-align: center;
+  }
+  h2{
+    font-size: 20px;
+    text-align: center;
+  }
+  h3{
+    font-size: 15px;
+    text-align: center;
+  }
+  h5{
+    font-size: 14px;
+    text-align: center;
+    margin-left: 4%;
+    margin-right: 4%;
+  }
+  .imgprofile{
+    border-radius: 50%;
+    width: 100%;
+    padding: 20px;
+    align-items: center;
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  .qrcode{
+    width: 300px;
+    height: 500px;
+  }
+  .cardParks{
+    width: 100%;
+    color: black;
+    margin-top: 30px ;
   }
 }

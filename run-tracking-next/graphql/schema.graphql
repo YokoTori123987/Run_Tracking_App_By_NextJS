@@ -46,6 +46,7 @@ type Mutation {
   updatePathCheckpoint(checkpointId: String, id: String, isFinish: String, isStart: String, pathId: String, prevCheckpointId: String): PathCheckpoint
   updateRole(id: String!, role: String!): User
   updateUser(dateOfBirth: String, firstName: String, gender: String, id: String, imageUrl: String, lastName: String): User
+  updateUserQR(dateOfBirth: String, email: String, firstName: String, gender: String, id: String, imageUrl: String, lastName: String, phoneNumber: String, phoneNumberuuid: String): User
 }
 
 type Park {
@@ -86,6 +87,7 @@ type Query {
   authUser(phoneNumberuuid: String!): User
   checkpoint(id: String!): [Checkpoint]
   checkpoints: [Checkpoint]
+  currentRun(userId: String!): Run
   lap(id: String!): [Lap]
   laps: [Lap]
   log(id: String!): [Log]
@@ -98,6 +100,7 @@ type Query {
   run(userId: String!): [Run]
   runs: [Run]
   user(id: String!): User
+  userDistance(userId: String!): String
   users: [User]
 }
 
@@ -138,4 +141,5 @@ type User {
   phoneNumber: String
   phoneNumberuuid: String
   role: Role
+  runsHistory: [Run]
 }

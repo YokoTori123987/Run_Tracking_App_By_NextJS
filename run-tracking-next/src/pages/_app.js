@@ -8,7 +8,6 @@ import { Breadcrumb, Layout, Menu, theme } from "antd";
 import NavbarComponents from "@/components/NavbarComponents";
 import { useRouter } from "next/router";
 import { UserAuthContextProvider } from "../context/UserAuthContext";
-const { Header, Content, Sider } = Layout;
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   const noAuthRequired = ["/", "/login", "/signup"];

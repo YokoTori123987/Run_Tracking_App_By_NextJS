@@ -1,4 +1,8 @@
 import { Inter } from "@next/font/google";
+import { useUserAuth } from "../context/UserAuthContext";
+import { useQuery, gql } from "@apollo/client";
+import { useRouter } from "next/router";
+import { Button } from "antd";
 
 import React from "react";
 import { Card, Carousel, Col, Row } from "antd";

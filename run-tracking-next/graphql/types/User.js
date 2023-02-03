@@ -78,6 +78,18 @@ export const User = objectType({
           .GovernedParks();
       },
     });
+    t.list.field("runsHistory", {
+      type: Run,
+      async resolve(parent, _, context) {
+        return await context.prisma.run.findMany({
+          where: { userId: parent.id },
+          orderBy: {
+            startTime: "desc",
+          },
+        });
+        // .Run();
+      },
+    });
   },
 });
 
@@ -252,6 +264,43 @@ export const UpdateRoleUser = extendType({
           },
           data: {
             role: args.role,
+          },
+        });
+      },
+    });
+  },
+});
+
+export const UpdateUserQR = extendType({
+  type: "Mutation",
+  definition(t) {
+    t.field("updateUserQR", {
+      type: User,
+      args: {
+        id: stringArg(),
+        gender: stringArg(),
+        dateOfBirth: stringArg(),
+        firstName: stringArg(),
+        lastName: stringArg(),
+        imageUrl: stringArg(),
+        email: stringArg(),
+        phoneNumber: stringArg(),
+        phoneNumberuuid: stringArg(),
+      },
+      async resolve(_, args, ctx) {
+        return await ctx.prisma.user.update({
+          where: {
+            id: args.id,
+          },
+          data: {
+            gender: args.gender,
+            dateOfBirth: args.dateOfBirth,
+            firstName: args.firstName,
+            lastName: args.lastName,
+            imageUrl: args.imageUrl,
+            email: args.email,
+            phoneNumber: args.phoneNumber,
+            phoneNumberuuid: args.phoneNumberuuid,
           },
         });
       },

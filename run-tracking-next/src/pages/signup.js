@@ -1,10 +1,9 @@
 import { gql, useQuery, useMutation } from "@apollo/client";
-import React, { useEffect, useState } from "react";
-import { Card, Button, Modal, Form, Input, Col, Row } from "antd";
+import React, { useEffect,useRef, useState } from "react";
+import { Card, Button, Modal, Form, Input } from "antd";
 import { useUserAuth } from "../context/UserAuthContext";
+import { QrReader } from "react-qr-reader";
 import { useRouter } from "next/router";
-import { PhoneOutlined, MailOutlined } from "@ant-design/icons";
-
 // import Router from "next/router";
 
 // const GET_UUSER = gql`
@@ -15,11 +14,6 @@ import { PhoneOutlined, MailOutlined } from "@ant-design/icons";
 //     }
 //   }
 // `;
-
-const handleCancel = () => {
-  console.log("Clicked cancel button");
-  setOpen(false);
-};
 
 const CREATE_ACCOUNT_USER = gql`
   # Increments a back-end counter and gets its resulting value
@@ -39,19 +33,58 @@ const tabListNoTitle = [
   },
 ];
 
-export default function signup() {
+export default function Signup() {
+  const Router = new useRouter()
   const [createUser, { loading, error }] = useMutation(CREATE_ACCOUNT_USER);
   const { verifyOtpSignup, setUpRecaptha } = useUserAuth();
   const [open, setOpen] = useState(false);
   const [otp, setotp] = useState(false);
+  const [userId, setUserId] = useState("");
   const [changesOTP, setChangeOTP] = useState(null);
   const [confirmResult, setConfirmResult] = useState(null);
   const [number, setNumber] = useState(null);
-  const router = useRouter();
+  const scanRef = useRef(null)
   const showModal = () => {
     setOpen(true);
   };
-  // console.log(currentuser + " dwadawdawdaw");
+
+  const handleScan = async (result) => {
+    // console.log(scanRef)
+    if (!result) return;
+    // setUserId(result?.text)
+    if (result?.text === scanRef.current) return;
+    scanRef.current = result?.text
+    // setUserId(result?.text)
+    console.log(result?.text)
+    // console.log(userId)
+    if (result) {
+      setUserId(result.text)
+      refetch({ id: result.text })
+        .then((res) => {
+          setUserId(res.data.user.id)
+          if (res.data.user.email, res.data.user.firstName, res.data.user.lastName, res.data.user.phoneNumber) {
+            Modal.error({
+              title: 'มีข้อมูลอยู่ในฐานข้อมูล',
+              content: 'ไอดีนี้ถูกกรอกข้อมูลแล้ว',
+            });
+            Router.push('/')
+          } else if (res.data.user.email === null, res.data.user.firstName === null, res.data.user.lastName === null, res.data.user.phoneNumber === null) {
+            Modal.info({
+              title: 'This is a notification message',
+              content: (
+                <div>
+                  <p>กรุณากรอกข้อมูลของท่าน</p>
+                </div>
+              ),
+              onOk() { },
+            });
+            Router.push('/signup/' + result.text)
+          }
+          console.log(res)
+        })
+    }
+  }
+
   const contentListNoTitle = {
     article: (
       <div style={{ padding: 30 }}>
@@ -68,20 +101,34 @@ export default function signup() {
         </Button>
       </div>
     ),
-    app: <p>app content</p>,
+    app: <>
+      <div class="qrcode">
+        <QrReader
+          style={{ width: '100%' }}
+          ref={scanRef}
+          onResult={handleScan}
+          constraints={{
+            facingMode: 'environment'
+          }}
+        />
+      </div>
+    </>,
   };
+
   const changeOTP = (e) => {
     // ใส่ตัวเลข otp ลงในช่อง
     setChangeOTP(e.target.value);
   };
+
   const confirmOTP = async () => {
     // ส่งข้อมูลตัวแปล confirmResult ตัวเลข otp ของ firebase , changesOTP ตัวเลข otp ของที่เรากรอก
     const useruid = await verifyOtpSignup(confirmResult, changesOTP);
     createUser({
       variables: { phoneNumber: number, phoneNumberuuid: useruid },
     });
-    router.push("/");
+    Router.push("/");
   };
+
   const onsignInSumit = async (e) => {
     const phoneNumber = "+66" + e.PhoneNumber;
     // const result = await setUpRecaptha(phoneNumber)
@@ -104,108 +151,82 @@ export default function signup() {
 
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
-  // console.log(window.recaptchaVerifier);
+
+  const { loading: loding2, error: errror2, data: data2, refetch } = useQuery(QUERY, { skip: true, });
+  if (loading) return "Loading...";
+  if (error) return `Error! ${error.message}`;
+  // console.log(data2)
+
   return (
     <>
-      <br />
-      <br />
-      <Row>
-        <Col xs={{ span: 20 }} lg={{ span: 8 }} style={{ margin: "auto" }}>
-          <Card
-            style={{
-              textAlign: "center",
-              paddingBottom: "20px",
-              marginBottom: "40px",
-              justify: "center",
-              alignContent: "center",
-              alignItems: "center",
-            }}
-            tabList={tabListNoTitle}
-            activeTabKey={activeTabKey2}
-            onTabChange={(key) => {
-              onTab2Change(key);
-              // console.log(key);
-            }}
+      <div>signup</div>
+      <Card
+        style={{
+          width: "50%",
+        }}
+        tabList={tabListNoTitle}
+        activeTabKey={activeTabKey2}
+        onTabChange={(key) => {
+          onTab2Change(key);
+          // console.log(key);
+        }}
+      >
+        {contentListNoTitle[activeTabKey2]}
+      </Card>
+      <Modal
+        title="Title"
+        open={open}
+        okButtonProps={{ style: { display: "none" } }}
+        cancelButtonProps={{ style: { display: "none" } }}
+        onCancel={() => setOpen(false)}
+      >
+        <Form
+          name="basic"
+          labelCol={{
+            span: 8,
+          }}
+          wrapperCol={{
+            span: 16,
+          }}
+          initialValues={{
+            remember: true,
+          }}
+          onFinish={onsignInSumit}
+          // onFinishFailed={"onFinishFailed"}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="PhoneNumber"
+            name="PhoneNumber"
+            rules={[
+              {
+                required: true,
+                message: "Please input your username!",
+              },
+            ]}
           >
-            {contentListNoTitle[activeTabKey2]}
-            <Modal
-              title="สมัครผ่านเบอร์โทรศัพท์"
-              open={open}
-              okButtonProps={{ style: { display: "none" } }}
-              cancelButtonProps={{ style: { display: "none" } }}
-              onCancel={() => setOpen(false)}
+            <Input />
+          </Form.Item>
+          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Button type="primary" htmlType="submit" id="recaptcha-container">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+        {otp && (
+          <>
+            <input onChange={changeOTP} type="text" />
+            <Button
+              type="primary"
+              onClick={confirmOTP}
+              htmlType="submit"
+              // id="recaptcha-container"
             >
-              <Form
-                name="basic"
-                labelCol={{
-                  span: 8,
-                }}
-                wrapperCol={{
-                  span: 16,
-                }}
-                initialValues={{
-                  remember: true,
-                }}
-                onFinish={onsignInSumit}
-                // onFinishFailed={"onFinishFailed"}
-                autoComplete="off"
-              >
-                <Input.Group compact>
-                  <Form.Item
-                    name="PhoneNumber"
-                    rules={[
-                      {
-                        required: true,
-                        message: "กรุณากรอกเบอร์โทรศัพท์ !",
-                      },
-                    ]}
-                  >
-                    <Input
-                      prefix={<PhoneOutlined className="site-form-item-icon" />}
-                      placeholder="+66"
-                      size="large"
-                      type="text"
-                    />
-                  </Form.Item>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    id="recaptcha-container"
-                    size="large"
-                  >
-                    ส่ง OTP
-                  </Button>
-                </Input.Group>
-              </Form>
-
-              {otp && (
-                <Input.Group compact>
-                  <Input
-                      labelCol={{
-                      span: 8,
-                    }}
-                    onChange={changeOTP}
-                    style={{ width: 190, padding: "auto" }}
-                    prefix={<MailOutlined className="site-form-item-icon" />}
-                    placeholder="ใส่รหัส OTP ที่นี่"
-                    type="text"
-                    maxlength="6"
-                    size="large"
-                  />
-                  <Button
-                    type="primary"
-                    onClick={confirmOTP}
-                    htmlType="submit"
-                    size="large"
-                  >
-                    ยืนยัน OTP
-                  </Button>
-                </Input.Group>
-              )}
-            </Modal>
-          </Card>
-        </Col>
-      </Row>
+              Submit
+            </Button>
+          </>
+        )}
+      </Modal>
     </>
   );
 }
