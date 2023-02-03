@@ -13,9 +13,9 @@ export default function App({ Component, pageProps }) {
   const noAuthRequired = ["/", "/login", "/signup"];
   return (
     <div>
-      <UserAuthContextProvider>
-        {/* <AuthContextProvider> */}
-        <ApolloProvider client={ApolloCliient}>
+      <ApolloProvider client={ApolloCliient}>
+        <UserAuthContextProvider>
+          {/* <AuthContextProvider> */}
           <Layout>
             <NavbarComponents />
             <Layout>
@@ -28,9 +28,9 @@ export default function App({ Component, pageProps }) {
               )} */}
             </Layout>
           </Layout>
-        </ApolloProvider>
-        {/* </AuthContextProvider> */}
-      </UserAuthContextProvider>
+        </UserAuthContextProvider>
+      </ApolloProvider>
+      {/* </AuthContextProvider> */}
     </div>
   );
 }
