@@ -45,6 +45,11 @@ export default function Statistic() {
         }
     `
 
+    const QUERY3 = gql`
+        query Query($userId: String!) {
+            userDistance(userId: $userId)
+        }
+    `
 
     const headerStyle = {
         textAlign: 'start',
@@ -68,18 +73,16 @@ export default function Statistic() {
         variables: { id: id }
     })
 
-    // console.log(loading);
-
     const { data: data2, loading: loding2, error: error2 } = useQuery(QUERY2, {
         variables: { userId: id }
     })
 
-    if (loading) {
-        return <p>loading</p>
-    }
-    if (error) {
-        return error("ไม่มีข้อมูล")
-    }
+    const { data: data3, loading: loding3, error: error3 } = useQuery(QUERY3, {
+        variables: { userId: id }
+    })
+
+    if (loading) return <p>Loading ...</p>;
+    if (error) return `Error! ${error}`;
 
     let Activity = data?.user?.runsHistory.length;
 
@@ -185,7 +188,7 @@ export default function Statistic() {
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h5 style={{ fontSize: "15px" }}>
-                                            ระยะวิ่งทั้งหมด
+                                            {data3?.userDistance}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>

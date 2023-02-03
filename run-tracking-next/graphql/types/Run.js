@@ -94,3 +94,24 @@ export const CurrentRun = extendType({
     })
   }
 })
+
+export const findTotalRun  = extendType({
+  type: "Query",
+  definition(t){
+    t.field("userDistance",{
+      type: "String",
+      args: {userId: nonNull(stringArg())},
+      resolve: async (_,args, ctx)=> {
+        const totalDistance = await ctx.prisma.run.aggregate({
+          _sum: {
+            distance: true,
+          },
+          where: {
+            userId: args.userId,
+          },
+        })
+        return totalDistance._sum.distance
+      }
+    })
+  }
+})
