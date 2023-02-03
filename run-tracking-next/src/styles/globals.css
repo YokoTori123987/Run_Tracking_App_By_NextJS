@@ -137,13 +137,17 @@ h5{
 .qrcode{
   width: 700px;
 }
-.cardParks{
+.contentParks{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-
+.cardParks{
+  width: 40%;
+  color: black;
+  margin-top: 30px ;
+}
 
 @media only screen and (max-width: 400px) {
   h1{
@@ -159,10 +163,10 @@ h5{
     text-align: center;
   }
   h5{
-    font-size: 15px;
+    font-size: 14px;
     text-align: center;
-    margin-left: 5%;
-    margin-right: 5%;
+    margin-left: 4%;
+    margin-right: 4%;
   }
   .imgprofile{
     border-radius: 50%;
@@ -175,5 +179,10 @@ h5{
   .qrcode{
     width: 300px;
     height: 500px;
+  }
+  .cardParks{
+    width: 100%;
+    color: black;
+    margin-top: 30px ;
   }
 }

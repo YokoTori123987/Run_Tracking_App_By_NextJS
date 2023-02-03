@@ -12,7 +12,7 @@ export default function Home() {
   const { user, logOut } = useUserAuth();
 
   // console.log(user.uid)
-  const id = user.uid
+  const id = user?.uid
 
   const QUERY = gql`
     query AuthUser($phoneNumberuuid: String!) {

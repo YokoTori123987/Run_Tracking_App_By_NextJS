@@ -43,7 +43,7 @@ export default function Parks() {
 
     if (loading) return <p>Loading ...</p>;
     if (error) return `Error! ${error}`;
-    console.log(data.parks)
+    // console.log(data.parks)
 
     return (
         <>
@@ -53,19 +53,21 @@ export default function Parks() {
             <Content style={contentStyle}>
                 {data.parks.map((park) => {
                     return (
-                        <a onClick={() => router.push("/park/" + park.id)} class="cardParks">
-                            <Card
-                                key={park.id}
-                                hoverable
-                                style={{
-                                    width: "40%",
-                                    color: "black",
-                                    marginTop: "25px",
-                                }}
-                                cover={<img alt="example" src={park.imageUrl} />}
-                            >
-                                <Meta title={park.name} description={park.address} />
-                            </Card>
+                        <a onClick={() => router.push("/park/" + park.id)} class="contentParks">
+                            <div class="cardParks">
+                                <Card
+                                    key={park.id}
+                                    hoverable
+                                    // style={{
+                                    //     width: "100%",
+                                    //     color: "black",
+                                    //     marginTop: "25px",
+                                    // }}
+                                    cover={<img alt="example" src={park.imageUrl} />}
+                                >
+                                    <Meta title={park.name} description={park.address} />
+                                </Card>
+                            </div>
                         </a>
                     )
                 })}

@@ -142,17 +142,17 @@ export default function Statistic() {
                                 </Row>
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             {data2?.currentRun?.pace}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             {data2?.currentRun?.distance}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             {duration.hours() + day + " hr " + duration.minutes() + " min "}
                                         </h5>
                                     </Col>
@@ -182,17 +182,17 @@ export default function Statistic() {
                                 {/* ข้อมูลการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             {Activity}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             {data3?.userDistance}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             เวลาที่ใช้วิ่งทั้งหมด
                                         </h5>
                                     </Col>
@@ -227,22 +227,22 @@ export default function Statistic() {
                                 {/* ข้อมูลการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             สนาม
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             10 k.m
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             00:00 m
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "15px" }}>
+                                        <h5 style={{ fontSize: "14px" }}>
                                             2
                                         </h5>
                                     </Col>
