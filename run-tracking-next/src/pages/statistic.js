@@ -115,7 +115,7 @@ export default function Statistic() {
                     </Col>
                     <Col xs={{ span: 24 }} lg={{ span: 18 }}>
                         <div style={{ marginTop: "40px" }}>
-                            <Card title="Recent-Activity" bordered={false} style={{ margin: "40px" }} extra={<Button onClick={() => router.push("/history/" + id)}>History</Button>}>
+                            <Card title="Recent-Activity" bordered={false} style={{ margin: "40px" }} extra={<Button onClick={() => router.push("/history")}>History</Button>}>
                                 {/* หัวข้อการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>

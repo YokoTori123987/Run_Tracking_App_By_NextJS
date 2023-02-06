@@ -1,14 +1,14 @@
 import { Layout, Card, Col, Row, List } from "antd"
 import { useRouter } from "next/router"
 import { gql, useQuery } from "@apollo/client";
+import { useUserAuth } from "../context/UserAuthContext";
 import moment from "moment"
 
 export default function History() {
 
     const router = new useRouter()
-    const { id } = router.query
     const { Header, Footer, Content } = Layout;
-
+    const { user } = useUserAuth();
 
     const QUERY = gql`
         query FindUserId($id: String!) {
@@ -39,10 +39,6 @@ export default function History() {
     };
     const contentStyle = {
         minHeight: 750,
-        // display: "flex",
-        // flexDirection: "column",
-        // alignItems: "center"
-        // lineHeight: '120px',
         marginRight: "40px",
         marginLeft: "40px"
     };
@@ -53,7 +49,7 @@ export default function History() {
     };
 
     const { data, loading } = useQuery(QUERY, {
-        variables: { id: id }
+        variables: { id: user?.id }
     })
 
     if (loading) {
@@ -85,21 +81,11 @@ export default function History() {
                     }
                     renderItem={((run) => {
 
-                        // const duration = moment.duration(moment(run?.stopTime).diff(moment(run?.startTime)));
-                        // const hours = duration.days();
-                        // console.log(hours)
+                        const startTime1 = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
+                        const stopTime1 = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
 
-                        const startTime = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
-                        const stopTime = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
-
-                        const duration = moment.duration(moment(stopTime).diff(moment(startTime)))
+                        const duration = moment.duration(moment(stopTime1).diff(moment(startTime1)))
                         const day = duration.days() * 24
-
-                        // console.log(hour, 'hr')
-                        // console.log(min, 'min')
-
-                        // console.log(a)
-                        // console.log(b)
 
                         return (
                             <Card
@@ -109,6 +95,7 @@ export default function History() {
                                     width: "100%",
                                     marginTop: "40px",
                                 }}
+                                extra={<p style={{ fontSize: "15px" }}>{moment(run?.startTime).format('DD MMMM YYYY')}</p>}
                             >
                                 <Row style={{ textAlign: "center" }}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
