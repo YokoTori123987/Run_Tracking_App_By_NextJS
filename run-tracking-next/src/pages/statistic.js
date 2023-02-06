@@ -1,16 +1,18 @@
 import { useRouter } from "next/router"
 import { useQuery, gql } from "@apollo/client"
 import { Col, Row, Layout, Card, Button, Image } from "antd"
-import { useUserAuth } from "../../context/UserAuthContext";
+import { useUserAuth } from "../context/UserAuthContext";
 import moment, { duration } from "moment"
 // import 'moment/locale/th'
 // moment.locale('th')
 
 export default function Statistic() {
 
-    const router = new useRouter()
-    const { id } = router.query
+    const router = new useRouter();
     const { Header, Footer, Content } = Layout;
+    const { user } = useUserAuth();
+
+    console.log(user.id, "sss")
 
     const QUERY = gql`
         query FindUserId($id: String!) {
@@ -51,6 +53,32 @@ export default function Statistic() {
         }
     `
 
+    const { data, loading, error } = useQuery(QUERY, {
+        variables: { id: user.id }
+    })
+
+    const { data: data2, loading: loading2, error: error2 } = useQuery(QUERY2, {
+        variables: { userId: user.id }
+    })
+
+    const { data: data3, loading: loading3, error: error3 } = useQuery(QUERY3, {
+        variables: { userId: user.id }
+    })
+
+    if (loading) return <p>Loading ...</p>;
+    if (error) return `Error! ${error}`;
+
+    let Activity = data?.user?.runsHistory.length;
+
+    const historyByID = user.id;
+
+    const startTime = moment(data2?.currentRun?.startTime).format("YYYY-MM-DD HH:mm:ss");
+    const stopTime = moment(data2?.currentRun?.stopTime).format("YYYY-MM-DD HH:mm:ss");
+
+    const duration = moment.duration(moment(stopTime).diff(moment(startTime)));
+
+    const day = duration.days() * 24;
+
     const headerStyle = {
         textAlign: 'start',
         color: '#fff',
@@ -61,44 +89,12 @@ export default function Statistic() {
     };
     const contentStyle = {
         minHeight: 750,
-        // lineHeight: '120px',
     };
     const footerStyle = {
         textAlign: 'center',
         color: '#fff',
         backgroundColor: '#7dbcea',
     };
-
-    const { data, loading, error } = useQuery(QUERY, {
-        variables: { id: id }
-    })
-
-    const { data: data2, loading: loding2, error: error2 } = useQuery(QUERY2, {
-        variables: { userId: id }
-    })
-
-    const { data: data3, loading: loding3, error: error3 } = useQuery(QUERY3, {
-        variables: { userId: id }
-    })
-
-    if (loading) return <p>Loading ...</p>;
-    if (error) return `Error! ${error}`;
-
-    let Activity = data?.user?.runsHistory.length;
-
-    const historyByID = id;
-
-    const startTime = moment(data2?.currentRun?.startTime).format("YYYY-MM-DD HH:mm:ss");
-    const stopTime = moment(data2?.currentRun?.stopTime).format("YYYY-MM-DD HH:mm:ss");
-
-    // console.log(a)
-    // console.log(b)
-
-    const duration = moment.duration(moment(stopTime).diff(moment(startTime)))
-    // console.log(duration)
-
-    const day = duration.days() * 24
-    // console.log(duration.hours()+ day + "hours and" + duration.minutes() + "minutes");
 
     return (
         <>
