@@ -107,7 +107,7 @@ export function UserAuthContextProvider({ children }) {
       });
       console.log(data);
       console.log(error);
-      setUser(data.authUser);
+      setUser(data?.authUser);
     });
     return () => {
       unsubscribe();
