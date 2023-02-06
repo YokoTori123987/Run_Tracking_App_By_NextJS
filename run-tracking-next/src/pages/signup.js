@@ -6,19 +6,24 @@ import { QrReader } from "react-qr-reader";
 import { useRouter } from "next/router";
 // import Router from "next/router";
 
-// const GET_UUSER = gql`
-//   query GetUser {
-//     users {
-//       id
-//       firstName
-//     }
-//   }
-// `;
+const QUERY = gql`
+  query GetUser($id: String!) {
+    user(id: $id) {
+      id
+      firstName
+      lastName
+      email
+      phoneNumber
+    }
+  }
+`;
 
 const CREATE_ACCOUNT_USER = gql`
   # Increments a back-end counter and gets its resulting value
   mutation createAccountUser($phoneNumberuuid: String, $phoneNumber: String) {
-    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber)
+    createUser(phoneNumberuuid: $phoneNumberuuid, phoneNumber: $phoneNumber) {
+      id
+    }
   }
 `;
 
