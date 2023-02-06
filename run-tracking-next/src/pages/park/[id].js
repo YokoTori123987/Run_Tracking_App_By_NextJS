@@ -52,7 +52,7 @@ export default function Park() {
         backgroundColor: '#7f7f7f',
     };
 
-    console.log(data)
+    // console.log(data)
 
     return (
         <>

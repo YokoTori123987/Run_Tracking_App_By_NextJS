@@ -12,8 +12,6 @@ export default function Statistic() {
     const { Header, Footer, Content } = Layout;
     const { user } = useUserAuth();
 
-    console.log(user.id, "sss")
-
     const QUERY = gql`
         query FindUserId($id: String!) {
             user(id: $id) {
@@ -54,15 +52,15 @@ export default function Statistic() {
     `
 
     const { data, loading, error } = useQuery(QUERY, {
-        variables: { id: user.id }
+        variables: { id: user?.id }
     })
 
     const { data: data2, loading: loading2, error: error2 } = useQuery(QUERY2, {
-        variables: { userId: user.id }
+        variables: { userId: user?.id }
     })
 
     const { data: data3, loading: loading3, error: error3 } = useQuery(QUERY3, {
-        variables: { userId: user.id }
+        variables: { userId: user?.id }
     })
 
     if (loading) return <p>Loading ...</p>;
