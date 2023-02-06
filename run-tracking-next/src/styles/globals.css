@@ -149,6 +149,14 @@ h5{
   margin-top: 30px ;
 }
 
+/* page park */
+
+.image-park {
+  width: 40%;
+}
+
+/* page mobile */
+
 @media only screen and (max-width: 400px) {
   h1{
     font-size: 30px;
@@ -185,4 +193,18 @@ h5{
     color: black;
     margin-top: 30px ;
   }
+
+  /* page park */
+  .image-park {
+    width: 100%;
+  }
+  /* div.park-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  } */
 }
+
+
+

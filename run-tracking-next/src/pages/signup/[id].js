@@ -103,7 +103,7 @@ export default function Signup() {
 
     return (
         <>
-            <Header style={headerStyle} >
+            <Header style={headerStyle}>
                 <h1>Signup</h1>
             </Header>
             <Content style={contentStyle}>
