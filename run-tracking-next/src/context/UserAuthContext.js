@@ -35,7 +35,7 @@ const userAuthContext = createContext();
 export function UserAuthContextProvider({ children }) {
   // const [authUser,{ loading2, error2, data }] = useQuery(GET_USER)
   const router = useRouter();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   // console.log(user)
   function logIn(email, password) {

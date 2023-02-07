@@ -15,6 +15,7 @@ import Link from "next/link";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useRouter } from "next/router";
 import { Layout, Menu, Col, Row } from "antd";
+import HomeGlobal from "@/pages/HomeMain/HomeGlobal";
 
 export default function NavbarComponents() {
   const { user, logOut } = useUserAuth();
