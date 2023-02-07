@@ -167,33 +167,30 @@ h5 {
 }
 
 .headName {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .address {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .working {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .description {
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
-.leaderboard {
+.leaderBoardHead {
   display: flex;
   justify-content: space-between;
-}
-
-.button-ldb {
-  width: 100px;
+  margin-bottom: 40px;
 }
 
 /* page mobile */
 
-@media only screen and (min-width: 300px) and (max-width: 600px) {
+@media only screen and (max-width: 900px) {
   h1 {
     font-size: 30px;
     text-align: center;
@@ -255,6 +252,22 @@ h5 {
   .cotentPark {
     padding-left: 20px;
     padding-right: 20px;
+  }
+
+  .headName {
+    margin-bottom: 20px;
+  }
+  
+  .address {
+    margin-bottom: 20px;
+  }
+  
+  .working {
+    margin-bottom: 20px;
+  }
+  
+  .description {
+    margin-bottom: 20px;
   }
 
 }
