@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client"
 import { Col, Row, Layout, Card, Button, Image } from "antd"
 import { useUserAuth } from "../context/UserAuthContext";
 import moment, { duration } from "moment"
+import { run } from "micro";
 // import 'moment/locale/th'
 // moment.locale('th')
 
@@ -24,6 +25,8 @@ export default function Statistic() {
                 bib
                 runsHistory {
                     id
+                    startTime
+                    stopTime
                 }
             }
         }
@@ -51,6 +54,8 @@ export default function Statistic() {
         }
     `
 
+
+
     const { data, loading, error } = useQuery(QUERY, {
         variables: { id: user?.id }
     })
@@ -70,12 +75,39 @@ export default function Statistic() {
 
     const historyByID = user.id;
 
+    let sum = 0;
+    let hours, minutes, seconds
+
     const startTime = moment(data2?.currentRun?.startTime).format("YYYY-MM-DD HH:mm:ss");
     const stopTime = moment(data2?.currentRun?.stopTime).format("YYYY-MM-DD HH:mm:ss");
 
     const duration = moment.duration(moment(stopTime).diff(moment(startTime)));
 
+
+
     const day = duration.days() * 24;
+
+    data?.user?.runsHistory.map((run) => {
+        const startTime1 = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
+        const stopTime1 = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
+
+        const duration1 = moment.duration(moment(stopTime1).diff(moment(startTime1)));
+
+        sum += duration1._milliseconds
+        // console.log(sum, 's')
+
+        seconds = Math.floor(sum / 1000)
+        minutes = Math.floor(seconds / 60)
+        hours = Math.floor(minutes / 60)
+
+        seconds = seconds % 60
+        minutes = minutes % 60
+
+        // console.log(hours, minutes, seconds, 'ss')
+        // console.log(hoursDuration)
+    })
+
+
 
     const headerStyle = {
         textAlign: 'start',
@@ -93,6 +125,7 @@ export default function Statistic() {
         color: '#fff',
         backgroundColor: '#7dbcea',
     };
+
 
     return (
         <>
@@ -187,7 +220,7 @@ export default function Statistic() {
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h5 style={{ fontSize: "14px" }}>
-                                            เวลาที่ใช้วิ่งทั้งหมด
+                                            {hours} hr {minutes} min
                                         </h5>
                                     </Col>
                                 </Row>
