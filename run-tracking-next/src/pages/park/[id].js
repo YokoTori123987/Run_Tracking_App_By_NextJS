@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router"
-import { Layout } from "antd";
+import { Button, Layout } from "antd";
 
 export default function Park() {
 
@@ -29,21 +29,9 @@ export default function Park() {
 
     const { Header, Content, Footer } = Layout;
 
-    const headerStyle = {
-        textAlign: 'start',
-        color: '#fff',
-        height: 64,
-        paddingInline: 50,
-        lineHeight: '64px',
-        backgroundColor: '#7f7f7f',
-    };
+
     const contentStyle = {
         minHeight: 750,
-        // lineHeight: '120px',
-        display: "flex",
-        flexDirection: "column",
-        // justifyContent: "center",
-        // alignItems: "center",
         width: "100%",
     };
     const footerStyle = {
@@ -56,24 +44,29 @@ export default function Park() {
 
     return (
         <>
-            <Header style={headerStyle}>
-                <h1>{data.park.name}</h1>
-            </Header>
             <Content style={contentStyle}>
                 <div>
-                    <img src={data.park.imageUrl} alt="img" class="image-park" />
-                </div>
-                <div>
-                    {data?.park.name}
-                </div>
-                <div>
-                    {data.park.address}
-                </div>
-                <div>
-                    {data.park.description}
-                </div>
-                <div>
-                    {data.park.workingHours}
+                    <div class="contentParks">
+                        <img src={data.park.imageUrl} alt="img" class="image-park" />
+                    </div>
+                    <div class="cotentPark">
+                        <div class="headName">
+                            <h2 style={{ textAlign: "start" }}>{data?.park.name}</h2>
+                        </div>
+                        <div class="working">
+                            <p>{data.park.workingHours}เวลา เปิด</p>
+                        </div>
+                        <div class="address">
+                            <p>{data.park.address}</p>
+                        </div>
+                        <div class="description">
+                            <p>{data.park.description}</p>
+                        </div>
+                        <div class="leaderboard">
+                            <h2 style={{ textAlign: "start" }}>LeaderBoard</h2>
+                            <Button class="button-ldb">onClick</Button>
+                        </div>
+                    </div>
                 </div>
             </Content>
             <Footer style={footerStyle}>
