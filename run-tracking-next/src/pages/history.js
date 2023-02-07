@@ -58,6 +58,8 @@ export default function History() {
 
     let length = data?.user?.runsHistory.length;
 
+    let sum = 0;
+
     return (
         <>
             <Header style={headerStyle}>
@@ -81,11 +83,16 @@ export default function History() {
                     }
                     renderItem={((run) => {
 
-                        const startTime1 = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
-                        const stopTime1 = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
+                        const startTime = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
+                        const stopTime = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
 
-                        const duration = moment.duration(moment(stopTime1).diff(moment(startTime1)))
-                        const day = duration.days() * 24
+                        const duration = moment.duration(moment(stopTime).diff(moment(startTime)))
+
+                        const day = duration.days() * 24  
+
+                        // const sumDuration = moment.utc(sum).format('HH:mm')
+                        // console.log(sum)
+                        // console.log(sumDuration,'sss')
 
                         return (
                             <Card
@@ -135,8 +142,6 @@ export default function History() {
                         )
                     })}
                 />
-
-
             </Content>
             <Footer>
 
