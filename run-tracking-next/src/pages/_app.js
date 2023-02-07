@@ -19,13 +19,13 @@ export default function App({ Component, pageProps }) {
           <Layout>
             <NavbarComponents />
             <Layout>
-              {/* {noAuthRequired.includes(router.pathname) ? (
+              {noAuthRequired.includes(router.pathname) ? (
                 <Component {...pageProps} />
               ) : (
-                <ProtectedRoute> */}
-              <Component {...pageProps} />
-              {/* </ProtectedRoute>
-              )} */}
+                <ProtectedRoute>
+                  <Component {...pageProps} />
+                </ProtectedRoute>
+              )}
             </Layout>
           </Layout>
         </UserAuthContextProvider>
