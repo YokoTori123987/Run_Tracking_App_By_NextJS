@@ -16,6 +16,17 @@ export default function Park() {
                 address
                 description
                 workingHours
+                Run {
+                    id
+                    pace
+                    distance
+                    user {
+                        firstName
+                        lastName
+                        bib
+                        imageUrl
+                    }
+                }
             }
         }
     `
@@ -27,23 +38,7 @@ export default function Park() {
     if (loading) return <p>Loading ...</p>;
     if (error) return `Error! ${error}`;
 
-    const { Header, Content, Footer } = Layout;
-
-    const data1 = [
-        {
-            title: 'Ant Design Title 1',
-        },
-        {
-            title: 'Ant Design Title 2',
-        },
-        {
-            title: 'Ant Design Title 3',
-        },
-        {
-            title: 'Ant Design Title 4',
-        },
-    ];
-
+    const { Content, Footer } = Layout;
 
     const contentStyle = {
         minHeight: 750,
@@ -84,14 +79,15 @@ export default function Park() {
                         <List
                             itemLayout="horizontal"
                             style={{ marginBottom: "30px" }}
-                            dataSource={data1}
-                            renderItem={(item) => (
+                            dataSource={data?.park?.Run}
+                            renderItem={(run, index) => (
                                 <List.Item>
+                                    <div style={{ textAlign: "start", fontSize: "15px", paddingRight: "5px" }}>{index+1}</div>
                                     <List.Item.Meta
-                                        avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                                        title={<a href="https://ant.design"><p style={{ textAlign: "start" }}>{item.title}</p></a>}
-                                        description="Ant Design, a design language for background applications, is refined by Ant UED Team"
+                                        avatar={<Avatar src={run.user.imageUrl} />}
+                                        title=<p style={{ textAlign: "start", fontSize: "15px" }}>{run.user.firstName} {run.user.lastName}</p> 
                                     />
+                                    <div style={{ textAlign: "start", fontSize: "15px" }}>Pace: {run.pace} km</div>
                                 </List.Item>
                             )}
                         />

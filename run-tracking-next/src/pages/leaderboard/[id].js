@@ -13,13 +13,13 @@ export default function Leaderboard() {
                 id
                 name
                 Run {
-                id
-                pace
-                distance
-                user {
-                    firstName
-                    bib
-                }
+                    id
+                    pace
+                    distance
+                    user {
+                        firstName
+                        bib
+                    }
                 }
             }
         }
