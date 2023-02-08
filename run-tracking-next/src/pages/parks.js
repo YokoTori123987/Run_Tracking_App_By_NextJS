@@ -48,13 +48,13 @@ export default function Parks() {
     return (
         <>
             <Header style={headerStyle}>
-                <h1>Parks</h1>
+                <h1>List Parks</h1>
             </Header>
             <Content style={contentStyle}>
                 {data.parks.map((park) => {
                     return (
-                        <a onClick={() => router.push("/park/" + park.id)} class="contentParks">
-                            <div class="cardParks">
+                        <div className="contentParks">
+                            <div className="cardParks">
                                 <Card
                                     key={park.id}
                                     hoverable
@@ -64,11 +64,12 @@ export default function Parks() {
                                     //     marginTop: "25px",
                                     // }}
                                     cover={<img alt="example" src={park.imageUrl} />}
+                                    onClick={() => router.push("/park/" + park.id)}
                                 >
                                     <Meta title={park.name} description={park.address} />
                                 </Card>
                             </div>
-                        </a>
+                        </div>
                     )
                 })}
 

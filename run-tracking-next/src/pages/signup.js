@@ -107,7 +107,7 @@ export default function Signup() {
       </div>
     ),
     app: <>
-      <div class="qrcode">
+      <div className="qrcode">
         <QrReader
           style={{ width: '100%' }}
           ref={scanRef}

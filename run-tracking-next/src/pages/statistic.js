@@ -3,7 +3,7 @@ import { useQuery, gql } from "@apollo/client"
 import { Col, Row, Layout, Card, Button, Image } from "antd"
 import { useUserAuth } from "../context/UserAuthContext";
 import moment, { duration } from "moment"
-import { run } from "micro";
+
 // import 'moment/locale/th'
 // moment.locale('th')
 
@@ -136,7 +136,7 @@ export default function Statistic() {
                 <Row>
                     <Col xs={{ span: 24 }} lg={{ span: 6 }} style={{ display: "flex", flexDirection: "column", marginTop: "30px", alignItems: "center" }}>
                         <h2 style={{ marginBottom: "20px" }}>Profile</h2>
-                        <img src="https://th.bing.com/th/id/R.f81936ad509f82c43bc17a903c8a1bf0?rik=GLun8UNuhTh1dQ&riu=http%3a%2f%2fwww.blognone.com%2fsites%2fdefault%2ffiles%2fnews-thumbnails%2fDoraemon.PNG%3f1346647979&ehk=ddjyAxlHrJLxQMSjSgoj7j7Vz4ZWCvUo6%2fIVo4qsHX0%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" class='imgprofile' />
+                        <img src="https://th.bing.com/th/id/R.f81936ad509f82c43bc17a903c8a1bf0?rik=GLun8UNuhTh1dQ&riu=http%3a%2f%2fwww.blognone.com%2fsites%2fdefault%2ffiles%2fnews-thumbnails%2fDoraemon.PNG%3f1346647979&ehk=ddjyAxlHrJLxQMSjSgoj7j7Vz4ZWCvUo6%2fIVo4qsHX0%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" className='imgprofile' />
                         <div style={{ paddingTop: "25px" }}>
                             <h4 style={{ paddingTop: "10px", textAlign: "start" }}>BIB : {data?.user?.bib}</h4>
                             <h4 style={{ paddingTop: "10px", textAlign: "start" }}>Name : {data?.user?.firstName} {data?.user?.lastName}</h4>

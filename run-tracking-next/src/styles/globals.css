@@ -157,13 +157,13 @@ h5 {
 
 .image-park {
   width: 40%;
-  padding-top: 40px;
+  padding-top: 2%;
   padding-bottom: 40px;
 }
 
 .cotentPark {
-  padding-left: 60px;
-  padding-right: 60px;
+  padding-left: 20%;
+  padding-right: 20%;
 }
 
 .headName {
@@ -188,9 +188,25 @@ h5 {
   margin-bottom: 40px;
 }
 
+/* page leadeboard park */
+
+.nameLeaderPark {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.cotentListLeader {
+  padding-left: 20%;
+  padding-right: 20%;
+}
+
+.tableLeadboard {
+  margin-top: 2%;
+}
+
 /* page mobile */
 
-@media only screen and (max-width: 900px) {
+@media only screen and (max-width: 600px) {
   h1 {
     font-size: 30px;
     text-align: center;
@@ -217,7 +233,7 @@ h5 {
 
   .imgprofile {
     border-radius: 50%;
-    width: 100%;
+    width: 70%;
     padding: 20px;
     align-items: center;
     margin-left: 5%;
@@ -257,17 +273,17 @@ h5 {
   .headName {
     margin-bottom: 20px;
   }
-  
+
   .address {
     margin-bottom: 20px;
   }
-  
+
   .working {
     margin-bottom: 20px;
   }
-  
+
   .description {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
   }
 
 }

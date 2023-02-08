@@ -61,23 +61,23 @@ export default function Park() {
         <>
             <Content style={contentStyle}>
                 <div>
-                    <div class="contentParks">
-                        <img src={data.park.imageUrl} alt="img" class="image-park" />
+                    <div className="contentParks">
+                        <img src={data.park.imageUrl} alt="img" className="image-park" />
                     </div>
-                    <div class="cotentPark">
-                        <div class="headName">
+                    <div className="cotentPark">
+                        <div className="headName">
                             <h2 style={{ textAlign: "start" }}>{data?.park.name}</h2>
                         </div>
-                        <div class="working">
+                        <div className="working">
                             <p>{data.park.workingHours}เวลา เปิด</p>
                         </div>
-                        <div class="address">
+                        <div className="address">
                             <p>{data.park.address}</p>
                         </div>
-                        <div class="description">
+                        <div className="description">
                             <p>{data.park.description}</p>
                         </div>
-                        <div class="leaderBoardHead">
+                        <div className="leaderBoardHead">
                             <h2 style={{ textAlign: "start" }}>LeaderBoard</h2>
                             <Button type="primary" onClick={() => router.push("/leaderboard/" + data.park.id)} style={{ paddingLeft: "30px", paddingRight: "30px" }}>More</Button>
                         </div>
