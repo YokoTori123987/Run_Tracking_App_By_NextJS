@@ -1,25 +1,28 @@
 import React from "react";
 import { Button } from "antd";
 export default function CheckNFT() {
-  const scanButton = addEventListener("click", async () => {
-    log("User clicked scan button");
+  const scanButton = async() => {
+    console.log("User clicked scan button");
     try {
       const ndef = new NDEFReader();
       await ndef.scan();
-      log("> Scan started");
+      console.log("> Scan started");
 
       ndef.addEventListener("readingerror", () => {
-        log("Argh! Cannot read data from the NFC tag. Try another one?");
+        alert("Argh! Cannot read data from the NFC tag. Try another one?")
+        console.log("Argh! Cannot read data from the NFC tag. Try another one?");
       });
 
       ndef.addEventListener("reading", ({ message, serialNumber }) => {
-        log(`> Serial Number: ${serialNumber}`);
-        log(`> Records: (${message.records.length})`);
+        alert(`> Serial Number: ${serialNumber}`)
+        alert(`> Records: (${message.records.length})`)
+        console.log(`> Serial Number: ${serialNumber}`);
+        console.log(`> Records: (${message.records.length})`);
       });
     } catch (error) {
-      log("Argh! " + error);
+      console.log("Argh! " + error);
     }
-  });
+  }
 
   //   writeButton.addEventListener("click", async () => {
   //     log("User clicked write button");
@@ -46,7 +49,7 @@ export default function CheckNFT() {
   //   });
   return (
     <>
-      <Button onClick={scanButton()}>Scan</Button>
+      <Button onClick={() => scanButton()}>Scan</Button>
     </>
   );
 }

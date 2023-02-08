@@ -9,7 +9,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   const noAuthRequired = ["/", "/login", "/signup"];
-  const adminAuthRequired = ["/admin"];
+  // const adminAuthRequired = ["/admin"];
   return (
     <div>
       <ApolloProvider client={ApolloCliient}>
@@ -18,13 +18,14 @@ export default function App({ Component, pageProps }) {
           <Layout>
             <NavbarComponents />
             <Layout>
-              {noAuthRequired.includes(router.pathname) ? (
+              {/* {noAuthRequired.includes(router.pathname) ? (
                 <Component {...pageProps} />
               ) : (
                 <ProtectedRoute>
                   <Component {...pageProps} />
                 </ProtectedRoute>
-              )}
+              )} */}
+              <Component {...pageProps} />
             </Layout>
           </Layout>
         </UserAuthContextProvider>
