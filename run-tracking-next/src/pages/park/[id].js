@@ -41,6 +41,8 @@ export default function Park() {
     if (loading) return <p>Loading ...</p>;
     if (error) return `Error! ${error}`;
 
+    
+
     const { Content, Footer } = Layout;
 
     const contentStyle = {

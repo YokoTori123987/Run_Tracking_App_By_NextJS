@@ -286,4 +286,20 @@ h5 {
     margin-bottom: 30px;
   }
 
+  /* page leadeboard park */
+
+  .nameLeaderPark {
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+  .cotentListLeader {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .tableLeadboard {
+    margin-top: 15px;
+    width: 100%;
+  }
 }

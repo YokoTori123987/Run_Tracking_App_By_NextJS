@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router"
 import { Layout, Table } from "antd";
+import moment from "moment";
 
 export default function Leaderboard() {
 
@@ -16,9 +17,12 @@ export default function Leaderboard() {
                     id
                     pace
                     distance
+                    startTime
+                    stopTime
                     user {
                         firstName
-                        bib
+                        lastName
+                        imageUrl
                     }
                 }
             }
@@ -31,8 +35,6 @@ export default function Leaderboard() {
 
     const { Content, Footer } = Layout;
 
-    console.log(data)
-
     const contentStyle = {
         minHeight: 750,
         width: "100%",
@@ -44,109 +46,45 @@ export default function Leaderboard() {
     };
 
     const columns = [
+        {   
+            title: 'No.',
+            dataIndex: 'user',
+            width: '1%',
+            render: ({}, record, index) => <span>{index+1}</span>
+        },
         {
             title: 'Name',
-            dataIndex: 'name',
-            filters: [
-                {
-                    text: 'Joe',
-                    value: 'Joe',
-                },
-                {
-                    text: 'Category 1',
-                    value: 'Category 1',
-                    children: [
-                        {
-                            text: 'Yellow',
-                            value: 'Yellow',
-                        },
-                        {
-                            text: 'Pink',
-                            value: 'Pink',
-                        },
-                    ],
-                },
-                {
-                    text: 'Category 2',
-                    value: 'Category 2',
-                    children: [
-                        {
-                            text: 'Green',
-                            value: 'Green',
-                        },
-                        {
-                            text: 'Black',
-                            value: 'Black',
-                        },
-                    ],
-                },
-            ],
-            filterMode: 'tree',
-            filterSearch: true,
-            onFilter: (value, record) => record.name.includes(value),
+            dataIndex: 'user',
             width: '30%',
+            render: ({ firstName, lastName }) => <span>{firstName} {lastName}</span>,
         },
         {
-            title: 'Age',
-            dataIndex: 'age',
-            sorter: (a, b) => a.age - b.age,
-        },
-        {
-            title: 'Address',
-            dataIndex: 'address',
-            filters: [
-                {
-                    text: 'London',
-                    value: 'London',
-                },
-                {
-                    text: 'New York',
-                    value: 'New York',
-                },
-            ],
-            onFilter: (value, record) => record.address.startsWith(value),
-            filterSearch: true,
+            title: 'Time',
+            dataIndex: '',
             width: '40%',
-        },
-    ];
-    const data1 = [
-        {
-            key: '1',
-            name: 'John Brown',
-            age: 32,
-            address: 'New York No. 1 Lake Park',
-        },
-        {
-            key: '2',
-            name: 'Jim Green',
-            age: 42,
-            address: 'London No. 1 Lake Park',
-        },
-        {
-            key: '3',
-            name: 'Joe Black',
-            age: 32,
-            address: 'Sydney No. 1 Lake Park',
-        },
-        {
-            key: '4',
-            name: 'Jim Red',
-            age: 32,
-            address: 'London No. 2 Lake Park',
+            render: ({ startTime, stopTime }) => {
+                const startTime1 = moment(startTime).format("YYYY-MM-DD HH:mm:ss");
+                const stopTime1 = moment(stopTime).format("YYYY-MM-DD HH:mm:ss");
+
+                const duration = moment.duration(moment(stopTime1).diff(moment(startTime1)));
+                const day = duration.days() * 24;
+                
+                return (
+                    <span>{duration.hours() + day + " hr " + duration.minutes() + " min "}</span>
+                )
+            },
         },
     ];
 
-    const onChange = (pagination, filters, sorter, extra) => {
-        console.log('params', pagination, filters, sorter, extra);
-    };
+    console.log(data?.park?.Run, 'ss');
 
     return (
         <>
             <Content style={contentStyle}>
                 <div className="cotentListLeader">
                     <h2 className="nameLeaderPark" style={{ textAlign: "start" }}>{data?.park?.name}</h2>
-                    <h3>LeaderBoard</h3>
-                    <Table columns={columns} dataSource={data1} onChange={onChange} className="tableLeadboard" />
+                    <h3 style={{ textAlign: "start"}}>LeaderBoard</h3>
+                    <Table columns={columns} dataSource={data?.park?.Run} className="tableLeadboard" />
                 </div>
             </Content>
             <Footer>
