@@ -146,7 +146,7 @@ export default function Leaderboard() {
                 <div className="cotentListLeader">
                     <h2 className="nameLeaderPark" style={{ textAlign: "start" }}>{data?.park?.name}</h2>
                     <h3>LeaderBoard</h3>
-                    <Table columns={columns} dataSource={data1} onChange={onChange} className="tableLeadboard" />;
+                    <Table columns={columns} dataSource={data1} onChange={onChange} className="tableLeadboard" />
                 </div>
             </Content>
             <Footer>

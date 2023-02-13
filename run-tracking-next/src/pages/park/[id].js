@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router"
 import { Button, Layout, Avatar, List } from "antd";
+import moment from "moment";
 
 export default function Park() {
 
@@ -20,6 +21,8 @@ export default function Park() {
                     id
                     pace
                     distance
+                    startTime
+                    stopTime
                     user {
                         firstName
                         lastName
@@ -50,8 +53,6 @@ export default function Park() {
         backgroundColor: '#7f7f7f',
     };
 
-    // console.log(data)
-
     return (
         <>
             <Content style={contentStyle}>
@@ -80,16 +81,22 @@ export default function Park() {
                             itemLayout="horizontal"
                             style={{ marginBottom: "30px" }}
                             dataSource={data?.park?.Run}
-                            renderItem={(run, index) => (
-                                <List.Item>
-                                    <div style={{ textAlign: "start", fontSize: "15px", paddingRight: "5px" }}>{index+1}</div>
-                                    <List.Item.Meta
-                                        avatar={<Avatar src={run.user.imageUrl} />}
-                                        title=<p style={{ textAlign: "start", fontSize: "15px" }}>{run.user.firstName} {run.user.lastName}</p> 
-                                    />
-                                    <div style={{ textAlign: "start", fontSize: "15px" }}>Pace: {run.pace} km</div>
-                                </List.Item>
-                            )}
+                            renderItem={(run, index) => {
+                                const startTime = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
+                                const stopTime = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
+                                const duration = moment.duration(moment(stopTime).diff(moment(startTime)));
+                                const day = duration.days() * 24;
+                                return (
+                                    <List.Item>
+                                        <div style={{ textAlign: "start", fontSize: "15px", paddingRight: "5px" }}>{index + 1}</div>
+                                        <List.Item.Meta
+                                            avatar={<Avatar src={run.user.imageUrl} />}
+                                            title=<p style={{ textAlign: "start", fontSize: "15px" }}>{run.user.firstName} {run.user.lastName}</p>
+                                        />
+                                        <div style={{ textAlign: "start", fontSize: "15px" }}>Time: {duration.hours() + day + " hr " + duration.minutes() + " min "}</div>
+                                    </List.Item>
+                                )
+                            }}
                         />
                     </div>
                 </div>
