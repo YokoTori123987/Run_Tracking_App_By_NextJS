@@ -3,6 +3,7 @@ import { useQuery, gql } from "@apollo/client"
 import { Col, Row, Layout, Card, Button, Image } from "antd"
 import { useUserAuth } from "../context/UserAuthContext";
 import moment, { duration } from "moment"
+import style from "@/styles/statistic.module.css"
 
 // import 'moment/locale/th'
 // moment.locale('th')
@@ -83,8 +84,6 @@ export default function Statistic() {
 
     const duration = moment.duration(moment(stopTime).diff(moment(startTime)));
 
-
-
     const day = duration.days() * 24;
 
     data?.user?.runsHistory.map((run) => {
@@ -102,12 +101,9 @@ export default function Statistic() {
 
         seconds = seconds % 60
         minutes = minutes % 60
-
         // console.log(hours, minutes, seconds, 'ss')
         // console.log(hoursDuration)
     })
-
-
 
     const headerStyle = {
         textAlign: 'start',
@@ -129,20 +125,17 @@ export default function Statistic() {
 
     return (
         <>
-            <Header style={headerStyle}>
-                <h1>Statistic</h1>
-            </Header>
             <Content style={contentStyle}>
                 <Row>
                     <Col xs={{ span: 24 }} lg={{ span: 6 }} style={{ display: "flex", flexDirection: "column", marginTop: "30px", alignItems: "center" }}>
-                        <h2 style={{ marginBottom: "20px" }}>Profile</h2>
-                        <img src="https://th.bing.com/th/id/R.f81936ad509f82c43bc17a903c8a1bf0?rik=GLun8UNuhTh1dQ&riu=http%3a%2f%2fwww.blognone.com%2fsites%2fdefault%2ffiles%2fnews-thumbnails%2fDoraemon.PNG%3f1346647979&ehk=ddjyAxlHrJLxQMSjSgoj7j7Vz4ZWCvUo6%2fIVo4qsHX0%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" className='imgprofile' />
+                        <h2 style={{ marginBottom: "20px" }} className={style.topicTwo}>Profile</h2>
+                        <img src="https://th.bing.com/th/id/R.f81936ad509f82c43bc17a903c8a1bf0?rik=GLun8UNuhTh1dQ&riu=http%3a%2f%2fwww.blognone.com%2fsites%2fdefault%2ffiles%2fnews-thumbnails%2fDoraemon.PNG%3f1346647979&ehk=ddjyAxlHrJLxQMSjSgoj7j7Vz4ZWCvUo6%2fIVo4qsHX0%3d&risl=&pid=ImgRaw&r=0&sres=1&sresct=1" className={style.imgprofile} />
                         <div style={{ paddingTop: "25px" }}>
-                            <h4 style={{ paddingTop: "10px", textAlign: "start" }}>BIB : {data?.user?.bib}</h4>
-                            <h4 style={{ paddingTop: "10px", textAlign: "start" }}>Name : {data?.user?.firstName} {data?.user?.lastName}</h4>
-                            <h4 style={{ paddingTop: "10px", textAlign: "start" }}>Phone : {data?.user?.phoneNumber}</h4>
-                            <h4 style={{ paddingTop: "10px", textAlign: "start" }}>Email : {data?.user?.email}</h4>
-                            <h4 style={{ paddingTop: "10px", textAlign: "start" }}>Birthday :  {moment(data?.user?.dateOfBirth).format('LL')}</h4>
+                            <h4 style={{ paddingTop: "10px", textAlign: "start" }} className={style.topicFour}>BIB : {data?.user?.bib}</h4>
+                            <h4 style={{ paddingTop: "10px", textAlign: "start" }} className={style.topicFour}>Name : {data?.user?.firstName} {data?.user?.lastName}</h4>
+                            <h4 style={{ paddingTop: "10px", textAlign: "start" }} className={style.topicFour}>Phone : {data?.user?.phoneNumber}</h4>
+                            <h4 style={{ paddingTop: "10px", textAlign: "start" }} className={style.topicFour}>Email : {data?.user?.email}</h4>
+                            <h4 style={{ paddingTop: "10px", textAlign: "start" }} className={style.topicFour}>Birthday :  {moment(data?.user?.dateOfBirth).format('LL')}</h4>
                             {/* {moment(data?.user?.dateOfBirth).format('LL')} */}
                         </div>
                     </Col>
@@ -152,34 +145,34 @@ export default function Statistic() {
                                 {/* หัวข้อการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Avg.Pace
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Distance
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Time
                                         </h4>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             {data2?.currentRun?.pace}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             {data2?.currentRun?.distance}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             {duration.hours() + day + " hr " + duration.minutes() + " min "}
                                         </h5>
                                     </Col>
@@ -191,17 +184,17 @@ export default function Statistic() {
                                 {/* หัวข้อการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Activity
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Distance
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Time
                                         </h4>
                                     </Col>
@@ -209,17 +202,17 @@ export default function Statistic() {
                                 {/* ข้อมูลการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             {Activity}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             {data3?.userDistance}
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             {hours} hr {minutes} min
                                         </h5>
                                     </Col>
@@ -231,22 +224,22 @@ export default function Statistic() {
                                 {/* หัวข้อการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Park
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Distance
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Time
                                         </h4>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Round
                                         </h4>
                                     </Col>
@@ -254,23 +247,23 @@ export default function Statistic() {
                                 {/* ข้อมูลการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             สนาม
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             10 k.m
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
                                             00:00 m
                                         </h5>
                                     </Col>
                                     <Col xs={{ span: 4, offset: 2 }} lg={{ span: 4, offset: 2 }}>
-                                        <h5 style={{ fontSize: "14px" }}>
-                                            2
+                                        <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
+                                            3
                                         </h5>
                                     </Col>
                                 </Row>
@@ -279,9 +272,6 @@ export default function Statistic() {
                     </Col>
                 </Row>
             </Content>
-            <Footer style={footerStyle}>
-
-            </Footer>
         </>
     )
 }

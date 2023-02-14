@@ -2,6 +2,7 @@ import { Layout, Card, Col, Row, List } from "antd"
 import { useRouter } from "next/router"
 import { gql, useQuery } from "@apollo/client";
 import { useUserAuth } from "../context/UserAuthContext";
+import style from "@/styles/history.module.css"
 import moment from "moment"
 
 export default function History() {
@@ -63,7 +64,7 @@ export default function History() {
     return (
         <>
             <Header style={headerStyle}>
-                <h1>History</h1>
+                <h1 className={style.topicOne}>History</h1>
             </Header>
             <Content style={contentStyle}>
                 <List
@@ -82,18 +83,10 @@ export default function History() {
                         </div>
                     }
                     renderItem={((run) => {
-
                         const startTime = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
                         const stopTime = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
-
                         const duration = moment.duration(moment(stopTime).diff(moment(startTime)))
-
                         const day = duration.days() * 24  
-
-                        // const sumDuration = moment.utc(sum).format('HH:mm')
-                        // console.log(sum)
-                        // console.log(sumDuration,'sss')
-
                         return (
                             <Card
                                 title={run?.park?.name}
@@ -106,34 +99,34 @@ export default function History() {
                             >
                                 <Row style={{ textAlign: "center" }}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Pace
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Distance
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Time
                                         </h4>
                                     </Col>
                                 </Row>
                                 <Row style={{ textAlign: "center" }}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4>
+                                        <h4 className={style.topicFour}>
                                             {run?.pace}
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4>
+                                        <h4 className={style.topicFour}>
                                             {run?.distance}
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4>
+                                        <h4 className={style.topicFour}>
                                             {duration.hours() + day + " hr " + duration.minutes() + " min "}
                                         </h4>
                                     </Col>
@@ -143,9 +136,6 @@ export default function History() {
                     })}
                 />
             </Content>
-            <Footer>
-
-            </Footer>
         </>
     )
 }

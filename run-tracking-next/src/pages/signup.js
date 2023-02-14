@@ -5,6 +5,7 @@ import { useUserAuth } from "../context/UserAuthContext";
 import { QrReader } from "react-qr-reader";
 import { useRouter } from "next/router";
 // import Router from "next/router";
+import style from "@/styles/signup.module.css"
 
 const QUERY = gql`
   query GetUser($id: String!) {
@@ -107,7 +108,7 @@ export default function Signup() {
       </div>
     ),
     app: <>
-      <div className="qrcode">
+      <div className={style.qrcode}>
         <QrReader
           style={{ width: '100%' }}
           ref={scanRef}
