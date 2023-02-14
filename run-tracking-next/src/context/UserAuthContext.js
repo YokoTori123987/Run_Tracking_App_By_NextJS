@@ -37,17 +37,21 @@ export function UserAuthContextProvider({ children }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
   // console.log(user)
   function logIn(email, password) {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   }
   function signUp(email, password) {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   }
   function logOut() {
     return signOut(auth);
   }
   function googleSignIn() {
+    setLoading(true);
     const googleAuthProvider = new GoogleAuthProvider();
     return signInWithPopup(auth, googleAuthProvider);
   }
@@ -61,7 +65,7 @@ export function UserAuthContextProvider({ children }) {
       auth
     );
     // recaptchaVerifier.render();
-
+    setLoading(true);
     return signInWithPhoneNumber(auth, number, recaptchaVerifier);
   }
 
@@ -101,7 +105,9 @@ export function UserAuthContextProvider({ children }) {
 
   const [authUser] = useLazyQuery(GET_USER);
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, async (currentuser) => {
+      setLoading(false);
       const { data, error } = await authUser({
         variables: { phoneNumberuuid: currentuser?.uid },
       });
@@ -117,6 +123,7 @@ export function UserAuthContextProvider({ children }) {
   return (
     <userAuthContext.Provider
       value={{
+        loading,
         user,
         logIn,
         signUp,
