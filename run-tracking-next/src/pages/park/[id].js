@@ -84,7 +84,9 @@ export default function Park() {
                         </div>
                         <div className={style.leaderBoardHead}>
                             <h2 style={{ textAlign: "start" }} className={style.topicTwo}>LeaderBoard</h2>
-                            <Button type="primary" onClick={() => router.push("/leaderboard/" + data.park.id)} style={{ paddingLeft: "30px", paddingRight: "30px" }}>More</Button>
+                            <div className={style.buttonLeader}>
+                            <Button type="primary" onClick={() => router.push("/leaderboard/" + data.park.id)} style={{ paddingLeft: "30px", paddingRight: "30px"}}>More</Button>
+                            </div>
                         </div>
                         <List
                             itemLayout="horizontal"

@@ -61,6 +61,12 @@
     margin-bottom: 40px;
 }
 
+.buttonLeader {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
  
 /* mobile */
   

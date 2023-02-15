@@ -5,8 +5,8 @@ import { useUserAuth } from "../context/UserAuthContext";
 import moment, { duration } from "moment"
 import style from "@/styles/statistic.module.css"
 
-// import 'moment/locale/th'
-// moment.locale('th')
+import 'moment/locale/th'
+moment.locale('th')
 
 export default function Statistic() {
 
@@ -115,6 +115,7 @@ export default function Statistic() {
     };
     const contentStyle = {
         minHeight: 750,
+        marginTop: "2%"
     };
     const footerStyle = {
         textAlign: 'center',
@@ -142,6 +143,10 @@ export default function Statistic() {
                     <Col xs={{ span: 24 }} lg={{ span: 18 }}>
                         <div style={{ marginTop: "40px" }}>
                             <Card title="Recent-Activity" bordered={false} style={{ margin: "40px" }} extra={<Button onClick={() => router.push("/history")}>History</Button>}>
+                                <div className={style.recentPD}>
+                                    <p>{data2?.currentRun?.park?.name}</p>
+                                    <p>{moment(data2?.currentRun?.startTime).format('LL')}</p>
+                                </div>
                                 {/* หัวข้อการวิ่ง */}
                                 <Row>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
@@ -173,7 +178,7 @@ export default function Statistic() {
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
-                                            {duration.hours() + day + " hr " + duration.minutes() + " min "}
+                                            {duration.hours() + day + " h " + duration.minutes() + " m "}
                                         </h5>
                                     </Col>
                                 </Row>
@@ -213,7 +218,7 @@ export default function Statistic() {
                                     </Col>
                                     <Col xs={{ span: 6, offset: 2 }} lg={{ span: 6, offset: 2 }}>
                                         <h5 style={{ fontSize: "14px" }} className={style.topicFive}>
-                                            {hours} hr {minutes} min
+                                            {hours} h {minutes} m
                                         </h5>
                                     </Col>
                                 </Row>

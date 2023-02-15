@@ -19,6 +19,7 @@ const QUERY = gql`
                     firstName
                     lastName
                     imageUrl
+                    bib
                 }
             }
         }
@@ -53,25 +54,31 @@ export default function Leaderboard() {
         {   
             title: 'No.',
             dataIndex: 'user',
-            width: '1%',
+            width: '2%',
             render: ({}, record, index) => <span>{index+1}</span>
         },
         {
             title: 'Image',
             dataIndex: 'user',
-            width: '1%',
+            width: '2%',
             render: ({imageUrl}) => <Avatar src={imageUrl} />
         },
         {
             title: 'Name',
             dataIndex: 'user',
-            width: '30%',
+            width: '10%',
             render: ({ firstName, lastName }) => <span>{firstName} {lastName}</span>,
+        },
+        {
+            title: 'Bib',
+            dataIndex: 'user',
+            width: '10%',
+            render: ({bib}) => <span>{bib}</span>
         },
         {
             title: 'Time',
             dataIndex: '',
-            width: '40%',
+            width: '10%',
             render: ({ startTime, stopTime }) => {
                 const startTime1 = moment(startTime).format("YYYY-MM-DD HH:mm:ss");
                 const stopTime1 = moment(stopTime).format("YYYY-MM-DD HH:mm:ss");

@@ -5,6 +5,9 @@ import { useUserAuth } from "../context/UserAuthContext";
 import style from "@/styles/history.module.css"
 import moment from "moment"
 
+import 'moment/locale/th'
+moment.locale('th')
+
 export default function History() {
 
     const router = new useRouter()
@@ -127,7 +130,7 @@ export default function History() {
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
                                         <h4 className={style.topicFour}>
-                                            {duration.hours() + day + " hr " + duration.minutes() + " min "}
+                                            {duration.hours() + day + " h " + duration.minutes() + " m "}
                                         </h4>
                                     </Col>
                                 </Row>
