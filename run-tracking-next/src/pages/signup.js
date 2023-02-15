@@ -1,5 +1,5 @@
 import { gql, useQuery, useMutation } from "@apollo/client";
-import React, { useEffect,useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card, Button, Modal, Form, Input } from "antd";
 import { useUserAuth } from "../context/UserAuthContext";
 import { QrReader } from "react-qr-reader";
@@ -40,7 +40,7 @@ const tabListNoTitle = [
 ];
 
 export default function Signup() {
-  const Router = new useRouter()
+  const Router = new useRouter();
   const [createUser, { loading, error }] = useMutation(CREATE_ACCOUNT_USER);
   const { verifyOtpSignup, setUpRecaptha } = useUserAuth();
   const [open, setOpen] = useState(false);
@@ -49,7 +49,7 @@ export default function Signup() {
   const [changesOTP, setChangeOTP] = useState(null);
   const [confirmResult, setConfirmResult] = useState(null);
   const [number, setNumber] = useState(null);
-  const scanRef = useRef(null)
+  const scanRef = useRef(null);
   const showModal = () => {
     setOpen(true);
   };
@@ -59,37 +59,46 @@ export default function Signup() {
     if (!result) return;
     // setUserId(result?.text)
     if (result?.text === scanRef.current) return;
-    scanRef.current = result?.text
+    scanRef.current = result?.text;
     // setUserId(result?.text)
-    console.log(result?.text)
+    console.log(result?.text);
     // console.log(userId)
     if (result) {
-      setUserId(result.text)
-      refetch({ id: result.text })
-        .then((res) => {
-          setUserId(res.data.user.id)
-          if (res.data.user.email, res.data.user.firstName, res.data.user.lastName, res.data.user.phoneNumber) {
-            Modal.error({
-              title: 'มีข้อมูลอยู่ในฐานข้อมูล',
-              content: 'ไอดีนี้ถูกกรอกข้อมูลแล้ว',
-            });
-            Router.push('/')
-          } else if (res.data.user.email === null, res.data.user.firstName === null, res.data.user.lastName === null, res.data.user.phoneNumber === null) {
-            Modal.info({
-              title: 'This is a notification message',
-              content: (
-                <div>
-                  <p>กรุณากรอกข้อมูลของท่าน</p>
-                </div>
-              ),
-              onOk() { },
-            });
-            Router.push('/signup/' + result.text)
-          }
-          console.log(res)
-        })
+      setUserId(result.text);
+      refetch({ id: result.text }).then((res) => {
+        setUserId(res.data.user.id);
+        if (
+          (res.data.user.email,
+          res.data.user.firstName,
+          res.data.user.lastName,
+          res.data.user.phoneNumber)
+        ) {
+          Modal.error({
+            title: "มีข้อมูลอยู่ในฐานข้อมูล",
+            content: "ไอดีนี้ถูกกรอกข้อมูลแล้ว",
+          });
+          Router.push("/");
+        } else if (
+          (res.data.user.email === null,
+          res.data.user.firstName === null,
+          res.data.user.lastName === null,
+          res.data.user.phoneNumber === null)
+        ) {
+          Modal.info({
+            title: "This is a notification message",
+            content: (
+              <div>
+                <p>กรุณากรอกข้อมูลของท่าน</p>
+              </div>
+            ),
+            onOk() {},
+          });
+          Router.push("/signup/" + result.text);
+        }
+        console.log(res);
+      });
     }
-  }
+  };
 
   const contentListNoTitle = {
     article: (
@@ -107,18 +116,20 @@ export default function Signup() {
         </Button>
       </div>
     ),
-    app: <>
-      <div className={style.qrcode}>
-        <QrReader
-          style={{ width: '100%' }}
-          ref={scanRef}
-          onResult={handleScan}
-          constraints={{
-            facingMode: 'environment'
-          }}
-        />
-      </div>
-    </>,
+    app: (
+      <>
+        <div class="qrcode">
+          <QrReader
+            style={{ width: "100%" }}
+            ref={scanRef}
+            onResult={handleScan}
+            constraints={{
+              facingMode: "environment",
+            }}
+          />
+        </div>
+      </>
+    ),
   };
 
   const changeOTP = (e) => {
@@ -138,7 +149,7 @@ export default function Signup() {
   const onsignInSumit = async (e) => {
     const phoneNumber = "+66" + e.PhoneNumber;
     // const result = await setUpRecaptha(phoneNumber)
-    
+
     await setUpRecaptha(phoneNumber)
       .then((res) => {
         setConfirmResult(res);
@@ -158,7 +169,12 @@ export default function Signup() {
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
 
-  const { loading: loding2, error: errror2, data: data2, refetch } = useQuery(QUERY, { skip: true, });
+  const {
+    loading: loding2,
+    error: errror2,
+    data: data2,
+    refetch,
+  } = useQuery(QUERY, { skip: true });
   if (loading) return "Loading...";
   if (error) return `Error! ${error.message}`;
   // console.log(data2)

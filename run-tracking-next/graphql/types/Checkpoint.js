@@ -14,6 +14,7 @@ import { Park } from "./Park";
 import { prisma } from "@prisma/client";
 import dayjs from "dayjs";
 import { send } from "micro";
+import { clippingParents } from "@popperjs/core";
 
 export const Checkpoint = objectType({
   name: "Checkpoint",
@@ -260,7 +261,6 @@ export const checkRunningPath = extendType({
                   id: args.userId,
                 },
               });
-
               if (checkpointNull) {
                 // เริ่มการวิ่ง
                 // startRuning({ userId, checkpointNull, checkpointId });
@@ -293,12 +293,15 @@ export const checkRunningPath = extendType({
                       },
                     });
                   }
-                  return (
-                    "นาย : " + user.firstName + " เริ่มวิ่ง BIB : " + user.bib
-                  );
+                  return user.firstName === null
+                    ? " เริ่มวิ่ง BIB : " + user.bib
+                    : user.firstName + " เริ่มวิ่ง BIB : " + user.bib;
                 }
               }
-              return "นาย : " + user.firstName + " จบการวิ่ง BIB : " + user.bib;
+              console.log("จบการวิ่ง");
+              return user.firstName === null
+                ? " จบการวิ่ง BIB : " + user.bib
+                : user.firstName + " จบการวิ่ง BIB : " + user.bib;
             } else {
               await ctx.prisma.user.update({
                 data: { currentCheckpoint: args.checkpointId },
@@ -313,14 +316,16 @@ export const checkRunningPath = extendType({
                   checkpointId: args.checkpointId,
                 },
               });
-              return (
-                "นาย : " +
-                user.firstName +
-                " BIB : " +
-                user.bib +
-                " จุดปัจจุบัน : " +
-                checkpoint.checkpoint.name
-              );
+              return user.firstName === null
+                ? " BIB : " +
+                    user.bib +
+                    " จุดปัจจุบัน : " +
+                    checkpoint.checkpoint.name
+                : user.firstName +
+                    " BIB : " +
+                    user.bib +
+                    " จุดปัจจุบัน : " +
+                    checkpoint.checkpoint.name;
             }
           }
           if (user.currentCheckpoint != checkpoint.prevCheckpointId) {
@@ -336,7 +341,16 @@ export const checkRunningPath = extendType({
                 checkpoint: true,
               },
             });
-            return "ผิดทาง ทางที่ถูกคือ : " + checkpointWrong.checkpoint.name;
+            return user.firstName === null
+              ? "BIB" +
+                  user.bib +
+                  "ผิดทาง ทางที่ถูกคือ : " +
+                  checkpointWrong.checkpoint.name
+              : user.firstName +
+                  "BIB" +
+                  user.bib +
+                  "ผิดทาง ทางที่ถูกคือ : " +
+                  checkpointWrong.checkpoint.name;
           }
         }
 
@@ -368,7 +382,9 @@ export const checkRunningPath = extendType({
                   stopTime: null,
                 },
               });
-              return "นาย : " + user.firstName + " เริ่มวิ่ง BIB : " + user.bib;
+              return user.firstName === null
+                ? " เริ่มวิ่ง BIB : " + user.bib
+                : user.firstName + " เริ่มวิ่ง BIB : " + user.bib;
             }
           }
         }

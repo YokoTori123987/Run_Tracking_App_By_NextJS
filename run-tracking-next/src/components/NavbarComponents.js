@@ -15,17 +15,7 @@ import Link from "next/link";
 import { useUserAuth } from "../context/UserAuthContext";
 import { useRouter } from "next/router";
 import { Layout, Menu, Col, Row } from "antd";
-import { gql, useQuery } from "@apollo/client";
-// import { getAuth, signOut } from "firebase/auth";
-// import { Volkhov } from "@next/font/google";
-
-const GET_USER = gql`
-  query GetAuthUser {
-    user {
-      role
-    }
-  }
-`;
+import HomeGlobal from "@/pages/HomeMain/HomeGlobal";
 
 export default function NavbarComponents() {
   const { user, logOut } = useUserAuth();
@@ -78,20 +68,28 @@ export default function NavbarComponents() {
       ],
     },
   ];
-  // console.log(user);
-
+  const navigationUsers = [
+    {
+      label: <Link href="/parks">Park</Link>,
+      key: "user-1",
+      // icon: <MailOutlined />,
+    },
+  ];
   const navigationMain = [
     {
       label: <Link href="/login">เข้าสู่ระบบ</Link>,
       key: "login",
       icon: <UsergroupAddOutlined />,
     },
-    {
-      label: <Link href="/checkPath">เข้าระบบสแกนแส้นทาง</Link>,
-      key: "checkPath",
-      icon: <AppstoreOutlined />,
-    },
+    // {
+    //   label: <Link href="/checkPath">เข้าระบบสแกนแส้นทาง</Link>,
+    //   key: "checkPath",
+    //   icon: <AppstoreOutlined />,
+    // },
   ];
+  const navigationScanners = [];
+  const navigationOwned = [];
+  const navigationGoverned = [];
   return (
     <>
       <Header className="header">
@@ -106,8 +104,6 @@ export default function NavbarComponents() {
             <link rel="icon" href="/favicon.ico" />
           </Head>
           <Col span={1} />
-          {/* <Row justify="space-around" align="middle"> */}
-          {/* <Col span={2} justify="space-evenly"> */}
           <div className="logo">
             <Link href="/">
               <Image
@@ -122,6 +118,73 @@ export default function NavbarComponents() {
             </Link>
           </div>
           <Col span={1} />
+          <Col span={6}>
+            {user ? (
+              <>
+                {user.role === "USER" ? (
+                  <>
+                    <Menu
+                      theme="dark"
+                      mode="horizontal"
+                      items={navigationUsers}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {user.role === "SCANNER" ? (
+                      <>
+                        <Menu
+                          theme="dark"
+                          mode="horizontal"
+                          items={navigationScanners}
+                        />
+                      </>
+                    ) : (
+                      <>
+                        {user.role === "OWNED" ? (
+                          <>
+                            <Menu
+                              theme="dark"
+                              mode="horizontal"
+                              items={navigationOwned}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            {user.role === "GOVERNED" ? (
+                              <>
+                                <Menu
+                                  theme="dark"
+                                  mode="horizontal"
+                                  items={navigationGoverned}
+                                />
+                              </>
+                            ) : (
+                              <>
+                                {user.role === "ADMIN" ? (
+                                  <>
+                                    <Menu
+                                      theme="dark"
+                                      mode="horizontal"
+                                      items={navigationAdmin}
+                                    />
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </>
+            ) : (
+              <></>
+            )}
+          </Col>
           <Col span={2} style={{ marginLeft: "auto" }}>
             {user ? (
               <>

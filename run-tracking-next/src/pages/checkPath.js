@@ -1,6 +1,6 @@
 import React from "react";
 import { gql, useMutation, useQuery } from "@apollo/client";
-import { useState,useRef } from "react";
+import { useState, useRef } from "react";
 import { Select, notification } from "antd";
 import { QrReader } from "react-qr-reader";
 
@@ -23,7 +23,7 @@ const CHECK_RUNING_PATH = gql`
 `;
 export default function checkPath() {
   let userId;
-  const scanRef = useRef(null)
+  const scanRef = useRef(null);
   const [api, contextHolder] = notification.useNotification();
   const [parkId, setPark] = useState();
   const [checkpointId, setcheckpointId] = useState();
@@ -32,14 +32,14 @@ export default function checkPath() {
     onCompleted: (res) => {
       // console.log(res);
       console.log(res);
-      api.info({
+      api.success({
         message: res.checkRunning,
         duration: 5,
         placement: "top",
       });
     },
     onError: (error) => {
-      api.info({
+      api.error({
         message: error.checkRunning,
         duration: 5,
         placement: "top",
@@ -68,26 +68,26 @@ export default function checkPath() {
     // console.log(e);
     setcheckpointId(e);
   };
-  const handleScan = async(result) => {
+  const handleScan = async (result) => {
     if (!result) return;
     if (result?.text === scanRef.current) return;
-    scanRef.current = result?.text
-// {(result) => {
-  if (result) {
-    const userId = result.text;
-    checkRunning({
-      variables: { userId, checkpointId },
-    });
-  }
-  if (error) {
-    console.info(error);
-  }
+    scanRef.current = result?.text;
+    // {(result) => {
+    if (result) {
+      const userId = result.text;
+      checkRunning({
+        variables: { userId, checkpointId },
+      });
+    }
+    if (error) {
+      console.info(error);
+    }
 
-//   // if (error) {
-//   //   console.info(error)
-//   // }
-// }}
-  }
+    //   // if (error) {
+    //   //   console.info(error)
+    //   // }
+    // }}
+  };
   return (
     <div>
       {contextHolder}
@@ -138,7 +138,7 @@ export default function checkPath() {
                   ref={scanRef}
                   legacyMode={false}
                   constraints={{
-                    facingMode: 'environment'
+                    facingMode: "environment",
                   }}
                   onResult={handleScan}
                 />
