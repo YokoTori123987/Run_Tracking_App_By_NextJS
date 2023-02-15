@@ -16,6 +16,7 @@ import { gql, useLazyQuery } from "@apollo/client";
 const GET_USER = gql`
   query AuthUser($phoneNumberuuid: String!) {
     authUser(phoneNumberuuid: $phoneNumberuuid) {
+      id
       bib
       currentCheckpoint
       dateOfBirth

@@ -1,14 +1,18 @@
 import { Layout, Card, Col, Row, List } from "antd"
 import { useRouter } from "next/router"
 import { gql, useQuery } from "@apollo/client";
+import { useUserAuth } from "../context/UserAuthContext";
+import style from "@/styles/history.module.css"
 import moment from "moment"
+
+import 'moment/locale/th'
+moment.locale('th')
 
 export default function History() {
 
     const router = new useRouter()
-    const { id } = router.query
     const { Header, Footer, Content } = Layout;
-
+    const { user } = useUserAuth();
 
     const QUERY = gql`
         query FindUserId($id: String!) {
@@ -39,10 +43,6 @@ export default function History() {
     };
     const contentStyle = {
         minHeight: 750,
-        // display: "flex",
-        // flexDirection: "column",
-        // alignItems: "center"
-        // lineHeight: '120px',
         marginRight: "40px",
         marginLeft: "40px"
     };
@@ -53,7 +53,7 @@ export default function History() {
     };
 
     const { data, loading } = useQuery(QUERY, {
-        variables: { id: id }
+        variables: { id: user?.id }
     })
 
     if (loading) {
@@ -62,10 +62,12 @@ export default function History() {
 
     let length = data?.user?.runsHistory.length;
 
+    let sum = 0;
+
     return (
         <>
             <Header style={headerStyle}>
-                <h1>History</h1>
+                <h1 className={style.topicOne}>History</h1>
             </Header>
             <Content style={contentStyle}>
                 <List
@@ -84,23 +86,10 @@ export default function History() {
                         </div>
                     }
                     renderItem={((run) => {
-
-                        // const duration = moment.duration(moment(run?.stopTime).diff(moment(run?.startTime)));
-                        // const hours = duration.days();
-                        // console.log(hours)
-
                         const startTime = moment(run?.startTime).format("YYYY-MM-DD HH:mm:ss");
                         const stopTime = moment(run?.stopTime).format("YYYY-MM-DD HH:mm:ss");
-
                         const duration = moment.duration(moment(stopTime).diff(moment(startTime)))
-                        const day = duration.days() * 24
-
-                        // console.log(hour, 'hr')
-                        // console.log(min, 'min')
-
-                        // console.log(a)
-                        // console.log(b)
-
+                        const day = duration.days() * 24  
                         return (
                             <Card
                                 title={run?.park?.name}
@@ -109,38 +98,39 @@ export default function History() {
                                     width: "100%",
                                     marginTop: "40px",
                                 }}
+                                extra={<p style={{ fontSize: "15px" }}>{moment(run?.startTime).format('DD MMMM YYYY')}</p>}
                             >
                                 <Row style={{ textAlign: "center" }}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Pace
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Distance
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }}>
+                                        <h4 style={{ fontSize: "15px", fontWeight: "bold" }} className={style.topicFour}>
                                             Time
                                         </h4>
                                     </Col>
                                 </Row>
                                 <Row style={{ textAlign: "center" }}>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4>
+                                        <h4 className={style.topicFour}>
                                             {run?.pace}
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4>
+                                        <h4 className={style.topicFour}>
                                             {run?.distance}
                                         </h4>
                                     </Col>
                                     <Col xs={8} sm={8} md={8} lg={8} xl={8}>
-                                        <h4>
-                                            {duration.hours() + day + " hr " + duration.minutes() + " min "}
+                                        <h4 className={style.topicFour}>
+                                            {duration.hours() + day + " h " + duration.minutes() + " m "}
                                         </h4>
                                     </Col>
                                 </Row>
@@ -148,12 +138,7 @@ export default function History() {
                         )
                     })}
                 />
-
-
             </Content>
-            <Footer>
-
-            </Footer>
         </>
     )
 }

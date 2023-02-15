@@ -1,0 +1,70 @@
+.topicOne {
+    font-size: 30px;
+}
+
+.topicTwo {
+    text-align: start;
+    font-size: 30px;
+}
+
+.topicFour {
+    font-size: 15px;
+    font-weight: normal;
+    text-align: center;
+}
+
+.topicFive {
+    font-size: 15px;
+    font-weight: normal;
+    margin-left: 4%;
+    margin-right: 4%;
+    text-align: center;
+}
+
+.cardParks {
+    width: 40%;
+    color: black;
+    margin-top: 30px;
+}
+
+.contentParks {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+  
+/* mobile */
+  
+@media only screen and (max-width: 600px) { 
+
+    .topicOne {
+        font-size: 30px;
+        text-align: center;
+    }
+
+    .topicTwo {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .topicThree {
+        font-size: 15px;
+        text-align: center;
+    }
+
+    .topicFive {
+        font-size: 14px;
+        text-align: center;
+        margin-left: 4%;
+        margin-right: 4%;
+    }
+
+    .cardParks {
+        width: 100%;
+        color: black;
+        margin-top: 15%;
+    }
+
+}
+  

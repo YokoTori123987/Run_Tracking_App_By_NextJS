@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useUserAuth } from "../../context/UserAuthContext";
 import { useState } from "react";
 
-export default function Signup() {
+export default function Signupxxx() {
 
     const UPDATE_ACCOUNT_USER = gql`
         mutation updateUserQR($updateUserQrId: String, $firstName: String, $lastName: String, $email: String, $phoneNumber: String, $phoneNumberuuid: String, $gender: String, $dateOfBirth: String) {
@@ -103,7 +103,7 @@ export default function Signup() {
 
     return (
         <>
-            <Header style={headerStyle} >
+            <Header style={headerStyle}>
                 <h1>Signup</h1>
             </Header>
             <Content style={contentStyle}>

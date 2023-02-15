@@ -1,6 +1,7 @@
 import { Layout, Card } from "antd"
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router"
+import style from "@/styles/parks.module.css"
 
 export default function Parks() {
 
@@ -43,32 +44,27 @@ export default function Parks() {
 
     if (loading) return <p>Loading ...</p>;
     if (error) return `Error! ${error}`;
-    // console.log(data.parks)
 
     return (
         <>
             <Header style={headerStyle}>
-                <h1>Parks</h1>
+                <h1 className={style.topicOne}>List Parks</h1>
             </Header>
             <Content style={contentStyle}>
                 {data.parks.map((park) => {
                     return (
-                        <a onClick={() => router.push("/park/" + park.id)} class="contentParks">
-                            <div class="cardParks">
+                        <div className={style.contentParks}>
+                            <div className={style.cardParks}>
                                 <Card
                                     key={park.id}
                                     hoverable
-                                    // style={{
-                                    //     width: "100%",
-                                    //     color: "black",
-                                    //     marginTop: "25px",
-                                    // }}
                                     cover={<img alt="example" src={park.imageUrl} />}
+                                    onClick={() => router.push("/park/" + park.id)}
                                 >
                                     <Meta title={park.name} description={park.address} />
                                 </Card>
                             </div>
-                        </a>
+                        </div>
                     )
                 })}
 
